@@ -108,3 +108,5 @@ for ($row_no = $res->num_rows - 1; $row_no >= 0; $row_no--) {
 	$row = $res->fetch_assoc();
 	echo $row['_id'] . "<br/>";
 }
+
+?>
