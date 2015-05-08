@@ -5,7 +5,18 @@
  */
 
 $('#btn').click(function() {
-	$('#string').html(getResponse());
+	/**/
+	$.ajax({
+		data: {response: getResponse()},
+		error: function() {
+			console.log('erro');
+		},
+		method: 'post',
+		success: function(data) {
+			console.log(data);
+		},
+		url: 'i/'
+	});
 });
 
 var getResponse = function() {
