@@ -131,7 +131,7 @@ window.onload = function () {
 							$(a).addClass('success');
 							emailServiceCount--;
 						},
-						url: '/api/wtal/'
+						url: '/i/wtal/'
 					});
 				} else {
 					$(a).removeClass('active-form');
