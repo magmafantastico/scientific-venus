@@ -1,5 +1,5 @@
 /*!
- * Magma SCI v0.9.1 (http://getvilla.org/)
+ * Magma SCI v0.9.3 (http://getvilla.org/)
  * Copyright 2013-2015 Noibe Developers
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
