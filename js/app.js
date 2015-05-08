@@ -87,7 +87,7 @@ var getResponse = function() {
 			hormonioTerapia: getActiveRadio('conduta_hormonioTerapia'),
 			hormonioTerapiaCiclico: getActiveCheckbox('conduta_hormonioterapia_ciclico'),
 			hormonioTerapiaContinuo: getActiveCheckbox('conduta_hormonioterapia_continuo'),
-			/*hormonioTerapiaName: getTextField('conduta_hormonioterapia_nome', 'name'),*/ // name
+			/*hormonioTerapiaName: getTextField('conduta_hormonioterapia_nome'),*/ // name
 			ainh: getTextField('conduta_ainh')
 		},
 		resultados: {
