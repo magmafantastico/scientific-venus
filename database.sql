@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`paciente` (
   `religiao` VARCHAR(45) NOT NULL,
   `religiaoNote` VARCHAR(45) NULL,
   `etnia` VARCHAR(45) NOT NULL,
-  `etiniaNote` VARCHAR(45) NULL,
+  `etniaNote` VARCHAR(45) NULL,
   `escolaridade` VARCHAR(45) NOT NULL,
   `escolaridadeNote` VARCHAR(45) NULL,
   `estadoCivil` VARCHAR(45) NOT NULL,
@@ -65,8 +65,8 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`exameFisico` (
   `circunferenciaCervical` DECIMAL(6,2) NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
-  INDEX `prontuario_id_idx` (`prontuario_id` ASC),
-  CONSTRAINT `prontuario_id`
+  INDEX `fk_exameFisico_1_idx` (`prontuario_id` ASC),
+  CONSTRAINT `fk_exameFisico_1`
     FOREIGN KEY (`prontuario_id`)
     REFERENCES `scientific_venus`.`prontuario` (`_id`)
     ON DELETE NO ACTION
@@ -82,10 +82,21 @@ DROP TABLE IF EXISTS `scientific_venus`.`antecedentes` ;
 CREATE TABLE IF NOT EXISTS `scientific_venus`.`antecedentes` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `prontuario_id` INT NOT NULL,
+  `situacaoAborto` TINYINT(1) NULL,
+  `situacaoGestacao` TINYINT(1) NULL,
+  `situacaoParidade` TINYINT(1) NULL,
+  `tabagismo` TINYINT(1) NULL,
+  `hac` TINYINT(1) NULL,
+  `hacType` VARCHAR(45) NULL,
+  `diabetes` TINYINT(1) NULL,
+  `diabetesType` VARCHAR(45) NULL,
+  `hipotireoidismo` TINYINT(1) NULL,
+  `hipotireoidismoType` VARCHAR(45) NULL,
+  `note` VARCHAR(45) NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
-  INDEX `prontuario_id_idx` (`prontuario_id` ASC),
-  CONSTRAINT `prontuario_id0`
+  INDEX `fk_antecedentes_1_idx` (`prontuario_id` ASC),
+  CONSTRAINT `fk_antecedentes_1`
     FOREIGN KEY (`prontuario_id`)
     REFERENCES `scientific_venus`.`prontuario` (`_id`)
     ON DELETE NO ACTION
