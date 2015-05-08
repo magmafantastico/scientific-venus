@@ -5,7 +5,7 @@
  */
 
 $('#btn').click(function() {
-	console.log(getResponse());
+	$('#string').html(getResponse());
 });
 
 var getResponse = function() {
@@ -37,14 +37,16 @@ var getResponse = function() {
 			circunferenciaCervical: getTextField('exameFisico_circunferenciaCervical')
 		},
 		antecedentes: {
-			situacao: getActiveCheckbox('antecedentes_situacao'),
-			tabagismo: getActiveRadio('antecedentes_tabagismo'),
-			hac: getActiveRadio('antecedentes_hac'),
+			situacaoAborto: toBoolean(getActiveCheckbox('antecedentes_situacao_aborto', true)),
+			situacaoGestacao: toBoolean(getActiveCheckbox('antecedentes_situacao_gestaçao', true)),
+			situacaoParidade: toBoolean(getActiveCheckbox('antecedentes_situacao_paridade', true)),
+			tabagismo: parseBoolean(getActiveRadio('antecedentes_tabagismo')),
+			hac: parseBoolean(getActiveRadio('antecedentes_hac')),
 			hacType: getActiveRadio('antecedentes_hac_type'),
-			diabetes: getActiveRadio('antecedentes_diabetes'),
+			diabetes: parseBoolean(getActiveRadio('antecedentes_diabetes')),
 			diabetesType: getActiveRadio('antecedentes_diabetes_type'),
-			hipotireoidismo: getActiveRadio('antecedentes_hipotireoidismo'),
-			hipotireoidismoTYpe: getActiveRadio('antecedentes_hipotireoidismo_type'),
+			hipotireoidismo: parseBoolean(getActiveRadio('antecedentes_hipotireoidismo')),
+			hipotireoidismoType: getActiveRadio('antecedentes_hipotireoidismo_type'),
 			note: getTextField('antecedentes_note')
 		},
 		uteroMioma: {
@@ -98,21 +100,26 @@ var getResponse = function() {
 
 	};
 
-	return r;
+	return JSON.stringify(r);
 
 };
 
-var getActiveCheckbox = function(a) {
-	var b, c;
+var getActiveCheckbox = function(a, b) {
+	var c, d;
 
-	b = $('input[name=' + a + ']:checked');
-	c = new Array();
+	c = $('input[name=' + a + ']:checked');
+	d = new Array();
 
-	for (var d = b.length; d--; )
-		c.push($(b[d]).val());
+	for (var e = c.length; e--; )
+		d.push($(c[e]).val());
 
-	if (c.length > 0)
-		return c;
+	if (d.length > 0)
+		if (d.length > 1)
+			return d;
+		else if (b)
+			return d[0];
+		else
+			return d;
 
 	return false;
 };
@@ -136,4 +143,12 @@ var getTextField = function(a) {
 		return b;
 
 	return false;
+};
+
+var toBoolean = function (a) {
+	return !!a;
+};
+
+var parseBoolean = function (a) {
+	return (a === "true");
 };
