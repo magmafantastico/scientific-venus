@@ -1,13 +1,12 @@
 /*!
- * Magma SCI v0.9.3 (http://getvilla.org/)
- * Copyright 2013-2015 Noibe Developers
+ * Magma Scientific v0.9.8 (http://getvilla.org/)
+ * Copyright 2014-2015 Magma Fantastico
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
 $('#btn').click(function() {
-	/**/
 	$.ajax({
-		data: {response: getResponse()},
+		data: {response: JSON.stringify(getResponse())},
 		error: function() {
 			console.log('erro');
 		},
@@ -68,9 +67,13 @@ var getResponse = function() {
 			endometro: getTextField('uteroMioma_endometro'),
 			miomaQuantidade: getTextField('uteroMioma_miomaQuantidade'),
 			mioma_1_caracteristicas: getTextField('uteroMioma_mioma_1_caracteristicas'),
-			mioma_1_type: getActiveCheckbox('uteroMioma_mioma_1_type'),
+			mioma_1_submucoso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_1_submucoso', true)),
+			mioma_1_subseroso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_1_subseroso', true)),
+			mioma_1_intramural: parseBoolean(getActiveCheckbox('uteroMioma_mioma_1_intramural', true)),
 			mioma_2_caracteristicas: getTextField('uteroMioma_mioma_2_caracteristicas'),
-			mioma_2_type: getActiveCheckbox('uteroMioma_mioma_2_type'),
+			mioma_2_submucoso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_2_submucoso', true)),
+			mioma_2_subseroso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_2_subseroso', true)),
+			mioma_2_intramural: parseBoolean(getActiveCheckbox('uteroMioma_mioma_2_intramural', true)),
 			nd: getActiveCheckbox('uteroMioma_nd')
 		},
 		sangramento: {
@@ -81,6 +84,7 @@ var getResponse = function() {
 			vidaMioma: getTextField('escalas_vidaMioma')
 		},
 		exames: {
+			hb: getTextField('exames_hb'),
 			ht: getTextField('exames_ht'),
 			ferro: getTextField('exames_ferro'),
 			ferritina: getTextField('exames_ferritina'),
@@ -98,10 +102,10 @@ var getResponse = function() {
 			conduta: getActiveRadio('conduta'),
 			cirurgia: getActiveRadio('conduta_cirurgia'),
 			hormonioTerapia: getActiveRadio('conduta_hormonioTerapia'),
-			hormonioTerapiaCiclico: getActiveCheckbox('conduta_hormonioterapia_ciclico'),
-			hormonioTerapiaContinuo: getActiveCheckbox('conduta_hormonioterapia_continuo'),
-			/*hormonioTerapiaName: getTextField('conduta_hormonioterapia_nome'),*/ // name
-			ainh: getTextField('conduta_ainh')
+			hormonioTerapiaCiclico: parseBoolean(getActiveCheckbox('conduta_hormonioterapia_ciclico', true)),
+			hormonioTerapiaContinuo: parseBoolean(getActiveCheckbox('conduta_hormonioterapia_continuo', true)),
+			hormonioTerapiaNome: getTextField('conduta_hormonioterapia_nome'), // name
+			ainh: getTextField('conduta_ainh_nome')
 		},
 		resultados: {
 			pbacFinal: getTextField('resultados_pbacFinal'),
@@ -111,7 +115,7 @@ var getResponse = function() {
 
 	};
 
-	return JSON.stringify(r);
+	return r;
 
 };
 
@@ -163,3 +167,41 @@ var toBoolean = function (a) {
 var parseBoolean = function (a) {
 	return (a === "true");
 };
+
+
++function ($) {
+	'use strict';
+
+	/* Constructor of distinct functions */
+	$.fn.distinct = function (options, events) {
+
+		var settings = $.extend({
+			prefix: false,
+			target: 'body'
+		}, options);
+
+		var handle = function(evt) {
+			var a = evt.explicitOriginalTarget;
+			$(settings.target).removeClassLike(settings.prefix);
+			$(settings.target).addClass(this.id);
+		};
+
+		for (var a = this.length; a--; )
+			if (events.constructor === Array)
+				for (var b = events.length; b--;)
+					this[a].addEventListener(events[b], handle, false);
+			else
+				this[a].addEventListener(events, handle, false);
+	}
+
+}(jQuery);
+
+// removes class with prefix
+jQuery.fn.removeClassLike = function (prefix) {
+	if (this.attr("class")) {
+		var classes = this.attr("class").split(" ").filter(function (c) {
+			return c.lastIndexOf(prefix, 0) !== 0;
+		});
+		return this.attr("class", classes.join(" "));
+	}
+}

@@ -18,13 +18,10 @@
 			plusOne: false,
 			prefix: false,
 			selfAction: false,
-			target: 'body',
-			touchEvents: true
+			target: 'body'
 		}, options);
 
 		var currentIndex;
-
-		console.log(typeof events);
 
 		// Convert selfActions Object to Array
 		// Happens when the user put a single object on selfAction var
@@ -36,11 +33,7 @@
 
 		// Add Touch and Mouse Listeners to elements
 		this.each(function() {
-			if (settings.touchEvents) {
-				this.addEventListener('touchstart', handleController, false);
-			}
-
-			this.addEventListener('click', handleController, false);
+			this.addEventListener(events, handleController, false);
 		});
 
 		// Handle Controller (start the actions with the listeners (touch or mouse))
@@ -48,11 +41,24 @@
 
 			evt.preventDefault();
 
-			// Get the Index of element
-			currentIndex = $(this).index();
+			var a;
 
-			/* TODO - Remove Class */
-			/* TODO - Add class */
+			switch (evt.type) {
+				case 'RadioStateChange':
+					a = evt.explicitOriginalTarget;
+					break;
+				case 'CheckboxStateChange':
+					console.log('trocou de checkbox');
+					break;
+				default:
+					console.log('isso é click');
+					break;
+			}
+
+			// Get the Index of element
+			currentIndex = $(a).index();
+
+			console.log(evt.explicitOriginalTarget.id);
 
 			// Test if exists some self action
 			if (settings.selfAction) selfAction(this);
