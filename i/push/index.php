@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Magma Scientific Server v1.0.0 (http://getvilla.org/)
+ * Magma Scientific Push Server v1.0.1 (http://getvilla.org/)
  * Copyright 2014-2015 Magma Fantastico
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
