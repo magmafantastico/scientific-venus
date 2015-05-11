@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Magma Scientific Server v1.0.0 (http://getvilla.org/)
+ * Copyright 2014-2015 Magma Fantastico
+ * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
+ */
+
 header('Content-Type: text/html; charset=utf-8');
 
 /*$a = '{"prontuario":{"_id":"111","data":"2015-05-15"},"paciente":{"nome":"Dudu","sexo":"Masculino","nascimento":"2015-11-26","religiao":"Outro","religiaoNote":"agnostico","etnia":"Branco","etniaNote":false,"escolaridade":"Superior","escolaridadeNote":false,"estadoCivil":"Solteiro(a)","estadoCivilNote":false},"exameFisico":{"peso":"72.00","altura":"1.74","imc":"1.50","pressaoArterial":"12.5","circunferenciaAbdominal":"60","circunferenciaCervical":"69.5"},"antecedentes":{"situacaoAborto":false,"situacaoGestacao":false,"situacaoParidade":true,"tabagismo":false,"hac":"true","hacType":"Descompensado","diabetes":"true","diabetesType":"Compensado","hipotireoidismo":"false","hipotireoidismoTYpe":false,"note":"Isso é apenas um teste"},"uteroMioma":{"us":false,"volumeInterino":false,"ovarioDireito":false,"ovarioEsquerdo":false,"endometro":false,"miomaQuantidade":false,"mioma_1_caracteristicas":false,"mioma_1_type":false,"mioma_2_caracteristicas":false,"mioma_2_type":false,"nd":false},"sangramento":{"pbacInicial":false},"escalas":{"beckInicial":false,"vidaMioma":false},"exames":{"ht":false,"ferro":false,"ferritina":false,"rdw":false,"vcm":false,"vitaminaD3":false,"tsh":false,"gj":false,"ct":false,"ldl":false,"hdl":false,"t4l":false},"conduta":{"conduta":false,"cirurgia":false,"hormonioTerapia":false,"hormonioTerapiaCiclico":false,"hormonioTerapiaContinuo":false,"ainh":false},"resultados":{"pbacFinal":false,"beckFinal":false,"vidaMioma":false}}';*/
