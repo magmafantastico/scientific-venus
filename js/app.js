@@ -1,5 +1,5 @@
 /*!
- * Magma Scientific v0.9.8 (http://getvilla.org/)
+ * Magma Scientific v0.9.9 (http://getvilla.org/)
  * Copyright 2014-2015 Magma Fantastico
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
