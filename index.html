@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="css/polar-font.css"/>
 	<link rel="stylesheet" href="css/villa.css"/>
 	<link rel="stylesheet" href="css/polar.css"/>
+	<link rel="stylesheet" href="css/classic.css"/>
+	<link rel="stylesheet" href="css/classic.date.css"/>
 	<!--[if lt IE 9]>
 	<link rel="stylesheet" type="text/css" href="css/material-colors.css"/>
 	<script type="text/javascript" src="js/html5shiv.js"></script>
@@ -822,6 +824,7 @@
 	</form>
 
 	<script src="js/jquery-min.js"></script>
+	<script src="js/picker.js"></script>
 	<script src="js/app.js"></script>
 
 	<script>
@@ -834,6 +837,9 @@
 			prefix: 'conduta',
 			target: document.getElementById('conduta_hormonioTerapia')
 		}, ['click', 'touchstart']);
+
+		var $prontuario_data = $('#prontuario_data').pickadate();
+		var $paciente_nascimento = $('#paciente_nascimento').pickadate();
 	</script>
 
 	<style>

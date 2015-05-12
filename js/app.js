@@ -5,6 +5,9 @@
  */
 
 $('#btn').click(function() {
+
+	console.log(getResponse());
+
 	$.ajax({
 		data: {response: JSON.stringify(getResponse())},
 		error: function(data) {
@@ -37,12 +40,12 @@ var getResponse = function() {
 	var r = {
 		prontuario: {
 			_id: getTextField('prontuario__id'),
-			data: getTextField('prontuario_data')
+			data: getPickDate($prontuario_data)
 		},
 		paciente: {
 			nome: getTextField('paciente_nome'),
 			sexo: getActiveRadio('paciente_sexo'),
-			nascimento: getTextField('paciente_nascimento'),
+			nascimento: getPickDate($paciente_nascimento),
 			religiao: getActiveRadio('paciente_religiao'),
 			religiaoNote: getTextField('paciente_religiao_note'),
 			etnia: getActiveRadio('paciente_etnia'),
@@ -182,6 +185,9 @@ var parseBoolean = function (a) {
 	return (a === "true");
 };
 
+var getPickDate = function (a) {
+	return a.pickadate('picker').get('select').obj.toISOString().substr(0, 10);
+};
 
 +function ($) {
 	'use strict';
