@@ -83,8 +83,6 @@ $consulta_id = $mysqli->insert_id;
 
 echo("consulta_id: " . $consulta_id . "/n");
 
-print_r($b->exameFisico);
-
 if (!$mysqli->query("INSERT INTO exameFisico(
 	consulta_id,
     peso,

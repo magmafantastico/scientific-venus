@@ -63,7 +63,6 @@ class Data
 
 	private function getDataArray($a, $b)
 	{
-
 		if ($c = $b->query("SELECT * FROM " . $a)) {
 			$d = array();
 
@@ -74,12 +73,14 @@ class Data
 
 			return $d;
 		}
+	}
 
+	public function toJSON()
+	{
+		return json_encode($this);
 	}
 
 }
 
 $obj = new Data();
-$responseText = json_encode($obj);
-
-echo $responseText;
+echo $obj->toJSON();
