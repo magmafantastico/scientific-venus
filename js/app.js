@@ -7,14 +7,28 @@
 $('#btn').click(function() {
 	$.ajax({
 		data: {response: JSON.stringify(getResponse())},
-		error: function() {
-			console.log('erro');
+		error: function(data) {
+			console.log(data.responseText);
 		},
 		method: 'post',
 		success: function(data) {
 			console.log(data);
 		},
-		url: 'i/'
+		url: 'i/push/'
+	});
+});
+
+$('#btn').click(function() {
+	$.ajax({
+		cache: false,
+		dataType: 'json',
+		error: function(data) {
+			console.log(data.responseText);
+		},
+		success: function(data) {
+			console.log(data);
+		},
+		url: 'i/pull/'
 	});
 });
 
