@@ -1,24 +1,40 @@
 <?php
 
 /**
- * Magma Scientific Push Server v1.0.1 (http://getvilla.org/)
+ * Magma Scientific Push Server v1.1.1 (http://getvilla.org/)
  * Copyright 2014-2015 Magma Fantastico
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
-header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: application/json');
+
+class Response {
+	private $request;
+
+	public function __construct($a)
+	{
+		$this->request = $a;
+	}
+
+	public function getRequest()
+	{
+		return $this->request;
+	}
+}
 
 /*$a = '{"prontuario":{"_id":"111","data":"2015-05-15"},"paciente":{"nome":"Dudu","sexo":"Masculino","nascimento":"2015-11-26","religiao":"Outro","religiaoNote":"agnostico","etnia":"Branco","etniaNote":false,"escolaridade":"Superior","escolaridadeNote":false,"estadoCivil":"Solteiro(a)","estadoCivilNote":false},"exameFisico":{"peso":"72.00","altura":"1.74","imc":"1.50","pressaoArterial":"12.5","circunferenciaAbdominal":"60","circunferenciaCervical":"69.5"},"antecedentes":{"situacaoAborto":false,"situacaoGestacao":false,"situacaoParidade":true,"tabagismo":false,"hac":"true","hacType":"Descompensado","diabetes":"true","diabetesType":"Compensado","hipotireoidismo":"false","hipotireoidismoTYpe":false,"note":"Isso é apenas um teste"},"uteroMioma":{"us":false,"volumeInterino":false,"ovarioDireito":false,"ovarioEsquerdo":false,"endometro":false,"miomaQuantidade":false,"mioma_1_caracteristicas":false,"mioma_1_type":false,"mioma_2_caracteristicas":false,"mioma_2_type":false,"nd":false},"sangramento":{"pbacInicial":false},"escalas":{"beckInicial":false,"vidaMioma":false},"exames":{"ht":false,"ferro":false,"ferritina":false,"rdw":false,"vcm":false,"vitaminaD3":false,"tsh":false,"gj":false,"ct":false,"ldl":false,"hdl":false,"t4l":false},"conduta":{"conduta":false,"cirurgia":false,"hormonioTerapia":false,"hormonioTerapiaCiclico":false,"hormonioTerapiaContinuo":false,"ainh":false},"resultados":{"pbacFinal":false,"beckFinal":false,"vidaMioma":false}}';*/
-$a = $_POST['response'];
-$b = json_decode($a);
+$a = new Response($_POST['response']);
+$b = json_decode($a->getRequest());
 
 $mysqli = new mysqli("localhost", "root", "sux", "scientific_venus");
 
-if ($mysqli->connect_errno) {
+if ($mysqli->connect_errno)
 	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-} else {
+else
 	echo "connection ok! /n/n";
-}
+
+if (!$mysqli->query("SET @@session.time_zone = '+00:00';"))
+	echo "time_zone not setted: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO paciente(
 	nome,
@@ -43,7 +59,7 @@ if (!$mysqli->query("INSERT INTO paciente(
 	$b->paciente->escolaridadeNote . "', '" .
 	$b->paciente->estadoCivil . "', '" .
 	$b->paciente->estadoCivilNote . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(paciente): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 $paciente_id = $mysqli->insert_id;
 
@@ -52,20 +68,22 @@ echo("Last inserted record has id: " . $paciente_id . "/n");
 if (!$mysqli->query("INSERT INTO prontuario(data, paciente_id) VALUES ('" .
 	$b->prontuario->data . "', '" .
 	$paciente_id . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(prontuario): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 $prontuario_id = $mysqli->insert_id;
 
-echo("Last inserted record has id: " . $prontuario_id . "/n");
+echo("prontuario_id: " . $prontuario_id . "/n");
 
 if (!$mysqli->query("INSERT INTO consulta(data, prontuario_id) VALUES ('" .
 	$b->prontuario->data . "', '" .
 	$prontuario_id . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(consulta): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 $consulta_id = $mysqli->insert_id;
 
-echo("Last inserted record has id: " . $prontuario_id . "/n");
+echo("consulta_id: " . $consulta_id . "/n");
+
+print_r($b->exameFisico);
 
 if (!$mysqli->query("INSERT INTO exameFisico(
 	consulta_id,
@@ -74,15 +92,15 @@ if (!$mysqli->query("INSERT INTO exameFisico(
     imc,
     pressaoArterial,
     circunferenciaAbdominal,
-    circunferenciaCervical) VALUES (" .
-	$consulta_id . ", " .
-	$b->exameFisico->peso . ", " .
-	$b->exameFisico->altura . ", " .
-	$b->exameFisico->imc . ", " .
-	$b->exameFisico->pressaoArterial . ", " .
-	$b->exameFisico->circunferenciaAbdominal . ", " .
-	$b->exameFisico->circunferenciaCervical . ")"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+    circunferenciaCervical) VALUES ('" .
+	$consulta_id . "', '" .
+	$b->exameFisico->peso . "', '" .
+	$b->exameFisico->altura . "', '" .
+	$b->exameFisico->imc . "', '" .
+	$b->exameFisico->pressaoArterial . "', '" .
+	$b->exameFisico->circunferenciaAbdominal . "', '" .
+	$b->exameFisico->circunferenciaCervical . "')"))
+	echo "Insert failed(exameFisico): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO antecedentes(
 	consulta_id,
@@ -109,7 +127,7 @@ if (!$mysqli->query("INSERT INTO antecedentes(
 	$b->antecedentes->hipotireoidismo . "', '" .
 	$b->antecedentes->hipotireoidismoType . "', '" .
 	$b->antecedentes->note . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(antecedentes): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO uteroMioma(
 	consulta_id,
@@ -144,14 +162,14 @@ if (!$mysqli->query("INSERT INTO uteroMioma(
 	$b->uteroMioma->mioma_2_subseroso . "', '" .
 	$b->uteroMioma->mioma_2_intramural . "', '" .
 	$b->uteroMioma->nd . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(uteroMioma): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO sangramento(
 	consulta_id,
     pbacInicial) VALUES ('" .
 	$consulta_id . "', '" .
 	$b->sangramento->pbacInicial . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(sangramento): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO escalas(
 	consulta_id,
@@ -160,7 +178,7 @@ if (!$mysqli->query("INSERT INTO escalas(
 	$consulta_id . "', '" .
 	$b->escalas->beckInicial . "', '" .
 	$b->escalas->vidaMioma . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(escalas): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO exames(
 	consulta_id,
@@ -191,7 +209,7 @@ if (!$mysqli->query("INSERT INTO exames(
 	$b->exames->ldl . "', '" .
 	$b->exames->hdl . "', '" .
 	$b->exames->t4l . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(exames): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO conduta(
 	consulta_id,
@@ -210,7 +228,7 @@ if (!$mysqli->query("INSERT INTO conduta(
 	$b->conduta->hormonioTerapiaContinuo . "', '" .
 	$b->conduta->hormonioTerapiaNome . "', '" .
 	$b->conduta->ainh . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(conduta): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 if (!$mysqli->query("INSERT INTO resultados(
 	consulta_id,
@@ -221,7 +239,7 @@ if (!$mysqli->query("INSERT INTO resultados(
 	$b->resultados->pbacFinal . "', '" .
 	$b->resultados->beckFinal . "', '" .
 	$b->resultados->vidaMioma . "')"))
-	echo "Insert failed: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	echo "Insert failed(resultados): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 $res = $mysqli->query("SELECT _id FROM paciente");
 
