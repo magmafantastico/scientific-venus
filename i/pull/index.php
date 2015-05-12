@@ -7,6 +7,7 @@
  */
 
 header('Content-Type: application/json');
+require_once('../var/connection.php');
 
 class Data
 {
@@ -39,11 +40,13 @@ class Data
 
 	public function __construct()
 	{
-		$this->conn = new mysqli("localhost", "root", "sux", "scientific_venus");
+		$a = new Connection();
+		$this->conn = $a->getConnection();
+
 		if ($this->conn->connect_errno)
 			echo "Failed to connect to MySQL: (" . $conn->connect_errno . ") " . $conn->connect_error;
 
-		$this->getData();
+		self::getData();
 	}
 
 	private function getData()

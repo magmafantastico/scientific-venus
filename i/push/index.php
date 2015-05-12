@@ -7,6 +7,7 @@
  */
 
 header('Content-Type: application/json');
+require_once('../var/connection.php');
 
 class Response {
 	private $request;
@@ -26,7 +27,8 @@ class Response {
 $a = new Response($_POST['response']);
 $b = json_decode($a->getRequest());
 
-$mysqli = new mysqli("localhost", "root", "sux", "scientific_venus");
+$c = new Connection();
+$mysqli = $c->getConnection();
 
 if ($mysqli->connect_errno)
 	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
