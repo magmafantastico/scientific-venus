@@ -25,7 +25,17 @@ class Connection
 	private $_SCHEMA = "scientific_venus";
 
 	public function __construct() {
-		$this->connection = new mysqli($this->_HOSTNAME, $this->_USER, $this->_PASSWD, $this->_SCHEMA);
+
+		$conn = new mysqli($this->_HOSTNAME, $this->_USER, $this->_PASSWD, $this->_SCHEMA);
+
+		if ($conn->connect_errno)
+			echo "Failed to connect to MySQL: (" . $conn->connect_errno . ") " . $conn->connect_error;
+		else
+			if (!$conn->query("SET @@session.time_zone = '+00:00';"))
+				echo "time_zone not setted: (" . $conn->errno . ") " . $conn->error . "/n";
+			else
+				$this->connection = $conn;
+
 	}
 
 	public function getConnection() {

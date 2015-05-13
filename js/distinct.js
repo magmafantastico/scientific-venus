@@ -82,7 +82,7 @@
 			var self = Array();
 
 			// Find a index number at selfAction array and put on array 'self'
-			// Obs: test for a fastest method to loop the array using the 'l' var
+			// Obs: tmp for a fastest method to loop the array using the 'l' var
 			for (var i = settings.selfAction.length; --i;) {
 
 				// Internal Loop to pass in all index of SelfAction Array
