@@ -6,7 +6,7 @@
 
 $('#btn').click(function() {
 
-	console.log(getResponse());
+	console.log(JSON.stringify(getResponse()));
 
 	$.ajax({
 		data: {response: JSON.stringify(getResponse())},

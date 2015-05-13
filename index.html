@@ -839,7 +839,10 @@
 		}, ['click', 'touchstart']);
 
 		var $prontuario_data = $('#prontuario_data').pickadate();
-		var $paciente_nascimento = $('#paciente_nascimento').pickadate();
+		var $paciente_nascimento = $('#paciente_nascimento').pickadate({
+			selectYears: 100,
+			selectMonths: true
+		});
 	</script>
 
 	<style>
