@@ -297,6 +297,10 @@ input:focus {
 	border-bottom: solid 2px #bdbdbd;
 }
 
+input[type=text] {
+	min-width: 14em;
+}
+
 input.font-large {
 	font-size: 1.5em;
 }

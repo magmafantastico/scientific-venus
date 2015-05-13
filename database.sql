@@ -36,8 +36,9 @@ DROP TABLE IF EXISTS `scientific_venus`.`prontuario` ;
 
 CREATE TABLE IF NOT EXISTS `scientific_venus`.`prontuario` (
   `_id` INT NOT NULL AUTO_INCREMENT,
-  `data` DATE NOT NULL,
   `paciente_id` INT NOT NULL,
+  `data` DATE NOT NULL,
+  `registro` INT NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
   INDEX `paciente_id_idx` (`paciente_id` ASC),

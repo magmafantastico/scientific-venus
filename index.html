@@ -62,7 +62,7 @@
 
 			<h2>Paciente</h2>
 
-			<div class="flex justify-between">
+			<div class="flex justify-between flex-wrap">
 
 				<div class="field flex-2">
 					<label for="prontuario__id">Registro Ambulatorio</label>
@@ -71,7 +71,7 @@
 
 				<div class="field flex-3" style="margin-left: 2em">
 					<label for="prontuario_data">Data Cadastro</label>
-					<input type="date" id="prontuario_data" name="prontuario_data"/>
+					<input type="text" id="prontuario_data" name="prontuario_data"/>
 				</div>
 
 			</div>
@@ -105,7 +105,7 @@
 
 				<div class="field flex-1" style="margin-left: 2em">
 					<label for="paciente_nascimento">Data de Nascimento</label>
-					<input type="date" id="paciente_nascimento" name="paciente_nascimento"/>
+					<input type="text" id="paciente_nascimento" name="paciente_nascimento"/>
 				</div>
 
 			</div>
@@ -825,7 +825,6 @@
 
 	<script src="js/jquery-min.js"></script>
 	<script src="js/picker.js"></script>
-	<script src="js/app.js"></script>
 
 	<script>
 		$('input[name=conduta]').distinct({
@@ -844,6 +843,8 @@
 			selectMonths: true
 		});
 	</script>
+
+	<script src="js/app.js"></script>
 
 	<style>
 		#conduta_cirurgia,

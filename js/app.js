@@ -6,9 +6,7 @@
 
 $('#btn').click(function() {
 
-	console.log(JSON.stringify(getResponse()));
-
-	$.ajax({
+	/*$.ajax({
 		data: {response: JSON.stringify(getResponse())},
 		error: function(data) {
 			console.log(data.responseText);
@@ -19,6 +17,11 @@ $('#btn').click(function() {
 		},
 		url: 'i/push/'
 	});
+*/
+});
+
+$('#prontuario_novo').click(function() {
+	novoProntuario();
 });
 
 $('#btn').click(function() {
@@ -35,11 +38,55 @@ $('#btn').click(function() {
 	});
 });
 
-var getResponse = function() {
+var novoProntuario = function() {
+	$.ajax({
+		cache: false,
+		data: {response: JSON.stringify(getProntuario())},
+		dataType: 'json',
+		error: function(data) {
+			console.log(data.responseText);
+		},
+		method: 'post',
+		success: function(data) {
+			console.log((data));
+			if (data.prontuario)
+				document.getElementById('prontuario__id').value = data.prontuario;
+		},
+		url: 'i/push/prontuario/'
+	});
+};
 
+var getProntuario = function() {
 	var r = {
+
 		prontuario: {
 			_id: getTextField('prontuario__id'),
+			registro: getTextField('prontuario_registro'),
+			data: getPickDate($prontuario_data)
+		},
+		paciente: {
+			nome: getTextField('paciente_nome'),
+			sexo: getActiveRadio('paciente_sexo'),
+			nascimento: getPickDate($paciente_nascimento),
+			religiao: getActiveRadio('paciente_religiao'),
+			religiaoNote: getTextField('paciente_religiao_note'),
+			etnia: getActiveRadio('paciente_etnia'),
+			etniaNote: getTextField('paciente_etnia_note'),
+			escolaridade: getActiveRadio('paciente_escolaridade'),
+			escolaridadeNote: getTextField('paciente_escolaridade_note'),
+			estadoCivil: getActiveRadio('paciente_estadoCivil'),
+			estadoCivilNote: getTextField('paciente_estadoCivil_note')
+		}
+	}
+	return r;
+};
+
+var getResponse = function() {
+	var r = {
+
+		prontuario: {
+			_id: getTextField('prontuario__id'),
+			registro: getTextField('prontuario_registro'),
 			data: getPickDate($prontuario_data)
 		},
 		paciente: {
@@ -133,7 +180,6 @@ var getResponse = function() {
 	};
 
 	return r;
-
 };
 
 var getActiveCheckbox = function(a, b) {

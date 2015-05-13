@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Magma Scientific</title>
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<script src="js/villa.js"></script>
+	<link rel="stylesheet" href="css/villa-foundation.css"/>
+	<link rel="stylesheet" href="css/villa-grid.css"/>
+	<link rel="stylesheet" href="css/polar-font.css"/>
+	<link rel="stylesheet" href="css/villa.css"/>
+	<link rel="stylesheet" href="css/polar.css"/>
+	<link rel="stylesheet" href="css/classic.css"/>
+	<link rel="stylesheet" href="css/classic.date.css"/>
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="css/material-colors.css"/>
+	<script type="text/javascript" src="js/html5shiv.js"></script>
+	<script type="text/javascript" src="js/html5shiv-printshiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<div id="string"></div>
+
+<style type="text/css">
+	html,
+	body {
+		height: auto;
+		overflow: visible;
+	}
+
+	.field {
+		flex-direction: column;
+	}
+
+	input[type=radio],
+	input[type=checkbox] {
+		width: auto;
+	}
+
+	form {
+		display: block;
+	}
+
+	h2 {
+		margin-top: .75em;
+	}
+
+	@media print {
+		.page-break	{ display: block; page-break-before: always; }
+	}
+</style>
+
+<div class="container">
+
+	<div style="position:fixed;">
+		<button id="btn">clica aqui</button>
+		<button id="prontuario_novo">Novo prontuario</button>
+	</div>
+
+	<form action="#" id="sci">
+
+		<input type="hidden" id="prontuario__id"/>
+
+		<div>
+
+			<h2>Paciente</h2>
+
+			<div class="flex justify-between flex-wrap">
+
+				<div class="field flex-2">
+					<label for="prontuario_registro">Registro Ambulatorio</label>
+					<input type="text" id="prontuario_registro" name="prontuario_registro"/>
+				</div>
+
+				<div class="field flex-3" style="margin-left: 2em">
+					<label for="prontuario_data">Data Cadastro</label>
+					<input type="text" id="prontuario_data" name="prontuario_data"/>
+				</div>
+
+			</div>
+
+			<div class="field">
+				<label for="paciente_nome">Nome</label>
+				<input type="text" class="font-large" id="paciente_nome" name="paciente_nome" required/>
+			</div>
+
+			<div class="flex justify-between">
+
+				<div class="field">
+
+					<label>Sexo</label>
+
+					<div class="flex">
+
+						<span class="flex">
+							<input type="radio" id="paciente_sexo_1" name="paciente_sexo" value="Feminino"/>
+							<label for="paciente_sexo_1">Feminino</label>
+						</span>
+
+						<span class="flex">
+							<input type="radio" id="paciente_sexo_2" name="paciente_sexo" value="Masculino"/>
+							<label for="paciente_sexo_2">Masculino</label>
+						</span>
+
+					</div>
+
+				</div>
+
+				<div class="field flex-1" style="margin-left: 2em">
+					<label for="paciente_nascimento">Data de Nascimento</label>
+					<input type="text" id="paciente_nascimento" name="paciente_nascimento"/>
+				</div>
+
+			</div>
+			<div class="flex justify-between flex-wrap">
+
+				<div class="field">
+
+					<label>Religião</label>
+
+					<span class="flex">
+						<input type="radio" id="paciente_religiao_1" name="paciente_religiao" value="Católico"/>
+						<label for="paciente_religiao_1">Católico</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_religiao_2" name="paciente_religiao" value="Evangélico"/>
+						<label for="paciente_religiao_2">Evangélico</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_religiao_3" name="paciente_religiao" value="Judeu"/>
+						<label for="paciente_religiao_3">Judeu</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_religiao_4" name="paciente_religiao" value="Outro"/>
+						<label for="paciente_religiao_4">Outro</label>
+						<input type="text" id="paciente_religiao_note" name="paciente_religiao_note"/>
+					</span>
+
+				</div>
+
+				<div class="field">
+
+					<label>Etnia</label>
+
+					<span class="flex">
+						<input type="radio" id="paciente_etnia_1" name="paciente_etnia" value="Branco"/>
+						<label for="paciente_etnia_1">Branco</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_etnia_2" name="paciente_etnia" value="Índio"/>
+						<label for="paciente_etnia_2">Índio</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_etnia_3" name="paciente_etnia" value="Negro"/>
+						<label for="paciente_etnia_3">Negro</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_etnia_4" name="paciente_etnia" value="Outro"/>
+						<label for="paciente_etnia_4">Outro</label>
+						<input type="text" id="paciente_etnia_note" name="paciente_etnia_note"/>
+					</span>
+
+				</div>
+
+				<div class="field">
+
+					<label>Escolaridade</label>
+
+					<span class="flex">
+						<input type="radio" id="paciente_escolaridade_1" name="paciente_escolaridade" value="Fundamental"/>
+						<label for="paciente_escolaridade_1">Ensino Fundamental</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_escolaridade_2" name="paciente_escolaridade" value="Médio"/>
+						<label for="paciente_escolaridade_2">Ensino Médio</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_escolaridade_3" name="paciente_escolaridade" value="Superior"/>
+						<label for="paciente_escolaridade_3">Ensino Superior</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_escolaridade_4" name="paciente_escolaridade" value="Outro"/>
+						<label for="paciente_escolaridade_4">Outro</label>
+						<input type="text" id="paciente_escolaridade_note" name="paciente_escolaridade_note"/>
+					</span>
+
+				</div>
+
+				<div class="field">
+
+					<label>Estado Cívil</label>
+
+					<span class="flex">
+						<input type="radio" id="paciente_estadoCivil_1" name="paciente_estadoCivil" value="Casado(a)"/>
+						<label for="paciente_estadoCivil_1">Casado(a)</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_estadoCivil_2" name="paciente_estadoCivil" value="Solteiro(a)"/>
+						<label for="paciente_estadoCivil_2">Solteiro(a)</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_estadoCivil_3" name="paciente_estadoCivil" value="Divorciado(a)"/>
+						<label for="paciente_estadoCivil_3">Divorciado(a)</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_estadoCivil_4" name="paciente_estadoCivil" value="Viúvo(a)"/>
+						<label for="paciente_estadoCivil_4">Viúvo(a)</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="paciente_estadoCivil_5" name="paciente_estadoCivil" value="Outro"/>
+						<label for="paciente_estadoCivil_5">Outro</label>
+						<input type="text" id="paciente_estadoCivil_note" name="paciente_estadoCivil_note"/>
+					</span>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+	<script src="js/jquery-min.js"></script>
+	<script src="js/picker.js"></script>
+
+
+	<script>
+		var $prontuario_data = $('#prontuario_data').pickadate();
+		var $paciente_nascimento = $('#paciente_nascimento').pickadate({
+			selectYears: 100,
+			selectMonths: true
+		});
+	</script>
+
+	<script src="js/app.js"></script>
+
+</div>
+
+</body>
+</html>
