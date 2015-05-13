@@ -24,7 +24,7 @@
 		var currentIndex;
 
 		// Convert selfActions Object to Array
-		// Happens when the user put a single object on selfAction var
+		// Happens when the prontuario put a single object on selfAction var
 		if (typeof settings.selfAction == 'object') {
 			var self = settings.selfAction;
 			settings.selfAction = Array();

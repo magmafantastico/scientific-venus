@@ -6,54 +6,8 @@
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8;');
 require_once('../../var/connection.php');
-
-class A
-{
-
-	private $name;
-	private $value;
-	
-	public function __construct($a, $b)
-	{
-		$this->setName($a);
-		$this->setValue($b);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 * @param mixed $name
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getValue()
-	{
-		return $this->value;
-	}
-
-	/**
-	 * @param mixed $value
-	 */
-	public function setValue($value)
-	{
-		$this->value = $value;
-	}
-
-}
 
 class Paciente
 {
@@ -91,11 +45,11 @@ class Paciente
 class Response
 {
 
-	private $request;
-	public $requestJSON;
-	private $paciente;
-	private $prontuario;
-	private $consulta;
+	public $request;
+	private $requestJSON;
+	public $paciente;
+	public $prontuario;
+	public $consulta;
 
 	public function __construct($a)
 	{
@@ -190,8 +144,9 @@ class Response
 	 */
 	public function setProntuario($a, $c)
 	{
-		if (!$c->query("INSERT INTO prontuario(data, paciente_id) VALUES ('" .
+		if (!$c->query("INSERT INTO prontuario(data, registro, paciente_id) VALUES ('" .
 			$a->data . "', '" .
+			$a->registro . "', '" .
 			$this->getPaciente() . "')"))
 			echo "Insert failed(prontuario): (" . $c->errno . ") " . $c->error . "/n";
 
@@ -221,25 +176,58 @@ class Response
 
 		$this->consulta = $c->insert_id;
 
-		//echo("consulta_id: " . $this->consulta . "/n");
+		echo("consulta_id: " . $this->consulta . "/n");
+	}
+
+	public function toArray()
+	{
+		return (array) $this;
+	}
+
+	public function toJSON()
+	{
+		return json_encode($this);
+	}
+
+	public function get()
+	{
+		return $this;
 	}
 
 }
 
 $string = '{"prontuario":{"_id":false,"data":"2015-05-14"},"paciente":{"nome":"Eduardo Barros","sexo":"Masculino","nascimento":"1992-11-26","religiao":"Outro","religiaoNote":"Agnóstico","etnia":"Branco","etniaNote":false,"escolaridade":"Superior","escolaridadeNote":false,"estadoCivil":"Solteiro(a)","estadoCivilNote":false}}';
+$string2 = '{"prontuario":{"_id":false,"data":"2015-05-14"},"paciente":{"nome":"Eduardo Barros","sexo":"Masculino","nascimento":"1992-11-26","religiao":"Outro","religiaoNote":"Agnóstico","etnia":"Branco","etniaNote":false,"escolaridade":"Superior","escolaridadeNote":false,"estadoCivil":"Solteiro(a)","estadoCivilNote":false},"exameFisico":{"peso":"66","altura":"66","imc":"66","pressaoArterial":"666","circunferenciaAbdominal":"666","circunferenciaCervical":"666"},"antecedentes":{"situacaoAborto":false,"situacaoGestacao":false,"situacaoParidade":false,"tabagismo":false,"hac":false,"hacType":false,"diabetes":false,"diabetesType":false,"hipotireoidismo":false,"hipotireoidismoType":false,"note":false},"uteroMioma":{"us":false,"volumeInterino":false,"ovarioDireito":false,"ovarioEsquerdo":false,"endometro":false,"miomaQuantidade":false,"mioma_1_caracteristicas":false,"mioma_1_submucoso":false,"mioma_1_subseroso":false,"mioma_1_intramural":false,"mioma_2_caracteristicas":false,"mioma_2_submucoso":false,"mioma_2_subseroso":false,"mioma_2_intramural":false,"nd":false},"sangramento":{"pbacInicial":false},"escalas":{"beckInicial":false,"vidaMioma":false},"exames":{"hb":false,"ht":false,"ferro":false,"ferritina":false,"rdw":false,"vcm":false,"vitaminaD3":false,"tsh":false,"gj":false,"ct":false,"ldl":false,"hdl":false,"t4l":false},"conduta":{"conduta":false,"cirurgia":false,"hormonioTerapia":false,"hormonioTerapiaCiclico":false,"hormonioTerapiaContinuo":false,"hormonioTerapiaNome":false,"ainh":false},"resultados":{"pbacFinal":false,"beckFinal":false,"vidaMioma":false}}';
 
-$a = new Response($string);
-$b = $a->getRequest();
+/*$a = new Response($string2);*/
+if (!empty($_POST['response'])) {
+	$a = new Response($_POST['response']);
+	$b = $a->getRequest();
 
-$c = new Connection();
-$conn = $c->getConnection();
+	$c = new Connection();
+	$conn = $c->getConnection();
 
-print_r($a->getRequest());
+	if (!$b->prontuario->_id) {
+		$a->setPaciente($b->paciente, $conn);
+		$a->setProntuario($b->prontuario, $conn);
+	}
 
-$a->setPaciente($b->paciente, $conn);
-$a->setProntuario($b->prontuario, $conn);
-$a->setConsulta($b->prontuario, $conn);
+	$test = (array) $a->getRequest()->paciente;
+} else {
+	$a = new Response('{}');
+}
 
+print_r($a->toJSON());
+
+/*
+for ($i = count($test), $key = array_keys($test); $i--; )
+	if(!empty($test[$key[$i]]))
+		echo $test[$key[$i]];
+	else
+		echo '___!' . $key[$i] . '!___';
+*/
+
+/*
 $res = $conn->query("SELECT _id FROM paciente");
 
 echo "Reverse order:/n";
@@ -248,3 +236,4 @@ for ($row_no = $res->num_rows - 1; $row_no >= 0; $row_no--) {
 	$row = $res->fetch_assoc();
 	echo $row['_id'] . "/n";
 }
+*/

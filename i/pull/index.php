@@ -6,7 +6,7 @@
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8;');
 require_once('../var/connection.php');
 
 class Data
