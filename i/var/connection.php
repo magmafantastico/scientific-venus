@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Magma Scientific Connection Server v1.4.0 (http://getvilla.org/)
+ * Copyright 2014-2015 Magma Fantastico
+ * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
+ */
+
 class Connection
 {
 
