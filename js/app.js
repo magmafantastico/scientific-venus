@@ -38,7 +38,7 @@ $('#btn').click(function() {
 	});
 });
 
-var novoProntuario = function() {
+var newProntuario = function() {
 	$.ajax({
 		cache: false,
 		data: {response: JSON.stringify(getProntuario())},
@@ -53,6 +53,22 @@ var novoProntuario = function() {
 				document.getElementById('prontuario__id').value = data.prontuario;
 		},
 		url: 'i/push/prontuario/'
+	});
+};
+
+var findProntuario = function() {
+	$.ajax({
+		cache: false,
+		data: {response: JSON.stringify(getProntuario())},
+		dataType: 'json',
+		error: function(data) {
+			console.log(data.responseText);
+		},
+		method: 'get',
+		success: function(data) {
+			console.log((data));
+		},
+		url: 'i/pull/find/prontuario/'
 	});
 };
 
