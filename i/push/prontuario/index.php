@@ -57,6 +57,9 @@ class Response
 		$this->setRequest(json_decode($this->getRequestJSON()));
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getRequest()
 	{
 		return $this->request;
@@ -199,8 +202,8 @@ class Response
 $string = '{"prontuario":{"_id":false,"data":"2015-05-14"},"paciente":{"nome":"Eduardo Barros","sexo":"Masculino","nascimento":"1992-11-26","religiao":"Outro","religiaoNote":"Agnóstico","etnia":"Branco","etniaNote":false,"escolaridade":"Superior","escolaridadeNote":false,"estadoCivil":"Solteiro(a)","estadoCivilNote":false}}';
 $string2 = '{"prontuario":{"_id":false,"data":"2015-05-14"},"paciente":{"nome":"Eduardo Barros","sexo":"Masculino","nascimento":"1992-11-26","religiao":"Outro","religiaoNote":"Agnóstico","etnia":"Branco","etniaNote":false,"escolaridade":"Superior","escolaridadeNote":false,"estadoCivil":"Solteiro(a)","estadoCivilNote":false},"exameFisico":{"peso":"66","altura":"66","imc":"66","pressaoArterial":"666","circunferenciaAbdominal":"666","circunferenciaCervical":"666"},"antecedentes":{"situacaoAborto":false,"situacaoGestacao":false,"situacaoParidade":false,"tabagismo":false,"hac":false,"hacType":false,"diabetes":false,"diabetesType":false,"hipotireoidismo":false,"hipotireoidismoType":false,"note":false},"uteroMioma":{"us":false,"volumeInterino":false,"ovarioDireito":false,"ovarioEsquerdo":false,"endometro":false,"miomaQuantidade":false,"mioma_1_caracteristicas":false,"mioma_1_submucoso":false,"mioma_1_subseroso":false,"mioma_1_intramural":false,"mioma_2_caracteristicas":false,"mioma_2_submucoso":false,"mioma_2_subseroso":false,"mioma_2_intramural":false,"nd":false},"sangramento":{"pbacInicial":false},"escalas":{"beckInicial":false,"vidaMioma":false},"exames":{"hb":false,"ht":false,"ferro":false,"ferritina":false,"rdw":false,"vcm":false,"vitaminaD3":false,"tsh":false,"gj":false,"ct":false,"ldl":false,"hdl":false,"t4l":false},"conduta":{"conduta":false,"cirurgia":false,"hormonioTerapia":false,"hormonioTerapiaCiclico":false,"hormonioTerapiaContinuo":false,"hormonioTerapiaNome":false,"ainh":false},"resultados":{"pbacFinal":false,"beckFinal":false,"vidaMioma":false}}';
 
-/*$a = new Response($string2);*/
 if (!empty($_POST['response'])) {
+	//$a = new Response($string2);
 	$a = new Response($_POST['response']);
 	$b = $a->getRequest();
 

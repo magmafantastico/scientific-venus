@@ -37,7 +37,7 @@ class Connection
 		if ($conn->connect_errno)
 			echo "Failed to connect to MySQL: (" . $conn->connect_errno . ") " . $conn->connect_error;
 		else
-			if (!$conn->query("SET @@session.time_zone = '+00:00';"))
+			if (!$conn->query("SET time_zone = '-06:00';"))
 				echo "time_zone not setted: (" . $conn->errno . ") " . $conn->error . "/n";
 			else
 				$this->connection = $conn;
