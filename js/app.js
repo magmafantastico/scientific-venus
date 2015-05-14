@@ -4,9 +4,12 @@
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
+if (typeof __API_DIR === 'undefined')
+	var __API_DIR = '';
+
 $('#btn').click(function() {
 
-	/*$.ajax({
+	$.ajax({
 		data: {response: JSON.stringify(getResponse())},
 		error: function(data) {
 			console.log(data.responseText);
@@ -15,13 +18,12 @@ $('#btn').click(function() {
 		success: function(data) {
 			console.log(data);
 		},
-		url: 'i/push/'
+		url: __API_DIR +  'i/push/'
 	});
-*/
 });
 
 $('#prontuario_novo').click(function() {
-	newProntuario();
+	createProntuario();
 });
 
 $('#btn').click(function() {
@@ -34,11 +36,15 @@ $('#btn').click(function() {
 		success: function(data) {
 			console.log(data);
 		},
-		url: 'i/pull/'
+		url: __API_DIR +  'i/pull/'
 	});
 });
 
-var newProntuario = function() {
+$('#prontuario_create').click(function() {
+	createProntuario();
+});
+
+var createProntuario = function() {
 	// TMP!!!!! REMOVE THIS AFTER TESTS
 	document.getElementById('prontuario__id').value = '';
 
@@ -48,17 +54,20 @@ var newProntuario = function() {
 		dataType: 'json',
 		error: function(data) {
 			console.log(data.responseText);
+			return false;
 		},
 		method: 'post',
 		success: function(data) {
 			if (data.prontuario)
-				finalizaPaciente(data)
+				renderProntuario(data);
+			else
+				return false;
 		},
-		url: 'i/push/prontuario/'
+		url: __API_DIR +  'i/push/prontuario/'
 	});
 };
 
-var finalizaPaciente = function(a) {
+var renderProntuario = function(a) {
 	var b, c, d, e, f;
 
 	b = a.request;
@@ -70,17 +79,34 @@ var finalizaPaciente = function(a) {
 	e.innerHTML = '';
 	f.value = a.prontuario;
 
+	$('#prontuario_edit').hide();
+
 	insereNovoProntuario(e, c, 'prontuario');
 	insereNovoPaciente(e, d, 'paciente');
+
+	initConsulta();
+};
+
+var initConsulta = function() {
+	$('#consulta').show();
 };
 
 var insereNovoPaciente = function(a, b) {
 	var c = document.createElement('div');
 	c.setAttribute('class', 'prontuario flex flex-column');
 
+	var date = new Date(b.nascimento);
+	date.setDate(date.getDate() + 1);
+	var dateOptions = {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric'
+	};
+	var dateString = date.toLocaleDateString('pt-BR', dateOptions);
+
 	c.appendChild(newNode('span', b.nome, 'nome'));
 	c.appendChild(newNode('span', b.sexo, 'sexo'));
-	c.appendChild(newNode('span', b.nascimento, 'nascimento'));
+	c.appendChild(newNode('span', dateString, 'nascimento'));
 	c.appendChild(newNode('span', buildNote(b.religiao, b.religiaoNote), 'religiao'));
 	c.appendChild(newNode('span', buildNote(b.etnia, b.etniaNote), 'etnia'));
 	c.appendChild(newNode('span', buildNote(b.escolaridade, b.escolaridadeNote), 'escolaridade'));
@@ -89,18 +115,20 @@ var insereNovoPaciente = function(a, b) {
 	a.insertBefore(c, a.firstChild);
 };
 
-var buildNote = function(a, b) {
-	if (b)
-		return a + ' (' + b + ')';
-	else
-		return a;
-};
-
 var insereNovoProntuario = function(a, b) {
 	var c = document.createElement('div');
 	c.setAttribute('class', 'prontuario flex flex-column');
 
-	c.appendChild(newNode('span', b.data, 'data'));
+	var date = new Date(b.data);
+	date.setDate(date.getDate() + 1);
+	var dateOptions = {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric'
+	};
+	var dateString = date.toLocaleDateString('pt-BR', dateOptions);
+
+	c.appendChild(newNode('span', dateString, 'data'));
 	c.appendChild(newNode('span', b.registro, 'registro'));
 
 	a.insertBefore(c, a.firstChild);
@@ -119,6 +147,13 @@ var newNode = function(a, b, c) {
 			e.appendChild(document.createTextNode(b));
 
 	return e;
+};
+
+var buildNote = function(a, b) {
+	if (b)
+		return a + ' (' + b + ')';
+	else
+		return a;
 };
 
 var appendObject = function(a, b, g) {
@@ -157,12 +192,12 @@ var findProntuario = function() {
 		success: function(data) {
 			console.log((data));
 		},
-		url: 'i/pull/find/prontuario/'
+		url: __API_DIR +  'i/pull/find/prontuario/'
 	});
 };
 
 var getProntuario = function() {
-	var r = {
+	return {
 
 		prontuario: {
 			_id: getTextField('prontuario__id'),
@@ -182,12 +217,13 @@ var getProntuario = function() {
 			estadoCivil: getActiveRadio('paciente_estadoCivil'),
 			estadoCivilNote: getTextField('paciente_estadoCivil_note')
 		}
-	}
-	return r;
+
+	};
 };
 
-var getResponse = function() {
-	var r = {
+var getResponse;
+getResponse = function () {
+	return {
 
 		prontuario: {
 			_id: getTextField('prontuario__id'),
@@ -283,15 +319,13 @@ var getResponse = function() {
 		}
 
 	};
-
-	return r;
 };
 
 var getActiveCheckbox = function(a, b) {
 	var c, d;
 
 	c = $('input[name=' + a + ']:checked');
-	d = new Array();
+	d = [];
 
 	for (var e = c.length; e--; )
 		d.push($(c[e]).val());
@@ -351,8 +385,7 @@ var getPickDate = function (a) {
 			target: 'body'
 		}, options);
 
-		var handle = function(evt) {
-			var a = evt.explicitOriginalTarget;
+		var handle = function() {
 			$(settings.target).removeClassLike(settings.prefix);
 			$(settings.target).addClass(this.id);
 		};
@@ -375,4 +408,186 @@ jQuery.fn.removeClassLike = function (prefix) {
 		});
 		return this.attr("class", classes.join(" "));
 	}
+};
+
+/**
+ * APRESENTAÇÃO DA DATA
+ */
+/*var data = new Date("2015-06-01");
+ data.setDate(data.getDate() + 1);
+ console.log(data.toLocaleDateString('pt-BR', {
+ day: 'numeric',
+ month: 'long',
+ year: 'numeric'
+ }));*/
+
+if (typeof _id !== 'undefined') {
+	$.ajax({
+		cache: false,
+		data: {prontuario_id: _id},
+		dataType: 'json',
+		error: function(data) {
+			console.log(data.responseText);
+			return false;
+		},
+		method: 'get',
+		success: function(data) {
+			if (data.prontuario)
+				renderConsulta(data);
+			else
+				return false;
+		},
+		url: __API_DIR +  'i/pull/find/consulta/'
+	});
 }
+
+var renderConsulta = function(a) {
+	var c, d, e, f;
+
+	c = a.prontuario[0];
+	d = a.paciente[0];
+
+	e = document.getElementById('p_data');
+	f = document.getElementById('prontuario__id');
+
+	g = document.getElementById('c_data');
+
+	e.innerHTML = '';
+	f.value = a.prontuario_id;
+
+	$('#prontuario_edit').hide();
+
+	insereNovoProntuario(e, c, 'prontuario');
+	insereNovoPaciente(e, d, 'paciente');
+
+	insereNovoResultados(g, a.resultados[0], 'resultados');
+	insereNovoConduta(g, a.conduta[0], 'conduta');
+	insereNovoExames(g, a.exames[0], 'exames');
+	insereNovoEscalas(g, a.escalas[0], 'escalas');
+	insereNovoSangramento(g, a.sangramento[0], 'sangramento');
+	insereNovoUteroMioma(g, a.uteroMioma[0], 'uteroMioma');
+	insereNovoAntecedentes(g, a.antecedentes[0], 'antecedentes');
+	insereNovoExameFisico(g, a.exameFisico[0], 'exameFisico');
+
+};
+
+var insereNovoAntecedentes = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' green-100 flex flex-column');
+
+	d.appendChild(newNode('span', b.situacaoAborto, 'situacaoAborto'));
+	d.appendChild(newNode('span', b.situacaoGestacao, 'situacaoGestacao'));
+	d.appendChild(newNode('span', b.situacaoParidade, 'situacaoParidade'));
+	d.appendChild(newNode('span', b.tabagismo, 'tabagismo'));
+	d.appendChild(newNode('span', b.hac, 'hac'));
+	d.appendChild(newNode('span', b.hacType, 'hacType'));
+	d.appendChild(newNode('span', b.diabetes, 'diabetes'));
+	d.appendChild(newNode('span', b.diabetesType, 'diabetesType'));
+	d.appendChild(newNode('span', b.hipotireoidismo, 'hipotireoidismo'));
+	d.appendChild(newNode('span', b.hipotireoidismoType, 'hipotireoidismoType'));
+	d.appendChild(newNode('span', b.note, 'note'));
+
+	a.insertBefore(d, a.firstChild);
+};
+
+var insereNovoConduta = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' flex flex-column');
+
+	d.appendChild(newNode('span', b.conduta, 'conduta'));
+	d.appendChild(newNode('span', b.cirurgia, 'cirurgia'));
+	d.appendChild(newNode('span', b.hormonioTerapia, 'hormonioTerapia'));
+	d.appendChild(newNode('span', b.hormonioTerapiaCiclico, 'hormonioTerapiaCiclico'));
+	d.appendChild(newNode('span', b.hormonioTerapiaContinuo, 'hormonioTerapiaContinuo'));
+	d.appendChild(newNode('span', b.hormonioTerapiaNome, 'hormonioTerapiaNome'));
+	d.appendChild(newNode('span', b.ainh, 'ainh'));
+
+	a.insertBefore(d, a.firstChild);
+};
+
+var insereNovoEscalas = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' grey-50 flex flex-column');
+
+	d.appendChild(newNode('span', b.beckInicial, 'beckInicial'));
+	d.appendChild(newNode('span', b.vidaMioma, 'vidaMioma'));
+
+	a.insertBefore(d, a.firstChild);
+};
+
+var insereNovoExameFisico = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' flex flex-column');
+
+	d.appendChild(newNode('span', b.peso, 'peso'));
+	d.appendChild(newNode('span', b.altura, 'altura'));
+	d.appendChild(newNode('span', b.imc, 'imc'));
+	d.appendChild(newNode('span', b.pressaoArterial, 'pressaoArterial'));
+	d.appendChild(newNode('span', b.circunferenciaAbdominal, 'circunferenciaAbdominal'));
+	d.appendChild(newNode('span', b.circunferenciaCervical, 'circunferenciaCervical'));
+
+	a.insertBefore(d, a.firstChild);
+};
+
+var insereNovoExames = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' green-100 flex flex-column');
+
+	d.appendChild(newNode('span', b.hb, 'hb'));
+	d.appendChild(newNode('span', b.ht, 'ht'));
+	d.appendChild(newNode('span', b.ferro, 'ferro'));
+	d.appendChild(newNode('span', b.ferritina, 'ferritina'));
+	d.appendChild(newNode('span', b.rdw, 'rdw'));
+	d.appendChild(newNode('span', b.vcm, 'vcm'));
+	d.appendChild(newNode('span', b.vitaminaD3, 'vitaminaD3'));
+	d.appendChild(newNode('span', b.tsh, 'tsh'));
+	d.appendChild(newNode('span', b.gj, 'gj'));
+	d.appendChild(newNode('span', b.ct, 'ct'));
+	d.appendChild(newNode('span', b.ldl, 'ldl'));
+	d.appendChild(newNode('span', b.hdl, 'hdl'));
+	d.appendChild(newNode('span', b.t4l, 't4l'));
+
+	a.insertBefore(d, a.firstChild);
+};
+
+var insereNovoResultados = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' indigo-100 flex flex-column');
+
+	d.appendChild(newNode('span', b.pbacFinal, 'pbacFinal'));
+	d.appendChild(newNode('span', b.beckFinal, 'beckFinal'));
+	d.appendChild(newNode('span', b.vidaMioma, 'vidaMioma'));
+
+	a.insertBefore(d, a.firstChild);
+};
+
+var insereNovoSangramento = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' flex flex-column');
+
+	d.appendChild(newNode('span', b.pbacInicial, 'pbacInicial'));
+
+	a.insertBefore(d, a.firstChild);
+};
+
+var insereNovoUteroMioma = function(a, b, c) {
+	var d = document.createElement('div');
+	d.setAttribute('class', c + ' flex flex-column');
+
+	d.appendChild(newNode('span', b.us, 'us'));
+	d.appendChild(newNode('span', b.volumeInterino, 'volumeInterino'));
+	d.appendChild(newNode('span', b.ovarioDireito, 'ovarioDireito'));
+	d.appendChild(newNode('span', b.ovarioEsquerdo, 'ovarioEsquerdo'));
+	d.appendChild(newNode('span', b.endometro, 'endometro'));
+	d.appendChild(newNode('span', b.miomaQuantidade, 'miomaQuantidade'));
+	d.appendChild(newNode('span', b.mioma_1_caracteristicas, 'mioma_1_caracteristicas'));
+	d.appendChild(newNode('span', b.mioma_1_submucoso, 'mioma_1_submucoso'));
+	d.appendChild(newNode('span', b.mioma_1_subseroso, 'mioma_1_subseroso'));
+	d.appendChild(newNode('span', b.mioma_1_intramural, 'mioma_1_intramural'));
+	d.appendChild(newNode('span', b.mioma_2_caracteristicas, 'mioma_2_caracteristicas'));
+	d.appendChild(newNode('span', b.mioma_2_submucoso, 'mioma_2_submucoso'));
+	d.appendChild(newNode('span', b.mioma_2_subseroso, 'mioma_2_subseroso'));
+	d.appendChild(newNode('span', b.mioma_2_intramural, 'mioma_2_intramural'));
+
+	a.insertBefore(d, a.firstChild);
+};

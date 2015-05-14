@@ -32,7 +32,7 @@
 }
 .picker {
   max-width: 24em;
-  min-width: 16em;
+  min-width: 20em;
 }
 /**
  * The holder is the base of the picker.

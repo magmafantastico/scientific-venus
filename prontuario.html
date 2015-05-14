@@ -51,7 +51,7 @@
 		.page-break	{ display: block; page-break-before: always; }
 	}
 </style>
-<input type="hidden" id="prontuario__id"/>
+
 
 <div class="container">
 
@@ -60,7 +60,7 @@
 		<button id="prontuario_novo">Novo prontuario</button>
 	</div>
 
-	<form action="#" id="sci">
+	<form action="#" id="consulta">
 
 		<div class="blue-100" id="p_data" style="padding-top: 2em"></div>
 
@@ -75,7 +75,7 @@
 					<input type="text" id="prontuario_registro" name="prontuario_registro"/>
 				</div>
 
-				<div class="field flex-3" style="margin-left: 2em">
+				<div class="field flex-3" style="">
 					<label for="prontuario_data">Data Cadastro</label>
 					<input type="text" id="prontuario_data" name="prontuario_data"/>
 				</div>
@@ -109,7 +109,7 @@
 
 				</div>
 
-				<div class="field flex-1" style="margin-left: 2em">
+				<div class="field flex-1" style="">
 					<label for="paciente_nascimento">Data de Nascimento</label>
 					<input type="text" id="paciente_nascimento" name="paciente_nascimento"/>
 				</div>
@@ -238,7 +238,7 @@
 
 	<script src="js/jquery-min.js"></script>
 	<script src="js/picker.js"></script>
-
+	<script src="js/app.js"></script>
 
 	<script>
 		var $prontuario_data = $('#prontuario_data').pickadate();
@@ -248,7 +248,7 @@
 		});
 	</script>
 
-	<script src="js/app.js"></script>
+
 
 </div>
 
