@@ -21,7 +21,7 @@ $('#btn').click(function() {
 });
 
 $('#prontuario_novo').click(function() {
-	novoProntuario();
+	newProntuario();
 });
 
 $('#btn').click(function() {
@@ -39,6 +39,9 @@ $('#btn').click(function() {
 });
 
 var newProntuario = function() {
+	// TMP!!!!! REMOVE THIS AFTER TESTS
+	document.getElementById('prontuario__id').value = '';
+
 	$.ajax({
 		cache: false,
 		data: {response: JSON.stringify(getProntuario())},
@@ -48,12 +51,98 @@ var newProntuario = function() {
 		},
 		method: 'post',
 		success: function(data) {
-			console.log((data));
 			if (data.prontuario)
-				document.getElementById('prontuario__id').value = data.prontuario;
+				finalizaPaciente(data)
 		},
 		url: 'i/push/prontuario/'
 	});
+};
+
+var finalizaPaciente = function(a) {
+	var b, c, d, e, f;
+
+	b = a.request;
+	c = b.prontuario;
+	d = b.paciente;
+	e = document.getElementById('p_data');
+	f = document.getElementById('prontuario__id');
+
+	e.innerHTML = '';
+	f.value = a.prontuario;
+
+	insereNovoProntuario(e, c, 'prontuario');
+	insereNovoPaciente(e, d, 'paciente');
+};
+
+var insereNovoPaciente = function(a, b) {
+	var c = document.createElement('div');
+	c.setAttribute('class', 'prontuario flex flex-column');
+
+	c.appendChild(newNode('span', b.nome, 'nome'));
+	c.appendChild(newNode('span', b.sexo, 'sexo'));
+	c.appendChild(newNode('span', b.nascimento, 'nascimento'));
+	c.appendChild(newNode('span', buildNote(b.religiao, b.religiaoNote), 'religiao'));
+	c.appendChild(newNode('span', buildNote(b.etnia, b.etniaNote), 'etnia'));
+	c.appendChild(newNode('span', buildNote(b.escolaridade, b.escolaridadeNote), 'escolaridade'));
+	c.appendChild(newNode('span', buildNote(b.estadoCivil, b.estadoCivilNote), 'estadoCivil'));
+
+	a.insertBefore(c, a.firstChild);
+};
+
+var buildNote = function(a, b) {
+	if (b)
+		return a + ' (' + b + ')';
+	else
+		return a;
+};
+
+var insereNovoProntuario = function(a, b) {
+	var c = document.createElement('div');
+	c.setAttribute('class', 'prontuario flex flex-column');
+
+	c.appendChild(newNode('span', b.data, 'data'));
+	c.appendChild(newNode('span', b.registro, 'registro'));
+
+	a.insertBefore(c, a.firstChild);
+};
+
+var newNode = function(a, b, c) {
+	var e = document.createElement(a);
+
+	if (c)
+		e.setAttribute('class', c);
+
+	if (b)
+		if (typeof b === 'object')
+			e.appendChild(b);
+		else if (typeof b === 'string')
+			e.appendChild(document.createTextNode(b));
+
+	return e;
+};
+
+var appendObject = function(a, b, g) {
+	// get the object
+	var c, d;
+
+	c = Object.keys(b);
+	d = c.length;
+
+	// create new append
+	var e, f;
+
+	e = document.createElement('div');
+	e.setAttribute('class', g);
+
+	for (var i = 0; i < d; i++) {
+		console.log(b[c[i]]);
+		f = document.createElement('span');
+		f.appendChild(document.createTextNode(b[c[i]]));
+		f.setAttribute('class', g + '_' + c[i]);
+		e.appendChild(f);
+	}
+
+	a.insertBefore(e, a.firstChild);
 };
 
 var findProntuario = function() {

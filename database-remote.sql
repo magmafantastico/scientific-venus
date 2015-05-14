@@ -2,10 +2,15 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+DROP SCHEMA IF EXISTS `empreen1_scientific_venus` ;
+CREATE SCHEMA IF NOT EXISTS `empreen1_scientific_venus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `empreen1_scientific_venus` ;
 
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`paciente`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`paciente` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`paciente` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
@@ -27,10 +32,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`prontuario`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`prontuario` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`prontuario` (
   `_id` INT NOT NULL AUTO_INCREMENT,
-  `data` DATE NOT NULL,
   `paciente_id` INT NOT NULL,
+  `registro` INT NOT NULL,
+  `data` DATE NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
   INDEX `paciente_id_idx` (`paciente_id` ASC),
@@ -45,6 +53,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`consulta`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`consulta` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`consulta` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `prontuario_id` INT NOT NULL,
@@ -63,6 +73,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`exameFisico`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`exameFisico` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`exameFisico` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
@@ -86,6 +98,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`antecedentes`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`antecedentes` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`antecedentes` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
@@ -114,6 +128,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`uteroMioma`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`uteroMioma` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`uteroMioma` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
@@ -146,6 +162,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`sangramento`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`sangramento` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`sangramento` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
@@ -164,6 +182,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`escalas`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`escalas` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`escalas` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
@@ -183,6 +203,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`exames`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`exames` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`exames` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
@@ -213,6 +235,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`conduta`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`conduta` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`conduta` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
@@ -237,6 +261,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`resultados`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`resultados` ;
+
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`resultados` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
