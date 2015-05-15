@@ -54,10 +54,14 @@
 
 <div class="container">
 
-	<div style="position:fixed;">
+	<div style="position:fixed; display: none;">
 		<button id="btn">clica aqui</button>
 		<button id="prontuario_novo">Novo prontuario</button>
 	</div>
+
+	<form action="print/" id="carry_id" name="carry_id" method="get">
+		<input type="hidden" id="prontuario__id" name="prontuario_id"/>
+	</form>
 
 	<div class="blue-200" id="p_data"></div>
 
@@ -240,287 +244,324 @@
 
 	</form>
 
-	<form action="#" id="consulta">
+	<div id="consulta">
+		<form action="#" id="consulta_form">
 
-		<input type="hidden" id="prontuario__id"/>
+			<div>
 
-		<div>
+				<h2>Exame Físico</h2>
 
-			<h2>Exame Físico</h2>
+				<div class="flex justify-between">
 
-			<div class="flex justify-between">
+					<div class="field">
+						<label for="exameFisico_peso">Peso</label>
+						<input type="tel" placeholder="kg" id="exameFisico_peso" name="exameFisico_peso"/>
+					</div>
+
+					<div class="field" style="margin-left: 2em">
+						<label for="exameFisico_altura">Altura</label>
+						<input type="tel" placeholder="cm" id="exameFisico_altura" name="exameFisico_altura"/>
+					</div>
+
+					<div class="field" style="margin-left: 2em">
+						<label for="exameFisico_imc">IMC</label>
+						<input type="tel" id="exameFisico_imc" name="exameFisico_imc"/>
+					</div>
+
+				</div>
 
 				<div class="field">
-					<label for="exameFisico_peso">Peso</label>
-					<input type="tel" placeholder="kg" id="exameFisico_peso" name="exameFisico_peso"/>
+					<label for="exameFisico_pressaoArterial">Pressão Arterial</label>
+					<input type="tel" id="exameFisico_pressaoArterial" name="exameFisico_pressaoArterial"/>
 				</div>
 
-				<div class="field" style="margin-left: 2em">
-					<label for="exameFisico_altura">Altura</label>
-					<input type="tel" placeholder="cm" id="exameFisico_altura" name="exameFisico_altura"/>
+				<div class="field">
+					<label for="exameFisico_circunferenciaAbdominal">Circunferência Abdominal</label>
+					<input type="tel" id="exameFisico_circunferenciaAbdominal" name="exameFisico_circunferenciaAbdominal"/>
 				</div>
 
-				<div class="field" style="margin-left: 2em">
-					<label for="exameFisico_imc">IMC</label>
-					<input type="tel" id="exameFisico_imc" name="exameFisico_imc"/>
+				<div class="field">
+					<label for="exameFisico_circunferenciaCervical">Circunferência Cervical</label>
+					<input type="tel" id="exameFisico_circunferenciaCervical" name="exameFisico_circunferenciaCervical"/>
 				</div>
 
 			</div>
 
-			<div class="field">
-				<label for="exameFisico_pressaoArterial">Pressão Arterial</label>
-				<input type="tel" id="exameFisico_pressaoArterial" name="exameFisico_pressaoArterial"/>
-			</div>
+			<div class="page-break">
 
-			<div class="field">
-				<label for="exameFisico_circunferenciaAbdominal">Circunferência Abdominal</label>
-				<input type="tel" id="exameFisico_circunferenciaAbdominal" name="exameFisico_circunferenciaAbdominal"/>
-			</div>
-
-			<div class="field">
-				<label for="exameFisico_circunferenciaCervical">Circunferência Cervical</label>
-				<input type="tel" id="exameFisico_circunferenciaCervical" name="exameFisico_circunferenciaCervical"/>
-			</div>
-
-		</div>
-
-		<div class="page-break">
-
-			<h2>Antecedentes</h2>
-
-			<div class="field">
-
-				<label>Situação</label>
-
-				<span class="flex">
-
-					<input type="checkbox" id="antecedentes_situacao_1" name="antecedentes_situacao_gestaçao" value="Gestação"/>
-					<label for="antecedentes_situacao_1">Gestação</label>
-
-					<input type="checkbox" id="antecedentes_situacao_2" name="antecedentes_situacao_paridade" value="Paridade"/>
-					<label for="antecedentes_situacao_2">Paridade</label>
-
-					<input type="checkbox" id="antecedentes_situacao_3" name="antecedentes_situacao_aborto" value="Aborto"/>
-					<label for="antecedentes_situacao_3">Aborto</label>
-
-				</span>
-
-			</div>
-			<div class="field">
-
-				<label>Tabagismo</label>
-
-				<span class="flex">
-					<input type="radio" id="antecedentes_tabagismo_1" name="antecedentes_tabagismo" value="true"/>
-					<label for="antecedentes_tabagismo_1">Sim</label>
-				</span>
-
-				<span class="flex">
-					<input type="radio" id="antecedentes_tabagismo_2" name="antecedentes_tabagismo" value="false"/>
-					<label for="antecedentes_tabagismo_2">Não</label>
-				</span>
-
-			</div>
-
-
-			<div class="flex">
+				<h2>Antecedentes</h2>
 
 				<div class="field">
 
-					<label>H.A.C.</label>
+					<label>Situação</label>
 
 					<span class="flex">
 
-						<input type="radio" id="antecedentes_hac_1" name="antecedentes_hac" value="true"/>
-						<label for="antecedentes_hac_1">Sim</label>
+						<input type="checkbox" id="antecedentes_situacao_1" name="antecedentes_situacao_gestaçao" value="Gestação"/>
+						<label for="antecedentes_situacao_1">Gestação</label>
 
-						<span class="field grey-50">
+						<input type="checkbox" id="antecedentes_situacao_2" name="antecedentes_situacao_paridade" value="Paridade"/>
+						<label for="antecedentes_situacao_2">Paridade</label>
 
-							<label></label>
+						<input type="checkbox" id="antecedentes_situacao_3" name="antecedentes_situacao_aborto" value="Aborto"/>
+						<label for="antecedentes_situacao_3">Aborto</label>
 
-							<span class="flex">
-								<input type="radio" id="antecedentes_hac_type_1" name="antecedentes_hac_type" value="Compensado"/>
-								<label for="antecedentes_hac_type_1">Compensado</label>
-							</span>
+					</span>
 
-							<span class="flex">
-								<input type="radio" id="antecedentes_hac_type_2" name="antecedentes_hac_type" value="Descompensado"/>
-								<label for="antecedentes_hac_type_2">Descompensado</label>
+				</div>
+				<div class="field">
+
+					<label>Tabagismo</label>
+
+					<span class="flex">
+						<input type="radio" id="antecedentes_tabagismo_1" name="antecedentes_tabagismo" value="true"/>
+						<label for="antecedentes_tabagismo_1">Sim</label>
+					</span>
+
+					<span class="flex">
+						<input type="radio" id="antecedentes_tabagismo_2" name="antecedentes_tabagismo" value="false"/>
+						<label for="antecedentes_tabagismo_2">Não</label>
+					</span>
+
+				</div>
+
+
+				<div class="flex">
+
+					<div class="field">
+
+						<label>H.A.C.</label>
+
+						<span class="flex">
+
+							<input type="radio" id="antecedentes_hac_1" name="antecedentes_hac" value="true"/>
+							<label for="antecedentes_hac_1">Sim</label>
+
+							<span class="field grey-50">
+
+								<label></label>
+
+								<span class="flex">
+									<input type="radio" id="antecedentes_hac_type_1" name="antecedentes_hac_type" value="Compensado"/>
+									<label for="antecedentes_hac_type_1">Compensado</label>
+								</span>
+
+								<span class="flex">
+									<input type="radio" id="antecedentes_hac_type_2" name="antecedentes_hac_type" value="Descompensado"/>
+									<label for="antecedentes_hac_type_2">Descompensado</label>
+								</span>
+
 							</span>
 
 						</span>
 
-					</span>
+						<span class="flex">
+							<input type="radio" id="antecedentes_hac_2" name="antecedentes_hac" value="false"/>
+							<label for="antecedentes_hac_2">Não</label>
+						</span>
 
-					<span class="flex">
-						<input type="radio" id="antecedentes_hac_2" name="antecedentes_hac" value="false"/>
-						<label for="antecedentes_hac_2">Não</label>
-					</span>
+					</div>
 
 				</div>
 
-			</div>
+				<div class="flex">
 
-			<div class="flex">
+					<div class="field">
 
-				<div class="field">
+						<label>Diabetes Mellitus</label>
 
-					<label>Diabetes Mellitus</label>
+						<span class="flex">
 
-					<span class="flex">
+							<input type="radio" id="antecedentes_diabetes_1" name="antecedentes_diabetes" value="true"/>
+							<label for="antecedentes_diabetes_1">Sim</label>
 
-						<input type="radio" id="antecedentes_diabetes_1" name="antecedentes_diabetes" value="true"/>
-						<label for="antecedentes_diabetes_1">Sim</label>
+							<span class="field grey-50">
 
-						<span class="field grey-50">
+								<label></label>
 
-							<label></label>
+								<span class="flex">
+									<input type="radio" id="antecedentes_diabetes_type_1" name="antecedentes_diabetes_type" value="Compensado"/>
+									<label for="antecedentes_diabetes_type_1">Compensado</label>
+								</span>
 
-							<span class="flex">
-								<input type="radio" id="antecedentes_diabetes_type_1" name="antecedentes_diabetes_type" value="Compensado"/>
-								<label for="antecedentes_diabetes_type_1">Compensado</label>
-							</span>
+								<span class="flex">
+									<input type="radio" id="antecedentes_diabetes_type_2" name="antecedentes_diabetes_type" value="Descompensado"/>
+									<label for="antecedentes_diabetes_type_2">Descompensado</label>
+								</span>
 
-							<span class="flex">
-								<input type="radio" id="antecedentes_diabetes_type_2" name="antecedentes_diabetes_type" value="Descompensado"/>
-								<label for="antecedentes_diabetes_type_2">Descompensado</label>
 							</span>
 
 						</span>
 
-					</span>
+						<span class="flex">
+							<input type="radio" id="antecedentes_diabetes_2" name="antecedentes_diabetes" value="false"/>
+							<label for="antecedentes_diabetes_2">Não</label>
+						</span>
 
-					<span class="flex">
-						<input type="radio" id="antecedentes_diabetes_2" name="antecedentes_diabetes" value="false"/>
-						<label for="antecedentes_diabetes_2">Não</label>
-					</span>
+					</div>
 
 				</div>
 
-			</div>
+				<div class="flex">
 
-			<div class="flex">
+					<div class="field">
 
-				<div class="field">
+						<label>Hipotireoidismo</label>
 
-					<label>Hipotireoidismo</label>
+						<span class="flex">
 
-					<span class="flex">
+							<input type="radio" id="antecedentes_hipotireoidismo_1" name="antecedentes_hipotireoidismo" value="true"/>
+							<label for="antecedentes_hipotireoidismo_1">Sim</label>
 
-						<input type="radio" id="antecedentes_hipotireoidismo_1" name="antecedentes_hipotireoidismo" value="true"/>
-						<label for="antecedentes_hipotireoidismo_1">Sim</label>
+							<span class="field grey-50">
 
-						<span class="field grey-50">
+								<label></label>
 
-							<label></label>
+								<span class="flex">
+									<input type="radio" id="antecedentes_hipotireoidismo_type_1" name="antecedentes_hipotireoidismo_type" value="Compensado"/>
+									<label for="antecedentes_hipotireoidismo_type_1">Compensado</label>
+								</span>
 
-							<span class="flex">
-								<input type="radio" id="antecedentes_hipotireoidismo_type_1" name="antecedentes_hipotireoidismo_type" value="Compensado"/>
-								<label for="antecedentes_hipotireoidismo_type_1">Compensado</label>
-							</span>
+								<span class="flex">
+									<input type="radio" id="antecedentes_hipotireoidismo_type_2" name="antecedentes_hipotireoidismo_type" value="Descompensado"/>
+									<label for="antecedentes_hipotireoidismo_type_2">Descompensado</label>
+								</span>
 
-							<span class="flex">
-								<input type="radio" id="antecedentes_hipotireoidismo_type_2" name="antecedentes_hipotireoidismo_type" value="Descompensado"/>
-								<label for="antecedentes_hipotireoidismo_type_2">Descompensado</label>
 							</span>
 
 						</span>
 
-					</span>
+						<span class="flex">
+							<input type="radio" id="antecedentes_hipotireoidismo_2" name="antecedentes_hipotireoidismo" value="false"/>
+							<label for="antecedentes_hipotireoidismo_2">Não</label>
+						</span>
 
-					<span class="flex">
-						<input type="radio" id="antecedentes_hipotireoidismo_2" name="antecedentes_hipotireoidismo" value="false"/>
-						<label for="antecedentes_hipotireoidismo_2">Não</label>
-					</span>
+					</div>
 
+				</div>
+
+				<div class="field">
+					<label for="antecedentes_note">Outros</label>
+					<input type="text" id="antecedentes_note" name="antecedentes_note"/>
 				</div>
 
 			</div>
 
-			<div class="field">
-				<label for="antecedentes_note">Outros</label>
-				<input type="text" id="antecedentes_note" name="antecedentes_note"/>
-			</div>
+			<div class="page-break">
 
-		</div>
+				<h2>Características do Utero / Mioma</h2>
 
-		<div class="page-break">
-
-			<h2>Características do Utero / Mioma</h2>
-
-			<div class="field">
-				<label for="uteroMioma_us">US</label>
-				<input type="text" id="uteroMioma_us" name="uteroMioma_us"/>
-			</div>
-
-			<div class="flex justify-between">
-
-				<div class="field flex-4">
-					<label for="uteroMioma_volumeInterino">Volume Interino</label>
-					<input type="tel" id="uteroMioma_volumeInterino" maxlength="4" name="uteroMioma_volumeInterino" placeholder="cm³"/>
+				<div class="field">
+					<label for="uteroMioma_us">US</label>
+					<input type="text" id="uteroMioma_us" name="uteroMioma_us"/>
 				</div>
-
-				<div class="field grey-50 flex-5" style="margin-left: 2em">
-
-					<span class="flex">
-						<label for="uteroMioma_ovarioDireito">Ovário Direito</label>
-						<input type="tel" id="uteroMioma_ovarioDireito" maxlength="3" name="uteroMioma_ovarioDireito" placeholder="cm³"/>
-					</span>
-
-					<span class="flex">
-						<label for="uteroMioma_ovarioEsquerdo">Ovário Esquerdo</label>
-						<input type="tel" id="uteroMioma_ovarioEsquerdo" maxlength="3" name="uteroMioma_ovarioEsquerdo" placeholder="cm³"/>
-					</span>
-
-				</div>
-
-			</div>
-
-			<div class="field">
-				<label for="uteroMioma_endometro">Endométro</label>
-				<input type="tel" id="uteroMioma_endometro" maxlength="2" name="uteroMioma_endometro" placeholder="mm"/>
-			</div>
-
-			<div class="flex flex-column">
 
 				<div class="flex justify-between">
 
 					<div class="field flex-4">
-						<label for="uteroMioma_miomaQuantidade">Quantidade de Miomas</label>
-						<input type="tel" id="uteroMioma_miomaQuantidade" maxlength="1" name="uteroMioma_miomaQuantidade"/>
+						<label for="uteroMioma_volumeInterino">Volume Interino</label>
+						<input type="tel" id="uteroMioma_volumeInterino" maxlength="4" name="uteroMioma_volumeInterino" placeholder="cm³"/>
 					</div>
 
-					<div class="flex flex-column flex-5" style="margin-left: 2em">
+					<div class="field grey-50 flex-5" style="margin-left: 2em">
 
-						<div class="field grey-50">
+						<span class="flex">
+							<label for="uteroMioma_ovarioDireito">Ovário Direito</label>
+							<input type="tel" id="uteroMioma_ovarioDireito" maxlength="3" name="uteroMioma_ovarioDireito" placeholder="cm³"/>
+						</span>
 
-							<div class="flex">
+						<span class="flex">
+							<label for="uteroMioma_ovarioEsquerdo">Ovário Esquerdo</label>
+							<input type="tel" id="uteroMioma_ovarioEsquerdo" maxlength="3" name="uteroMioma_ovarioEsquerdo" placeholder="cm³"/>
+						</span>
 
-								<div class="flex flex-column">
+					</div>
 
-									<span class="flex">
-										<input type="checkbox" id="uteroMioma_mioma_1_type_1" name="uteroMioma_mioma_1_submucoso" value="true"/>
-										<label for="uteroMioma_mioma_1_type_1">Submucoso</label>
-									</span>
+				</div>
 
-									<span class="flex">
-										<input type="checkbox" id="uteroMioma_mioma_1_type_2" name="uteroMioma_mioma_1_subseroso" value="true"/>
-										<label for="uteroMioma_mioma_1_type_2">Subseroso</label>
-									</span>
+				<div class="field">
+					<label for="uteroMioma_endometro">Endométro</label>
+					<input type="tel" id="uteroMioma_endometro" maxlength="2" name="uteroMioma_endometro" placeholder="mm"/>
+				</div>
 
-									<span class="flex">
-										<input type="checkbox" id="uteroMioma_mioma_1_type_3" name="uteroMioma_mioma_1_intramural" value="true"/>
-										<label for="uteroMioma_mioma_1_type_3">Intramural</label>
-									</span>
+				<div class="flex flex-column">
+
+					<div class="flex justify-between">
+
+						<div class="field flex-4">
+							<label for="uteroMioma_miomaQuantidade">Quantidade de Miomas</label>
+							<input type="tel" id="uteroMioma_miomaQuantidade" maxlength="1" name="uteroMioma_miomaQuantidade"/>
+						</div>
+
+						<div class="flex flex-column flex-5" style="margin-left: 2em">
+
+							<div class="field grey-50">
+
+								<div class="flex">
+
+									<div class="flex flex-column">
+
+										<span class="flex">
+											<input type="checkbox" id="uteroMioma_mioma_1_type_1" name="uteroMioma_mioma_1_submucoso" value="true"/>
+											<label for="uteroMioma_mioma_1_type_1">Submucoso</label>
+										</span>
+
+										<span class="flex">
+											<input type="checkbox" id="uteroMioma_mioma_1_type_2" name="uteroMioma_mioma_1_subseroso" value="true"/>
+											<label for="uteroMioma_mioma_1_type_2">Subseroso</label>
+										</span>
+
+										<span class="flex">
+											<input type="checkbox" id="uteroMioma_mioma_1_type_3" name="uteroMioma_mioma_1_intramural" value="true"/>
+											<label for="uteroMioma_mioma_1_type_3">Intramural</label>
+										</span>
+
+									</div>
+
+									<div class="field">
+
+										<span class="flex">
+											<label for="uteroMioma_mioma_1_caracteristicas">Caracteristicas do Mioma</label>
+											<input type="tel" id="uteroMioma_mioma_1_caracteristicas" maxlength="2" name="uteroMioma_mioma_1_caracteristicas" placeholder="mm"/>
+										</span>
+
+									</div>
 
 								</div>
 
-								<div class="field">
+							</div>
 
-									<span class="flex">
-										<label for="uteroMioma_mioma_1_caracteristicas">Caracteristicas do Mioma</label>
-										<input type="tel" id="uteroMioma_mioma_1_caracteristicas" maxlength="2" name="uteroMioma_mioma_1_caracteristicas" placeholder="mm"/>
-									</span>
+							<div class="field grey-50">
+
+								<div class="flex">
+
+									<div class="flex flex-column">
+
+										<span class="flex">
+											<input type="checkbox" id="uteroMioma_mioma_2_type_1" name="uteroMioma_mioma_2_submucoso" value="true"/>
+											<label for="uteroMioma_mioma_2_type_1">Submucoso</label>
+										</span>
+
+										<span class="flex">
+											<input type="checkbox" id="uteroMioma_mioma_2_type_2" name="uteroMioma_mioma_2_subseroso" value="true"/>
+											<label for="uteroMioma_mioma_2_type_2">Subseroso</label>
+										</span>
+
+										<span class="flex">
+											<input type="checkbox" id="uteroMioma_mioma_2_type_3" name="uteroMioma_mioma_2_intramural" value="true"/>
+											<label for="uteroMioma_mioma_2_type_3">Intramural</label>
+										</span>
+
+									</div>
+
+									<div class="field">
+
+										<span class="flex">
+											<label for="uteroMioma_mioma_2_caracteristicas">Caracteristicas do Mioma</label>
+											<input type="tel" id="uteroMioma_mioma_2_caracteristicas" maxlength="2" name="uteroMioma_mioma_2_caracteristicas" placeholder="mm"/>
+										</span>
+
+									</div>
 
 								</div>
 
@@ -528,320 +569,287 @@
 
 						</div>
 
-						<div class="field grey-50">
+					</div>
 
-							<div class="flex">
+					<div class="field">
 
-								<div class="flex flex-column">
-
-									<span class="flex">
-										<input type="checkbox" id="uteroMioma_mioma_2_type_1" name="uteroMioma_mioma_2_submucoso" value="true"/>
-										<label for="uteroMioma_mioma_2_type_1">Submucoso</label>
-									</span>
-
-									<span class="flex">
-										<input type="checkbox" id="uteroMioma_mioma_2_type_2" name="uteroMioma_mioma_2_subseroso" value="true"/>
-										<label for="uteroMioma_mioma_2_type_2">Subseroso</label>
-									</span>
-
-									<span class="flex">
-										<input type="checkbox" id="uteroMioma_mioma_2_type_3" name="uteroMioma_mioma_2_intramural" value="true"/>
-										<label for="uteroMioma_mioma_2_type_3">Intramural</label>
-									</span>
-
-								</div>
-
-								<div class="field">
-
-									<span class="flex">
-										<label for="uteroMioma_mioma_2_caracteristicas">Caracteristicas do Mioma</label>
-										<input type="tel" id="uteroMioma_mioma_2_caracteristicas" maxlength="2" name="uteroMioma_mioma_2_caracteristicas" placeholder="mm"/>
-									</span>
-
-								</div>
-
-							</div>
-
+						<div class="flex">
+							<input type="checkbox" id="uteroMioma_nd" name="uteroMioma_nd" value="true"/>
+							<label for="uteroMioma_nd">Dados não disponíveis</label>
 						</div>
 
 					</div>
 
 				</div>
 
-				<div class="field">
 
-					<div class="flex">
-						<input type="checkbox" id="uteroMioma_nd" name="uteroMioma_nd" value="true"/>
-						<label for="uteroMioma_nd">Dados não disponíveis</label>
+			</div>
+
+			<div class="page-break">
+
+				<h2>Sangramento</h2>
+
+				<div class="field">
+					<label for="sangramento_pbacInicial">Escore PBAC Inicíal</label>
+					<input type="tel" id="sangramento_pbacInicial" name="sangramento_pbacInicial"/>
+				</div>
+
+			</div>
+
+			<h2>Escalas</h2>
+
+			<div class="field">
+				<label for="escalas_beckInicial">Depressão Beck Inicial</label>
+				<input type="tel" id="escalas_beckInicial" name="escalas_beckInicial"/>
+			</div>
+			<div class="field">
+				<label for="escalas_vidaMioma">Qualidade de Vida x Mioma</label>
+				<input type="tel" id="escalas_vidaMioma" name="escalas_vidaMioma"/>
+			</div>
+
+			<div>
+
+				<h2>Exames</h2>
+
+				<div class="flex flex-wrap justify-around">
+
+					<span class="field">
+						<label for="exames_hb" class="flex-9">Hb</label>
+						<input type="tel" id="exames_hb" name="exames_hb"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_ht" class="flex-9">Ht</label>
+						<input type="tel" id="exames_ht" name="exames_ht"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_ferro" class="flex-9">Ferro</label>
+						<input type="tel" id="exames_ferro" name="exames_ferro"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_ferritina" class="flex-9">Ferritina</label>
+						<input type="tel" id="exames_ferritina" name="exames_ferritina"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_rdw" class="flex-9">R.D.W</label>
+						<input type="tel" id="exames_rdw" name="exames_rdw"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_vcm" class="flex-9">V.C.M</label>
+						<input type="tel" id="exames_vcm" name="exames_vcm"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_vitaminaD3" class="flex-9">Vitamina D3</label>
+						<input type="tel" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_tsh" class="flex-9">T.S.H</label>
+						<input type="tel" id="exames_tsh" name="exames_tsh"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_gj" class="flex-9">G.J</label>
+						<input type="tel" id="exames_gj" name="exames_gj"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_ct" class="flex-9">C.T</label>
+						<input type="tel" id="exames_ct" name="exames_ct"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_ldl" class="flex-9">L.D.L</label>
+						<input type="tel" id="exames_ldl" name="exames_ldl"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_hdl" class="flex-9">H.D.L</label>
+						<input type="tel" id="exames_hdl" name="exames_hdl"/>
+					</span>
+
+					<span class="field">
+						<label for="exames_t4l" class="flex-9">T.4.L</label>
+						<input type="tel" id="exames_t4l" name="exames_t4l"/>
+					</span>
+
+				</div>
+
+			</div>
+
+			<div class="page-break">
+
+				<h2>Conduta</h2>
+
+				<div class="flex" id="conduta">
+
+					<div class="field">
+
+						<span class="flex">
+
+							<input type="radio" id="conduta_1" name="conduta" value="Cirurgia"/>
+							<label for="conduta_1">Cirurgia</label>
+
+						</span>
+
+						<span class="flex">
+
+							<input type="radio" id="conduta_2" name="conduta" value="S.I.U - L.N.G"/>
+							<label for="conduta_2">S.I.U - L.N.G</label>
+
+						</span>
+
+						<span class="flex">
+
+							<input type="radio" id="conduta_3" name="conduta" value="Hormônio Terapia"/>
+							<label for="conduta_3">Hormônio Terapia</label>
+
+						</span>
+
+						<span class="flex">
+
+							<input type="radio" id="conduta_4" name="conduta" value="A.I.N.H."/>
+							<label for="conduta_4">A.I.N.H.</label>
+
+						</span>
+
 					</div>
 
+
+
+					<!--
+						Cirurgia
+					-->
+
+					<span id="conduta_cirurgia" class="field grey-50">
+
+						<label></label>
+
+						<span class="flex">
+							<input type="radio" id="conduta_cirurgia_1" name="conduta_cirurgia"/>
+							<label for="conduta_cirurgia_1">H.T.A.</label>
+						</span>
+
+						<span class="flex">
+							<input type="radio" id="conduta_cirurgia_2" name="conduta_cirurgia"/>
+							<label for="conduta_cirurgia_2">H.V.</label>
+						</span>
+
+					</span>
+
+					<!--
+						Hormônio Terapia
+					-->
+
+					<span id="conduta_hormonioTerapia">
+
+						<label></label>
+
+						<span class="field grey-50">
+
+							<span class="flex">
+
+								<input type="radio" id="conduta_hormonioTerapia_1" name="conduta_hormonioTerapia"/>
+								<label for="conduta_hormonioTerapia_1">Progestagênio</label>
+
+							</span>
+
+							<span class="flex">
+
+								<input type="radio" id="conduta_hormonioTerapia_2" name="conduta_hormonioTerapia"/>
+								<label for="conduta_hormonioTerapia_2">A.C.Os</label>
+
+							</span>
+
+							<span class="flex">
+
+								<input type="radio" id="conduta_hormonioTerapia_3" name="conduta_hormonioTerapia"/>
+								<label for="conduta_hormonioTerapia_3">Analogo do GnRH</label>
+
+							</span>
+
+						</span>
+
+						<span class="field grey-100" id="conduta_hormonioTerapia_caracteristicas">
+
+							<!--
+								Hormônio Terapia
+							-->
+
+							<label for="conduta_hormonioterapia_nome">Nome</label>
+							<input type="text" id="conduta_hormonioterapia_nome" name="conduta_hormonioterapia_nome"/>
+
+							<!--
+								Progestagênio, A.C.Os
+							-->
+
+							<span class="flex" id="conduta_hormonioTerapia_caracteristicas_tipo">
+
+								<span class="flex">
+									<input type="checkbox" id="conduta_hormonioterapia_ciclico" name="conduta_hormonioterapia_ciclico" value="true"/>
+									<label for="conduta_hormonioterapia_ciclico">Ciclico</label>
+								</span>
+
+								<span class="flex">
+									<input type="checkbox" id="conduta_hormonioterapia_continuo" name="conduta_hormonioterapia_continuo" value="true"/>
+									<label for="conduta_hormonioterapia_continuo">Contínuo</label>
+								</span>
+
+							</span>
+
+						</span>
+
+					</span>
+
+					<!--
+						A.I.N.H.
+					-->
+
+					<span class="field grey-50" id="conduta_ainh">
+						<label for="conduta_ainh_nome">Nome</label>
+						<input type="text" id="conduta_ainh_nome" name="conduta_ainh_nome"/>
+					</span>
+
 				</div>
 
 			</div>
 
+			<div>
 
-		</div>
-
-		<div class="page-break">
-
-			<h2>Sangramento</h2>
-
-			<div class="field">
-				<label for="sangramento_pbacInicial">Escore PBAC Inicíal</label>
-				<input type="tel" id="sangramento_pbacInicial" name="sangramento_pbacInicial"/>
-			</div>
-
-		</div>
-
-		<h2>Escalas</h2>
-
-		<div class="field">
-			<label for="escalas_beckInicial">Depressão Beck Inicial</label>
-			<input type="tel" id="escalas_beckInicial" name="escalas_beckInicial"/>
-		</div>
-		<div class="field">
-			<label for="escalas_vidaMioma">Qualidade de Vida x Mioma</label>
-			<input type="tel" id="escalas_vidaMioma" name="escalas_vidaMioma"/>
-		</div>
-
-		<div>
-
-			<h2>Exames</h2>
-
-			<div class="flex flex-wrap justify-around">
-
-				<span class="field">
-					<label for="exames_hb" class="flex-9">Hb</label>
-					<input type="tel" id="exames_hb" name="exames_hb"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_ht" class="flex-9">Ht</label>
-					<input type="tel" id="exames_ht" name="exames_ht"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_ferro" class="flex-9">Ferro</label>
-					<input type="tel" id="exames_ferro" name="exames_ferro"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_ferritina" class="flex-9">Ferritina</label>
-					<input type="tel" id="exames_ferritina" name="exames_ferritina"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_rdw" class="flex-9">R.D.W</label>
-					<input type="tel" id="exames_rdw" name="exames_rdw"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_vcm" class="flex-9">V.C.M</label>
-					<input type="tel" id="exames_vcm" name="exames_vcm"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_vitaminaD3" class="flex-9">Vitamina D3</label>
-					<input type="tel" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_tsh" class="flex-9">T.S.H</label>
-					<input type="tel" id="exames_tsh" name="exames_tsh"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_gj" class="flex-9">G.J</label>
-					<input type="tel" id="exames_gj" name="exames_gj"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_ct" class="flex-9">C.T</label>
-					<input type="tel" id="exames_ct" name="exames_ct"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_ldl" class="flex-9">L.D.L</label>
-					<input type="tel" id="exames_ldl" name="exames_ldl"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_hdl" class="flex-9">H.D.L</label>
-					<input type="tel" id="exames_hdl" name="exames_hdl"/>
-				</span>
-
-				<span class="field">
-					<label for="exames_t4l" class="flex-9">T.4.L</label>
-					<input type="tel" id="exames_t4l" name="exames_t4l"/>
-				</span>
-
-			</div>
-
-		</div>
-
-		<div class="page-break">
-
-			<h2>Conduta</h2>
-
-			<div class="flex" id="conduta">
+				<h2>Resultados</h2>
 
 				<div class="field">
-
-					<span class="flex">
-
-						<input type="radio" id="conduta_1" name="conduta" value="Cirurgia"/>
-						<label for="conduta_1">Cirurgia</label>
-
-					</span>
-
-					<span class="flex">
-
-						<input type="radio" id="conduta_2" name="conduta" value="S.I.U - L.N.G"/>
-						<label for="conduta_2">S.I.U - L.N.G</label>
-
-					</span>
-
-					<span class="flex">
-
-						<input type="radio" id="conduta_3" name="conduta" value="Hormônio Terapia"/>
-						<label for="conduta_3">Hormônio Terapia</label>
-
-					</span>
-
-					<span class="flex">
-
-						<input type="radio" id="conduta_4" name="conduta" value="A.I.N.H."/>
-						<label for="conduta_4">A.I.N.H.</label>
-
-					</span>
-
+					<label for="resultados_pbacFinal">Escore PBAC Final</label>
+					<input type="tel" id="resultados_pbacFinal" name="resultados_pbacFinal"/>
 				</div>
 
+				<div class="field">
+					<label for="resultados_beckFinal">Depressão Beck Final</label>
+					<input type="tel" id="resultados_beckFinal" name="resultados_beckFinal"/>
+				</div>
 
-
-				<!--
-					Cirurgia
-				-->
-
-				<span id="conduta_cirurgia" class="field grey-50">
-
-					<label></label>
-
-					<span class="flex">
-						<input type="radio" id="conduta_cirurgia_1" name="conduta_cirurgia"/>
-						<label for="conduta_cirurgia_1">H.T.A.</label>
-					</span>
-
-					<span class="flex">
-						<input type="radio" id="conduta_cirurgia_2" name="conduta_cirurgia"/>
-						<label for="conduta_cirurgia_2">H.V.</label>
-					</span>
-
-				</span>
-
-				<!--
-					Hormônio Terapia
-				-->
-
-				<span id="conduta_hormonioTerapia">
-
-					<label></label>
-
-					<span class="field grey-50">
-
-						<span class="flex">
-
-							<input type="radio" id="conduta_hormonioTerapia_1" name="conduta_hormonioTerapia"/>
-							<label for="conduta_hormonioTerapia_1">Progestagênio</label>
-
-						</span>
-
-						<span class="flex">
-
-							<input type="radio" id="conduta_hormonioTerapia_2" name="conduta_hormonioTerapia"/>
-							<label for="conduta_hormonioTerapia_2">A.C.Os</label>
-
-						</span>
-
-						<span class="flex">
-
-							<input type="radio" id="conduta_hormonioTerapia_3" name="conduta_hormonioTerapia"/>
-							<label for="conduta_hormonioTerapia_3">Analogo do GnRH</label>
-
-						</span>
-
-					</span>
-
-					<span class="field grey-100" id="conduta_hormonioTerapia_caracteristicas">
-
-						<!--
-							Hormônio Terapia
-						-->
-
-						<label for="conduta_hormonioterapia_nome">Nome</label>
-						<input type="text" id="conduta_hormonioterapia_nome" name="conduta_hormonioterapia_nome"/>
-
-						<!--
-							Progestagênio, A.C.Os
-						-->
-
-						<span class="flex" id="conduta_hormonioTerapia_caracteristicas_tipo">
-
-							<span class="flex">
-								<input type="checkbox" id="conduta_hormonioterapia_ciclico" name="conduta_hormonioterapia_ciclico" value="true"/>
-								<label for="conduta_hormonioterapia_ciclico">Ciclico</label>
-							</span>
-
-							<span class="flex">
-								<input type="checkbox" id="conduta_hormonioterapia_continuo" name="conduta_hormonioterapia_continuo" value="true"/>
-								<label for="conduta_hormonioterapia_continuo">Contínuo</label>
-							</span>
-
-						</span>
-
-					</span>
-
-				</span>
-
-				<!--
-					A.I.N.H.
-				-->
-
-				<span class="field grey-50" id="conduta_ainh">
-					<label for="conduta_ainh_nome">Nome</label>
-					<input type="text" id="conduta_ainh_nome" name="conduta_ainh_nome"/>
-				</span>
+				<div class="field">
+					<label for="resultados_vidaMiomaFinal">Qualidade Vida x Mioma</label>
+					<input type="tel" id="resultados_vidaMiomaFinal" name="resultados_vidaMiomaFinal"/>
+				</div>
 
 			</div>
 
-		</div>
+		</form>
 
-		<div>
 
-			<h2>Resultados</h2>
-
-			<div class="field">
-				<label for="resultados_pbacFinal">Escore PBAC Final</label>
-				<input type="tel" id="resultados_pbacFinal" name="resultados_pbacFinal"/>
-			</div>
-
-			<div class="field">
-				<label for="resultados_beckFinal">Depressão Beck Final</label>
-				<input type="tel" id="resultados_beckFinal" name="resultados_beckFinal"/>
-			</div>
-
-			<div class="field">
-				<label for="resultados_vidaMiomaFinal">Qualidade Vida x Mioma</label>
-				<input type="tel" id="resultados_vidaMiomaFinal" name="resultados_vidaMiomaFinal"/>
-			</div>
-
-		</div>
 
 		<div class="flex justify-end" style="margin-top: 1em">
 			<a class="button flat" id="consulta_create">Salvar e Imprimir</a>
 		</div>
 
-	</form>
+	</div>
+
 
 	<script src="js/jquery-min.js"></script>
 	<script src="js/picker.js"></script>

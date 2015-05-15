@@ -20,6 +20,7 @@ $('#btn').click(function() {
 		},
 		url: __API_DIR +  'i/push/'
 	});
+
 });
 
 $('#prontuario_novo').click(function() {
@@ -67,119 +68,6 @@ var createProntuario = function() {
 	});
 };
 
-var renderProntuario = function(a) {
-	var b, c, d, e, f;
-
-	b = a.request;
-	c = b.prontuario;
-	d = b.paciente;
-	e = document.getElementById('p_data');
-	f = document.getElementById('prontuario__id');
-
-	e.innerHTML = '';
-	f.value = a.prontuario;
-
-	$('#prontuario_edit').hide();
-
-	insereNovoProntuario(e, c, 'prontuario');
-	insereNovoPaciente(e, d, 'paciente');
-
-	initConsulta();
-};
-
-var initConsulta = function() {
-	$('#consulta').show();
-};
-
-var insereNovoPaciente = function(a, b) {
-	var c = document.createElement('div');
-	c.setAttribute('class', 'prontuario flex flex-column');
-
-	var date = new Date(b.nascimento);
-	date.setDate(date.getDate() + 1);
-	var dateOptions = {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric'
-	};
-	var dateString = date.toLocaleDateString('pt-BR', dateOptions);
-
-	c.appendChild(newNode('span', b.nome, 'nome'));
-	c.appendChild(newNode('span', b.sexo, 'sexo'));
-	c.appendChild(newNode('span', dateString, 'nascimento'));
-	c.appendChild(newNode('span', buildNote(b.religiao, b.religiaoNote), 'religiao'));
-	c.appendChild(newNode('span', buildNote(b.etnia, b.etniaNote), 'etnia'));
-	c.appendChild(newNode('span', buildNote(b.escolaridade, b.escolaridadeNote), 'escolaridade'));
-	c.appendChild(newNode('span', buildNote(b.estadoCivil, b.estadoCivilNote), 'estadoCivil'));
-
-	a.insertBefore(c, a.firstChild);
-};
-
-var insereNovoProntuario = function(a, b) {
-	var c = document.createElement('div');
-	c.setAttribute('class', 'prontuario flex flex-column');
-
-	var date = new Date(b.data);
-	date.setDate(date.getDate() + 1);
-	var dateOptions = {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric'
-	};
-	var dateString = date.toLocaleDateString('pt-BR', dateOptions);
-
-	c.appendChild(newNode('span', dateString, 'data'));
-	c.appendChild(newNode('span', b.registro, 'registro'));
-
-	a.insertBefore(c, a.firstChild);
-};
-
-var newNode = function(a, b, c) {
-	var e = document.createElement(a);
-
-	if (c)
-		e.setAttribute('class', c);
-
-	if (b)
-		if (typeof b === 'object')
-			e.appendChild(b);
-		else if (typeof b === 'string')
-			e.appendChild(document.createTextNode(b));
-
-	return e;
-};
-
-var buildNote = function(a, b) {
-	if (b)
-		return a + ' (' + b + ')';
-	else
-		return a;
-};
-
-var appendObject = function(a, b, g) {
-	// get the object
-	var c, d;
-
-	c = Object.keys(b);
-	d = c.length;
-
-	// create new append
-	var e, f;
-
-	e = document.createElement('div');
-	e.setAttribute('class', g);
-
-	for (var i = 0; i < d; i++) {
-		console.log(b[c[i]]);
-		f = document.createElement('span');
-		f.appendChild(document.createTextNode(b[c[i]]));
-		f.setAttribute('class', g + '_' + c[i]);
-		e.appendChild(f);
-	}
-
-	a.insertBefore(e, a.firstChild);
-};
-
 var findProntuario = function() {
 	$.ajax({
 		cache: false,
@@ -194,6 +82,47 @@ var findProntuario = function() {
 		},
 		url: __API_DIR +  'i/pull/find/prontuario/'
 	});
+};
+
+$('#consulta_create').click(function() {
+
+	$.ajax({
+		data: {response: JSON.stringify(getResponse())},
+		error: function(data) {
+			console.log(data.responseText);
+		},
+		method: 'post',
+		success: function(data) {
+			console.log(data);
+		},
+		url: __API_DIR +  'i/push/'
+	});
+
+	document.forms['carry_id'].submit();
+
+});
+
+var renderProntuario = function(a) {
+	var b, c, d, e, f;
+
+	b = a.request;
+	c = b.prontuario;
+	d = b.paciente;
+	e = document.getElementById('p_data');
+	f = document.getElementById('prontuario__id');
+
+	e.innerHTML = '';
+	f.value = a.prontuario;
+
+	$('#prontuario_edit').hide();
+
+	insereNovoProntuario(e, c, d, 'prontuario');
+
+	initConsulta();
+};
+
+var initConsulta = function() {
+	$('#consulta').show();
 };
 
 var getProntuario = function() {
@@ -441,7 +370,81 @@ if (typeof _id !== 'undefined') {
 	});
 }
 
+
+
+var insereNovoProntuario = function(a, b, c, d) {
+
+	// b = prontuario
+	// c = paciente
+
+	var dateOptions = {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric'
+	};
+
+	var date = new Date(c.nascimento);
+	date.setDate(date.getDate() + 1);
+	var paciente_nascimento = date.toLocaleDateString('pt-BR', dateOptions);
+
+	var date = new Date(b.data);
+	date.setDate(date.getDate() + 1);
+	var prontuario_data = date.toLocaleDateString('pt-BR', dateOptions);
+
+	// renderiza prontuario
+
+	// renderiza coluna A (nome, religiao, etnia, escolaridade, estadoCivil)
+
+	var e = document.createElement('div');
+	e.setAttribute('class', d + ' flex');
+
+	var ea = document.createElement('div');
+	ea.setAttribute('class', 'flex flex-column');
+
+	var eaa = document.createElement('div');
+	eaa.setAttribute('class', 'flex red');
+	var eab = document.createElement('div');
+	eab.setAttribute('class', 'flex');
+
+	eaa.appendChild(newNode('span', c.nome, 'nome'));
+
+	eab.appendChild(newNode('span', buildNote(c.religiao, c.religiaoNote), 'religiao'));
+	eab.appendChild(newNode('span', buildNote(c.etnia, c.etniaNote), 'etnia'));
+	eab.appendChild(newNode('span', buildNote(c.escolaridade, c.escolaridadeNote), 'escolaridade'));
+	eab.appendChild(newNode('span', buildNote(c.estadoCivil, c.estadoCivilNote), 'estadoCivil'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+
+	e.appendChild(ea);
+
+	// renderiza coluna B (nome, religiao, etnia, escolaridade, estadoCivil)
+
+	var eb = document.createElement('div');
+	eb.setAttribute('class', 'flex');
+
+	var eba = document.createElement('div');
+	eba.setAttribute('class', 'flex flex-column');
+	var ebb = document.createElement('div');
+	ebb.setAttribute('class', 'flex flex-column');
+
+	eba.appendChild(newNode('span', c.sexo, 'sexo'));
+	eba.appendChild(newNode('span', b.registro, 'registro'));
+
+	ebb.appendChild(newNode('span', paciente_nascimento, 'nascimento'));
+	ebb.appendChild(newNode('span', prontuario_data, 'data'));
+
+	eb.appendChild(eba);
+	eb.appendChild(ebb);
+
+	e.appendChild(eb);
+
+	a.insertBefore(e, a.firstChild);
+
+};
+
 var renderConsulta = function(a) {
+	console.log(a);
 	var c, d, e, f;
 
 	c = a.prontuario[0];
@@ -457,8 +460,7 @@ var renderConsulta = function(a) {
 
 	$('#prontuario_edit').hide();
 
-	insereNovoProntuario(e, c, 'prontuario');
-	insereNovoPaciente(e, d, 'paciente');
+	insereNovoProntuario(e, c, d, 'prontuario');
 
 	insereNovoResultados(g, a.resultados[0], 'resultados');
 	insereNovoConduta(g, a.conduta[0], 'conduta');
@@ -590,4 +592,50 @@ var insereNovoUteroMioma = function(a, b, c) {
 	d.appendChild(newNode('span', b.mioma_2_intramural, 'mioma_2_intramural'));
 
 	a.insertBefore(d, a.firstChild);
+};
+
+var newNode = function(a, b, c) {
+	var e = document.createElement(a);
+
+	if (c)
+		e.setAttribute('class', c);
+
+	if (b)
+		if (typeof b === 'object')
+			e.appendChild(b);
+		else if (typeof b === 'string')
+			e.appendChild(document.createTextNode(b));
+
+	return e;
+};
+
+var buildNote = function(a, b) {
+	if (b)
+		return a + ' (' + b + ')';
+	else
+		return a;
+};
+
+var appendObject = function(a, b, g) {
+	// get the object
+	var c, d;
+
+	c = Object.keys(b);
+	d = c.length;
+
+	// create new append
+	var e, f;
+
+	e = document.createElement('div');
+	e.setAttribute('class', g);
+
+	for (var i = 0; i < d; i++) {
+		console.log(b[c[i]]);
+		f = document.createElement('span');
+		f.appendChild(document.createTextNode(b[c[i]]));
+		f.setAttribute('class', g + '_' + c[i]);
+		e.appendChild(f);
+	}
+
+	a.insertBefore(e, a.firstChild);
 };
