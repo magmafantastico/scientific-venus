@@ -197,18 +197,16 @@ class Consulta_Search extends Search
 
 if (!empty($_GET['prontuario_id'])) {
 	$s = $_GET['prontuario_id'];
-	$a = new Consulta_Search($s);
 	$c = new Connection();
 	$conn = $c->getConnection();
+	$a = new Consulta_Search($s);
 
 	$a->findProntuario($a->request, $conn);
-
-	//TODO - Algum problema com PHP 5.5
-	if (!empty($a->getProntuarioId()))
+	if (($a->getProntuarioId()))
 		$a->getProntuarioData($conn);
 
 	$a->findConsulta($a->getProntuarioId(), $conn);
-	if (!empty($a->getProntuarioId()))
+	if ($a->getProntuarioId())
 		$a->getData($a->getConsultaId(), $conn);
 
 } else {

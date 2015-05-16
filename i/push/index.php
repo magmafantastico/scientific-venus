@@ -30,14 +30,6 @@ $b = json_decode($a->getRequest());
 $c = new Connection();
 $mysqli = $c->getConnection();
 
-if ($mysqli->connect_errno)
-	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-else
-	echo "connection ok! /n/n";
-
-if (!$mysqli->query("SET @@session.time_zone = '+00:00';"))
-	echo "time_zone not setted: (" . $mysqli->errno . ") " . $mysqli->error . "/n";
-
 if (!$mysqli->query("INSERT INTO paciente(
 	nome,
     sexo,
@@ -65,8 +57,6 @@ if (!$mysqli->query("INSERT INTO paciente(
 
 $paciente_id = $mysqli->insert_id;
 
-echo("Last inserted record has id: " . $paciente_id . "/n");
-
 if (!$mysqli->query("INSERT INTO prontuario(data, paciente_id) VALUES ('" .
 	$b->prontuario->data . "', '" .
 	$paciente_id . "')"))
@@ -74,7 +64,7 @@ if (!$mysqli->query("INSERT INTO prontuario(data, paciente_id) VALUES ('" .
 
 $prontuario_id = $mysqli->insert_id;
 
-echo("prontuario_id: " . $prontuario_id . "/n");
+echo($prontuario_id);
 
 if (!$mysqli->query("INSERT INTO consulta(data, prontuario_id) VALUES ('" .
 	$b->prontuario->data . "', '" .
@@ -82,8 +72,6 @@ if (!$mysqli->query("INSERT INTO consulta(data, prontuario_id) VALUES ('" .
 	echo "Insert failed(consulta): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
 
 $consulta_id = $mysqli->insert_id;
-
-echo("consulta_id: " . $consulta_id . "/n");
 
 if (!$mysqli->query("INSERT INTO exameFisico(
 	consulta_id,
@@ -240,12 +228,3 @@ if (!$mysqli->query("INSERT INTO resultados(
 	$b->resultados->beckFinal . "', '" .
 	$b->resultados->vidaMioma . "')"))
 	echo "Insert failed(resultados): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
-
-$res = $mysqli->query("SELECT _id FROM paciente");
-
-echo "Reverse order:/n";
-for ($row_no = $res->num_rows - 1; $row_no >= 0; $row_no--) {
-	$res->data_seek($row_no);
-	$row = $res->fetch_assoc();
-	echo $row['_id'] . "/n";
-}
