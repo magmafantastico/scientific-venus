@@ -94,11 +94,11 @@ $('#consulta_create').click(function() {
 		method: 'post',
 		success: function(data) {
 			console.log(data);
+			document.getElementById('prontuario__id').value = data;
+			document.forms['carry_id'].submit();
 		},
 		url: __API_DIR +  'i/push/'
 	});
-
-	document.forms['carry_id'].submit();
 
 });
 
@@ -114,7 +114,7 @@ var renderProntuario = function(a) {
 	e.innerHTML = '';
 	f.value = a.prontuario;
 
-	$('#prontuario_edit').hide();
+	//$('#prontuario_edit').hide();
 
 	insertNewProntuario(e, c, d, 'prontuario');
 
@@ -122,7 +122,7 @@ var renderProntuario = function(a) {
 };
 
 var initConsulta = function() {
-	$('#consulta').show();
+	/*$('#consulta').show();*/
 };
 
 var getProntuario = function() {
@@ -365,11 +365,27 @@ if (typeof _id !== 'undefined') {
  * @param b
  * @returns string
  */
-var buildNote = function(a, b) {
-	if (b)
-		return a + ' (' + b + ')';
-	else
-		return a;
+var buildNote;
+buildNote = function (a, b) {
+	if (b) return a + ' (' + b + ')';
+	else return a;
+};
+
+/**
+ * Localiza boolean para o português
+ * @param a
+ * @returns string
+ */
+var toLocaleBool;
+toLocaleBool = function (a) {
+	if (a == 1) return 'Sim';
+	else return 'Não';
+};
+
+var buildTypeNote = function(a, b) {
+	if (a > 0)
+		return toLocaleBool(a) + ' (' + b + ')';
+	else return b;
 };
 
 /**
@@ -381,10 +397,7 @@ var buildNote = function(a, b) {
 var newNode;
 newNode = function (a, c) {
 	var e = document.createElement(a);
-
-	if (c)
-		e.setAttribute('class', c);
-
+	if (c) e.setAttribute('class', c);
 	return e;
 };
 
@@ -423,7 +436,7 @@ var newField;
 newField = function (a, b, c) {
 	var e = document.createElement('span');
 	var className = 'field';
-	if (b) className += ' ' + b;
+	if (b) className += ' ' + b.toLowerCase().replace(/\s+/g, '').replace(/\.+/g, '');
 	if (c) className += ' ' + c;
 	e.setAttribute('class', className);
 
@@ -433,71 +446,12 @@ newField = function (a, b, c) {
 	return e;
 };
 
-var insertNewProntuario = function(a, b, c, d) {
-
-	// b = prontuario
-	// c = paciente
-
-	var dateOptions = {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric'
-	};
-
-	var date = new Date(c.nascimento);
-	date.setDate(date.getDate() + 1);
-	var paciente_nascimento = date.toLocaleDateString('pt-BR', dateOptions);
-
-	var date = new Date(b.data);
-	date.setDate(date.getDate() + 1);
-	var prontuario_data = date.toLocaleDateString('pt-BR', dateOptions);
-
-	// renderiza prontuario
-
-	// renderiza coluna A (nome, religiao, etnia, escolaridade, estadoCivil)
-
-	var e = newNode('div', d + ' content-box');
-
-	var ea = newNode('div', 'flexbox flex-column');
-	var eaa = newNode('div', 'flexbox');
-	var eab = newNode('div', 'flexbox');
-
-	eaa.appendChild(newField(c.nome, 'nome', 'value-bold value-large'));
-
-	eab.appendChild(newField(buildNote(c.religiao, c.religiaoNote), 'religiao'));
-	eab.appendChild(newField(buildNote(c.etnia, c.etniaNote), 'etnia'));
-	eab.appendChild(newField(buildNote(c.escolaridade, c.escolaridadeNote), 'escolaridade'));
-	eab.appendChild(newField(buildNote(c.estadoCivil, c.estadoCivilNote), 'estado civil'));
-
-	ea.appendChild(eaa);
-	ea.appendChild(eab);
-
-	e.appendChild(ea);
-
-	// renderiza coluna B (nome, religiao, etnia, escolaridade, estadoCivil)
-
-	var eb = document.createElement('div');
-	eb.setAttribute('class', 'flexbox');
-
-	var eba = newNode('div', 'flexbox flex-column');
-	var ebb = newNode('div', 'flexbox flex-column');
-
-	eba.appendChild(newField(c.sexo, 'sexo', 'value-bold'));
-	eba.appendChild(newField(b.registro, 'registro'));
-
-	ebb.appendChild(newField(paciente_nascimento, 'nascimento', 'value-bold'));
-	ebb.appendChild(newField(prontuario_data, 'data'));
-
-	eb.appendChild(eba);
-	eb.appendChild(ebb);
-
-	e.appendChild(eb);
-
-	a.insertBefore(e, a.firstChild);
-
-};
-
-var renderConsulta = function(a) {
+/**
+ * Renderiza a consulta inteira
+ * @param object a consulta
+ */
+var renderConsulta;
+renderConsulta = function (a) {
 	console.log(a);
 	var c, d, e, f;
 
@@ -519,137 +473,351 @@ var renderConsulta = function(a) {
 	insertNewResultados(g, a.resultados[0], 'resultados');
 	insertNewConduta(g, a.conduta[0], 'conduta');
 	insertNewExames(g, a.exames[0], 'exames');
-	insertNewEscalas(g, a.escalas[0], 'escalas');
-	insertNewSangramento(g, a.sangramento[0], 'sangramento');
+	insertNewEscalas(g, a.escalas[0], a.sangramento[0], 'escalas');
+	/*insertNewSangramento(g, a.sangramento[0], 'sangramento');*/
 	insertNewUteroMioma(g, a.uteroMioma[0], 'uteroMioma');
 	insertNewAntecedentes(g, a.antecedentes[0], 'antecedentes');
 	insertNewExameFisico(g, a.exameFisico[0], 'exameFisico');
 
 };
 
-var insertNewAntecedentes = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' green-100 flex flex-column');
+/**
+ * Insere elemento de prontuario no parent
+ * @param a parent
+ * @param b prontuario
+ * @param c paciente
+ * @param d class
+ */
+var insertNewProntuario;
+insertNewProntuario = function (a, b, c, d) {
 
-	d.appendChild(newContentNode('span', b.situacaoAborto, 'situacaoAborto'));
-	d.appendChild(newContentNode('span', b.situacaoGestacao, 'situacaoGestacao'));
-	d.appendChild(newContentNode('span', b.situacaoParidade, 'situacaoParidade'));
-	d.appendChild(newContentNode('span', b.tabagismo, 'tabagismo'));
-	d.appendChild(newContentNode('span', b.hac, 'hac'));
-	d.appendChild(newContentNode('span', b.hacType, 'hacType'));
-	d.appendChild(newContentNode('span', b.diabetes, 'diabetes'));
-	d.appendChild(newContentNode('span', b.diabetesType, 'diabetesType'));
-	d.appendChild(newContentNode('span', b.hipotireoidismo, 'hipotireoidismo'));
-	d.appendChild(newContentNode('span', b.hipotireoidismoType, 'hipotireoidismoType'));
-	d.appendChild(newContentNode('span', b.note, 'note'));
+	var dateOptions = {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric'
+	};
 
-	a.insertBefore(d, a.firstChild);
+	var date = new Date(c.nascimento);
+	date.setDate(date.getDate() + 1);
+	var paciente_nascimento = date.toLocaleDateString('pt-BR', dateOptions);
+
+	var date = new Date(b.data);
+	date.setDate(date.getDate() + 1);
+	var prontuario_data = date.toLocaleDateString('pt-BR', dateOptions);
+
+	// renderiza prontuario
+
+	// renderiza coluna A (nome, religiao, etnia, escolaridade, estadoCivil)
+
+	var e = newNode('div', d + ' content-box');
+
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
+
+	eaa.appendChild(newField(c.nome, 'nome', 'value-bold value-large'));
+
+	eab.appendChild(newField(buildNote(c.religiao, c.religiaoNote), 'religiao'));
+	eab.appendChild(newField(buildNote(c.etnia, c.etniaNote), 'etnia'));
+	eab.appendChild(newField(buildNote(c.escolaridade, c.escolaridadeNote), 'escolaridade'));
+	eab.appendChild(newField(buildNote(c.estadoCivil, c.estadoCivilNote), 'estado civil'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+
+	e.appendChild(ea);
+
+	// renderiza coluna B (nome, religiao, etnia, escolaridade, estadoCivil)
+
+	var eb = newNode('div', 'flexbox flex-2');
+
+	var eba = newNode('div', 'flexbox flex-column');
+	var ebb = newNode('div', 'flexbox flex-column');
+
+	eba.appendChild(newField(c.sexo, 'sexo', 'value-bold'));
+	eba.appendChild(newField(b.registro, 'ambulatório'));
+
+	ebb.appendChild(newField(paciente_nascimento, 'nascimento', 'value-bold'));
+	ebb.appendChild(newField(prontuario_data, 'data'));
+
+	eb.appendChild(eba);
+	eb.appendChild(ebb);
+
+	e.appendChild(eb);
+
+	a.insertBefore(e, a.firstChild);
+
 };
 
-var insertNewConduta = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' flex flex-column');
+/**
+ * Insere elemento de Exame Físico no parent
+ * @param a parent
+ * @param b exameFisico
+ * @param c class
+ */
+var insertNewExameFisico;
+insertNewExameFisico = function (a, b, c) {
+	var e = newNode('div', c + ' content-box');
 
-	d.appendChild(newContentNode('span', b.conduta, 'conduta'));
-	d.appendChild(newContentNode('span', b.cirurgia, 'cirurgia'));
-	d.appendChild(newContentNode('span', b.hormonioTerapia, 'hormonioTerapia'));
-	d.appendChild(newContentNode('span', b.hormonioTerapiaCiclico, 'hormonioTerapiaCiclico'));
-	d.appendChild(newContentNode('span', b.hormonioTerapiaContinuo, 'hormonioTerapiaContinuo'));
-	d.appendChild(newContentNode('span', b.hormonioTerapiaNome, 'hormonioTerapiaNome'));
-	d.appendChild(newContentNode('span', b.ainh, 'ainh'));
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
 
-	a.insertBefore(d, a.firstChild);
+	eaa.appendChild(newContentNode('h2', 'Exame Físico'));
+
+	eab.appendChild(newField(b.peso, 'peso'));
+	eab.appendChild(newField(b.altura, 'altura'));
+	eab.appendChild(newField(b.imc, 'imc'));
+	eab.appendChild(newField(b.pressaoArterial, 'PA. Arterial'));
+	eab.appendChild(newField(b.circunferenciaAbdominal, 'C. Abdominal'));
+	eab.appendChild(newField(b.circunferenciaCervical, 'C. Cervical'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
 };
 
-var insertNewEscalas = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' grey-50 flex flex-column');
+/**
+ * Insere elemento de Antecedentes no parent
+ * @param a parent
+ * @param b antecedentes
+ * @param c class
+ */
+var insertNewAntecedentes;
+insertNewAntecedentes = function (a, b, c) {
+	var e = newNode('div', c + ' content-box');
 
-	d.appendChild(newContentNode('span', b.beckInicial, 'beckInicial'));
-	d.appendChild(newContentNode('span', b.vidaMioma, 'vidaMioma'));
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
+	var eac = newNode('div', 'flexbox');
 
-	a.insertBefore(d, a.firstChild);
+	eaa.appendChild(newContentNode('h2', 'Antecedentes'));
+
+	eab.appendChild(newField(toLocaleBool(b.situacaoAborto), 'Aborto'));
+	eab.appendChild(newField(toLocaleBool(b.situacaoGestacao), 'Gestacao'));
+	eab.appendChild(newField(toLocaleBool(b.situacaoParidade), 'Paridade'));
+	eab.appendChild(newField(toLocaleBool(b.tabagismo), 'tabagismo'));
+
+	eac.appendChild(newField(buildTypeNote(b.hac, b.diabetesType), 'hac'));
+	eac.appendChild(newField(buildTypeNote(b.diabetes, b.diabetesType), 'diabetes'));
+	eac.appendChild(newField(buildTypeNote(b.hipotireoidismo, b.diabetesType), 'hipotireoidismo'));
+	eac.appendChild(newField(b.note, 'outro'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+	ea.appendChild(eac);
+
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
 };
 
-var insertNewExameFisico = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' flex flex-column');
+/**
+ * Insere elemento de UteroMioma no parent
+ * @param a parent
+ * @param b uteroMioma
+ * @param c class
+ */
+var insertNewUteroMioma;
+insertNewUteroMioma = function (a, b, c) {
+	var e = newNode('div', c + ' content-box');
 
-	d.appendChild(newContentNode('span', b.peso, 'peso'));
-	d.appendChild(newContentNode('span', b.altura, 'altura'));
-	d.appendChild(newContentNode('span', b.imc, 'imc'));
-	d.appendChild(newContentNode('span', b.pressaoArterial, 'pressaoArterial'));
-	d.appendChild(newContentNode('span', b.circunferenciaAbdominal, 'circunferenciaAbdominal'));
-	d.appendChild(newContentNode('span', b.circunferenciaCervical, 'circunferenciaCervical'));
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
+	var eac = newNode('div', 'flexbox');
+	var ead = newNode('div', 'flexbox');
+	var eae = newNode('div', 'flexbox');
 
-	a.insertBefore(d, a.firstChild);
+	eaa.appendChild(newContentNode('h2', 'Características Útero / Mioma'));
+
+	eab.appendChild(newField(b.us, 'us'));
+	eab.appendChild(newField(b.volumeInterino, 'volumeInterino'));
+	eab.appendChild(newField(b.ovarioDireito, 'ovarioDireito'));
+	eab.appendChild(newField(b.ovarioEsquerdo, 'ovarioEsquerdo'));
+	eab.appendChild(newField(b.endometro, 'endometro'));
+
+	eac.appendChild(newField(b.miomaQuantidade, 'miomaQuantidade'));
+
+	ead.appendChild(newField(b.mioma_1_caracteristicas, 'caracteristicas'));
+	ead.appendChild(newField(toLocaleBool(b.mioma_1_submucoso), 'submucoso'));
+	ead.appendChild(newField(toLocaleBool(b.mioma_1_subseroso), 'subseroso'));
+	ead.appendChild(newField(toLocaleBool(b.mioma_1_intramural), 'intramural'));
+
+	eae.appendChild(newField(b.mioma_2_caracteristicas, 'caracteristicas'));
+	eae.appendChild(newField(toLocaleBool(b.mioma_2_submucoso), 'submucoso'));
+	eae.appendChild(newField(toLocaleBool(b.mioma_2_subseroso), 'subseroso'));
+	eae.appendChild(newField(toLocaleBool(b.mioma_2_intramural), 'intramural'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+	ea.appendChild(eac);
+	ea.appendChild(ead);
+	ea.appendChild(eae);
+
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
 };
 
-var insertNewExames = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' green-100 flex flex-column');
+/**
+ * Insere elemento de Sangramento no parent
+ * @param a parent
+ * @param b sangramento
+ * @param c class
+ */
+var insertNewSangramento;
+insertNewSangramento = function (a, b, c) {
+	var e = newNode('div', c + ' content-box');
 
-	d.appendChild(newContentNode('span', b.hb, 'hb'));
-	d.appendChild(newContentNode('span', b.ht, 'ht'));
-	d.appendChild(newContentNode('span', b.ferro, 'ferro'));
-	d.appendChild(newContentNode('span', b.ferritina, 'ferritina'));
-	d.appendChild(newContentNode('span', b.rdw, 'rdw'));
-	d.appendChild(newContentNode('span', b.vcm, 'vcm'));
-	d.appendChild(newContentNode('span', b.vitaminaD3, 'vitaminaD3'));
-	d.appendChild(newContentNode('span', b.tsh, 'tsh'));
-	d.appendChild(newContentNode('span', b.gj, 'gj'));
-	d.appendChild(newContentNode('span', b.ct, 'ct'));
-	d.appendChild(newContentNode('span', b.ldl, 'ldl'));
-	d.appendChild(newContentNode('span', b.hdl, 'hdl'));
-	d.appendChild(newContentNode('span', b.t4l, 't4l'));
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
 
-	a.insertBefore(d, a.firstChild);
+	eaa.appendChild(newContentNode('h2', 'Sangramento'));
+
+	eab.appendChild(newField(b.pbacInicial, 'pbac Inicial'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
+};
+
+/**
+ * Insere elemento de Escalas no parent
+ * @param a parent
+ * @param b escalas
+ * @param c sangramento
+ * @param d class
+ */
+var insertNewEscalas;
+insertNewEscalas = function (a, b, c, d) {
+	var e = newNode('div', d + ' content-box');
+
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
+
+	eaa.appendChild(newContentNode('h2', 'Escalas'));
+	console.log(b);
+
+	eab.appendChild(newField(c.pbacInicial, 'pbac Inicial'));
+	eab.appendChild(newField(b.beckInicial, 'beck Inicial'));
+	eab.appendChild(newField(b.vidaMioma, 'vida Mioma'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
+};
+
+/**
+ * Insere elemento de Exames no parent
+ * @param a parent
+ * @param b exameFisico
+ * @param c class
+ */
+var insertNewExames;
+insertNewExames = function (a, b, c) {
+	var e = newNode('div', c + ' content-box');
+
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
+	var eac = newNode('div', 'flexbox');
+	var ead = newNode('div', 'flexbox');
+
+	eaa.appendChild(newContentNode('h2', 'Exames'));
+
+	eab.appendChild(newField(b.hb, 'hb'));
+	eab.appendChild(newField(b.ht, 'ht'));
+	eab.appendChild(newField(b.ferro, 'ferro'));
+	eab.appendChild(newField(b.ferritina, 'ferritina'));
+	eab.appendChild(newField(b.rdw, 'rdw'));
+	eab.appendChild(newField(b.vcm, 'vcm'));
+
+	eac.appendChild(newField(b.vitaminaD3, 'vitaminaD3'));
+	eac.appendChild(newField(b.tsh, 'tsh'));
+	eac.appendChild(newField(b.gj, 'gj'));
+	eac.appendChild(newField(b.ct, 'ct'));
+	eac.appendChild(newField(b.ldl, 'ldl'));
+	eac.appendChild(newField(b.hdl, 'hdl'));
+
+	ead.appendChild(newField(b.t4l, 't4l'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+	ea.appendChild(eac);
+	ea.appendChild(ead);
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
+};
+
+/**
+ * Insere elemento de Conduta no parent
+ * @param a parent
+ * @param b exameFisico
+ * @param c class
+ */
+var insertNewConduta;
+insertNewConduta = function (a, b, c) {
+	var e = newNode('div', c + ' content-box');
+
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
+
+	eaa.appendChild(newContentNode('h2', 'Conduta'));
+
+	eab.appendChild(newField(b.conduta, 'conduta'));
+
+	if (b.cirurgia)
+	eab.appendChild(newField(b.cirurgia, 'cirurgia'));
+	if (b.hormonioTerapia) {
+		eab.appendChild(newField(b.hormonioTerapia, 'hormônio Terapia'));
+		eab.appendChild(newField(toLocaleBool(b.hormonioTerapiaCiclico), 'Ciclico'));
+		eab.appendChild(newField(toLocaleBool(b.hormonioTerapiaContinuo), 'Continuo'));
+		eab.appendChild(newField(b.hormonioTerapiaNome, 'Nome'));
+	}
+	if (b.ainh)
+	eab.appendChild(newField(b.ainh, 'ainh'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
 };
 
 var insertNewResultados = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' indigo-100 flex flex-column');
+	var e = newNode('div', c + ' content-box');
 
-	d.appendChild(newContentNode('span', b.pbacFinal, 'pbacFinal'));
-	d.appendChild(newContentNode('span', b.beckFinal, 'beckFinal'));
-	d.appendChild(newContentNode('span', b.vidaMioma, 'vidaMioma'));
+	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
 
-	a.insertBefore(d, a.firstChild);
+	eaa.appendChild(newContentNode('h2', 'Resultados'));
+
+	eab.appendChild(newField(b.pbacFinal, 'pbac Final'));
+	eab.appendChild(newField(b.beckFinal, 'beck Final'));
+	eab.appendChild(newField(b.vidaMioma, 'vida Mioma'));
+
+	ea.appendChild(eaa);
+	ea.appendChild(eab);
+
+	e.appendChild(ea);
+
+	a.insertBefore(e, a.firstChild);
 };
-
-var insertNewSangramento = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' flex flex-column');
-
-	d.appendChild(newContentNode('span', b.pbacInicial, 'pbacInicial'));
-
-	a.insertBefore(d, a.firstChild);
-};
-
-var insertNewUteroMioma = function(a, b, c) {
-	var d = document.createElement('div');
-	d.setAttribute('class', c + ' flex flex-column');
-
-	d.appendChild(newContentNode('span', b.us, 'us'));
-	d.appendChild(newContentNode('span', b.volumeInterino, 'volumeInterino'));
-	d.appendChild(newContentNode('span', b.ovarioDireito, 'ovarioDireito'));
-	d.appendChild(newContentNode('span', b.ovarioEsquerdo, 'ovarioEsquerdo'));
-	d.appendChild(newContentNode('span', b.endometro, 'endometro'));
-	d.appendChild(newContentNode('span', b.miomaQuantidade, 'miomaQuantidade'));
-	d.appendChild(newContentNode('span', b.mioma_1_caracteristicas, 'mioma_1_caracteristicas'));
-	d.appendChild(newContentNode('span', b.mioma_1_submucoso, 'mioma_1_submucoso'));
-	d.appendChild(newContentNode('span', b.mioma_1_subseroso, 'mioma_1_subseroso'));
-	d.appendChild(newContentNode('span', b.mioma_1_intramural, 'mioma_1_intramural'));
-	d.appendChild(newContentNode('span', b.mioma_2_caracteristicas, 'mioma_2_caracteristicas'));
-	d.appendChild(newContentNode('span', b.mioma_2_submucoso, 'mioma_2_submucoso'));
-	d.appendChild(newContentNode('span', b.mioma_2_subseroso, 'mioma_2_subseroso'));
-	d.appendChild(newContentNode('span', b.mioma_2_intramural, 'mioma_2_intramural'));
-
-	a.insertBefore(d, a.firstChild);
-};
-
-
-
 
 
 var appendObject = function(a, b, g) {

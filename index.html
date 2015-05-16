@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="css/villa-grid.css"/>
 	<link rel="stylesheet" href="css/polar-font.css"/>
 	<link rel="stylesheet" href="css/villa.css"/>
+	<link rel="stylesheet" href="css/polar.css"/>
 	<link rel="stylesheet" href="css/classic.css"/>
 	<link rel="stylesheet" href="css/classic.date.css"/>
 	<!--[if lt IE 9]>
@@ -237,7 +238,7 @@
 		</div>
 
 
-		<div class="flex justify-end" style="margin-top: 1em">
+		<div class="flex justify-end" style="margin-top: 1em; display: none;">
 			<a class="button flat" id="prontuario_create">Cadastrar Paciente</a>
 		</div>
 
@@ -753,21 +754,21 @@
 
 							<span class="flex">
 
-								<input type="radio" id="conduta_hormonioTerapia_1" name="conduta_hormonioTerapia"/>
+								<input type="radio" id="conduta_hormonioTerapia_1" name="conduta_hormonioTerapia" value="Progestagênio"/>
 								<label for="conduta_hormonioTerapia_1">Progestagênio</label>
 
 							</span>
 
 							<span class="flex">
 
-								<input type="radio" id="conduta_hormonioTerapia_2" name="conduta_hormonioTerapia"/>
+								<input type="radio" id="conduta_hormonioTerapia_2" name="conduta_hormonioTerapia" value="A.C.Os"/>
 								<label for="conduta_hormonioTerapia_2">A.C.Os</label>
 
 							</span>
 
 							<span class="flex">
 
-								<input type="radio" id="conduta_hormonioTerapia_3" name="conduta_hormonioTerapia"/>
+								<input type="radio" id="conduta_hormonioTerapia_3" name="conduta_hormonioTerapia" value="Analogo do GnRH"/>
 								<label for="conduta_hormonioTerapia_3">Analogo do GnRH</label>
 
 							</span>
@@ -890,10 +891,6 @@
 		.conduta_3 .conduta_hormonioTerapia_2 #conduta_hormonioTerapia_caracteristicas_tipo,
 		.conduta_4 #conduta_ainh {
 			display: flex;
-		}
-
-		#consulta {
-			display: none;
 		}
 	</style>
 
