@@ -59,7 +59,79 @@
 
 <style>
 	#p_data span {
-		padding: 8px;
+	}
+
+	.content-box {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	}
+
+	.content-box .flexbox {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	}
+
+	.content-box .field {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		flex-direction: column;
+		min-width: 9em;
+		width: 100%;
+	}
+
+	.content-box .field .title {
+		text-transform: uppercase;
+		font-size: .75em;
+	}
+
+	.content-box .field .value,
+	.content-box .field .title {
+		align-items: flex-end;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		border-style: solid;
+	}
+
+	.content-box .field .value {
+		border-width: 0 0 1px 1px;
+		margin: 0 2px 2px;
+		padding: 0 2px;
+		min-height: 25px;
+	}
+
+	.content-box .field .title {
+		border-width: 0 0 0 1px;
+		margin: 2px 2px 0;
+		padding: 0 2px;
+	}
+
+	.content-box .field.value-bold .value {
+		font-weight: 600;
+	}
+
+	.content-box .field.value-large .value {
+		font-size: 1.125em;
+	}
+
+	.content-box.prontuario .field * {
+		/*background-color: #90caf9;*/
+		border-color: #424242;
+	}
+
+	.content-box.prontuario .field {
+
 	}
 </style>
 

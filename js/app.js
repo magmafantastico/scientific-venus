@@ -116,7 +116,7 @@ var renderProntuario = function(a) {
 
 	$('#prontuario_edit').hide();
 
-	insereNovoProntuario(e, c, d, 'prontuario');
+	insertNewProntuario(e, c, d, 'prontuario');
 
 	initConsulta();
 };
@@ -339,17 +339,6 @@ jQuery.fn.removeClassLike = function (prefix) {
 	}
 };
 
-/**
- * APRESENTAÇÃO DA DATA
- */
-/*var data = new Date("2015-06-01");
- data.setDate(data.getDate() + 1);
- console.log(data.toLocaleDateString('pt-BR', {
- day: 'numeric',
- month: 'long',
- year: 'numeric'
- }));*/
-
 if (typeof _id !== 'undefined') {
 	$.ajax({
 		cache: false,
@@ -370,9 +359,81 @@ if (typeof _id !== 'undefined') {
 	});
 }
 
+/**
+ * Constrói string com condicional se b exsite
+ * @param a
+ * @param b
+ * @returns string
+ */
+var buildNote = function(a, b) {
+	if (b)
+		return a + ' (' + b + ')';
+	else
+		return a;
+};
 
+/**
+ * Cria novo elemento
+ * @param a element type
+ * @param c class
+ * @returns {Element}
+ */
+var newNode;
+newNode = function (a, c) {
+	var e = document.createElement(a);
 
-var insereNovoProntuario = function(a, b, c, d) {
+	if (c)
+		e.setAttribute('class', c);
+
+	return e;
+};
+
+/**
+ * Cria novo elemento com conteudo
+ * @param a element type
+ * @param b content
+ * @param c class
+ * @returns {Element}
+ */
+var newContentNode;
+newContentNode = function (a, b, c) {
+
+	var e = document.createElement(a);
+
+	if (c)
+		e.setAttribute('class', c);
+
+	if (b)
+		if (typeof b === 'object')
+			e.appendChild(b);
+		else if (typeof b === 'string')
+			e.appendChild(document.createTextNode(b));
+
+	return e;
+};
+
+/**
+ * Cria um field de informação para o prontuário (nome, sexo, etc)
+ * @param a content
+ * @param b title
+ * @param c class
+ * @returns {Element}
+ */
+var newField;
+newField = function (a, b, c) {
+	var e = document.createElement('span');
+	var className = 'field';
+	if (b) className += ' ' + b;
+	if (c) className += ' ' + c;
+	e.setAttribute('class', className);
+
+	e.appendChild(newContentNode('span', b, 'title'));
+	if (b) e.appendChild(newContentNode('span', a, 'value'));
+
+	return e;
+};
+
+var insertNewProntuario = function(a, b, c, d) {
 
 	// b = prontuario
 	// c = paciente
@@ -395,23 +456,18 @@ var insereNovoProntuario = function(a, b, c, d) {
 
 	// renderiza coluna A (nome, religiao, etnia, escolaridade, estadoCivil)
 
-	var e = document.createElement('div');
-	e.setAttribute('class', d + ' flex');
+	var e = newNode('div', d + ' content-box');
 
-	var ea = document.createElement('div');
-	ea.setAttribute('class', 'flex flex-column');
+	var ea = newNode('div', 'flexbox flex-column');
+	var eaa = newNode('div', 'flexbox');
+	var eab = newNode('div', 'flexbox');
 
-	var eaa = document.createElement('div');
-	eaa.setAttribute('class', 'flex red');
-	var eab = document.createElement('div');
-	eab.setAttribute('class', 'flex');
+	eaa.appendChild(newField(c.nome, 'nome', 'value-bold value-large'));
 
-	eaa.appendChild(newNode('span', c.nome, 'nome'));
-
-	eab.appendChild(newNode('span', buildNote(c.religiao, c.religiaoNote), 'religiao'));
-	eab.appendChild(newNode('span', buildNote(c.etnia, c.etniaNote), 'etnia'));
-	eab.appendChild(newNode('span', buildNote(c.escolaridade, c.escolaridadeNote), 'escolaridade'));
-	eab.appendChild(newNode('span', buildNote(c.estadoCivil, c.estadoCivilNote), 'estadoCivil'));
+	eab.appendChild(newField(buildNote(c.religiao, c.religiaoNote), 'religiao'));
+	eab.appendChild(newField(buildNote(c.etnia, c.etniaNote), 'etnia'));
+	eab.appendChild(newField(buildNote(c.escolaridade, c.escolaridadeNote), 'escolaridade'));
+	eab.appendChild(newField(buildNote(c.estadoCivil, c.estadoCivilNote), 'estado civil'));
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
@@ -421,18 +477,16 @@ var insereNovoProntuario = function(a, b, c, d) {
 	// renderiza coluna B (nome, religiao, etnia, escolaridade, estadoCivil)
 
 	var eb = document.createElement('div');
-	eb.setAttribute('class', 'flex');
+	eb.setAttribute('class', 'flexbox');
 
-	var eba = document.createElement('div');
-	eba.setAttribute('class', 'flex flex-column');
-	var ebb = document.createElement('div');
-	ebb.setAttribute('class', 'flex flex-column');
+	var eba = newNode('div', 'flexbox flex-column');
+	var ebb = newNode('div', 'flexbox flex-column');
 
-	eba.appendChild(newNode('span', c.sexo, 'sexo'));
-	eba.appendChild(newNode('span', b.registro, 'registro'));
+	eba.appendChild(newField(c.sexo, 'sexo', 'value-bold'));
+	eba.appendChild(newField(b.registro, 'registro'));
 
-	ebb.appendChild(newNode('span', paciente_nascimento, 'nascimento'));
-	ebb.appendChild(newNode('span', prontuario_data, 'data'));
+	ebb.appendChild(newField(paciente_nascimento, 'nascimento', 'value-bold'));
+	ebb.appendChild(newField(prontuario_data, 'data'));
 
 	eb.appendChild(eba);
 	eb.appendChild(ebb);
@@ -460,161 +514,143 @@ var renderConsulta = function(a) {
 
 	$('#prontuario_edit').hide();
 
-	insereNovoProntuario(e, c, d, 'prontuario');
+	insertNewProntuario(e, c, d, 'prontuario');
 
-	insereNovoResultados(g, a.resultados[0], 'resultados');
-	insereNovoConduta(g, a.conduta[0], 'conduta');
-	insereNovoExames(g, a.exames[0], 'exames');
-	insereNovoEscalas(g, a.escalas[0], 'escalas');
-	insereNovoSangramento(g, a.sangramento[0], 'sangramento');
-	insereNovoUteroMioma(g, a.uteroMioma[0], 'uteroMioma');
-	insereNovoAntecedentes(g, a.antecedentes[0], 'antecedentes');
-	insereNovoExameFisico(g, a.exameFisico[0], 'exameFisico');
+	insertNewResultados(g, a.resultados[0], 'resultados');
+	insertNewConduta(g, a.conduta[0], 'conduta');
+	insertNewExames(g, a.exames[0], 'exames');
+	insertNewEscalas(g, a.escalas[0], 'escalas');
+	insertNewSangramento(g, a.sangramento[0], 'sangramento');
+	insertNewUteroMioma(g, a.uteroMioma[0], 'uteroMioma');
+	insertNewAntecedentes(g, a.antecedentes[0], 'antecedentes');
+	insertNewExameFisico(g, a.exameFisico[0], 'exameFisico');
 
 };
 
-var insereNovoAntecedentes = function(a, b, c) {
+var insertNewAntecedentes = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' green-100 flex flex-column');
 
-	d.appendChild(newNode('span', b.situacaoAborto, 'situacaoAborto'));
-	d.appendChild(newNode('span', b.situacaoGestacao, 'situacaoGestacao'));
-	d.appendChild(newNode('span', b.situacaoParidade, 'situacaoParidade'));
-	d.appendChild(newNode('span', b.tabagismo, 'tabagismo'));
-	d.appendChild(newNode('span', b.hac, 'hac'));
-	d.appendChild(newNode('span', b.hacType, 'hacType'));
-	d.appendChild(newNode('span', b.diabetes, 'diabetes'));
-	d.appendChild(newNode('span', b.diabetesType, 'diabetesType'));
-	d.appendChild(newNode('span', b.hipotireoidismo, 'hipotireoidismo'));
-	d.appendChild(newNode('span', b.hipotireoidismoType, 'hipotireoidismoType'));
-	d.appendChild(newNode('span', b.note, 'note'));
+	d.appendChild(newContentNode('span', b.situacaoAborto, 'situacaoAborto'));
+	d.appendChild(newContentNode('span', b.situacaoGestacao, 'situacaoGestacao'));
+	d.appendChild(newContentNode('span', b.situacaoParidade, 'situacaoParidade'));
+	d.appendChild(newContentNode('span', b.tabagismo, 'tabagismo'));
+	d.appendChild(newContentNode('span', b.hac, 'hac'));
+	d.appendChild(newContentNode('span', b.hacType, 'hacType'));
+	d.appendChild(newContentNode('span', b.diabetes, 'diabetes'));
+	d.appendChild(newContentNode('span', b.diabetesType, 'diabetesType'));
+	d.appendChild(newContentNode('span', b.hipotireoidismo, 'hipotireoidismo'));
+	d.appendChild(newContentNode('span', b.hipotireoidismoType, 'hipotireoidismoType'));
+	d.appendChild(newContentNode('span', b.note, 'note'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var insereNovoConduta = function(a, b, c) {
+var insertNewConduta = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' flex flex-column');
 
-	d.appendChild(newNode('span', b.conduta, 'conduta'));
-	d.appendChild(newNode('span', b.cirurgia, 'cirurgia'));
-	d.appendChild(newNode('span', b.hormonioTerapia, 'hormonioTerapia'));
-	d.appendChild(newNode('span', b.hormonioTerapiaCiclico, 'hormonioTerapiaCiclico'));
-	d.appendChild(newNode('span', b.hormonioTerapiaContinuo, 'hormonioTerapiaContinuo'));
-	d.appendChild(newNode('span', b.hormonioTerapiaNome, 'hormonioTerapiaNome'));
-	d.appendChild(newNode('span', b.ainh, 'ainh'));
+	d.appendChild(newContentNode('span', b.conduta, 'conduta'));
+	d.appendChild(newContentNode('span', b.cirurgia, 'cirurgia'));
+	d.appendChild(newContentNode('span', b.hormonioTerapia, 'hormonioTerapia'));
+	d.appendChild(newContentNode('span', b.hormonioTerapiaCiclico, 'hormonioTerapiaCiclico'));
+	d.appendChild(newContentNode('span', b.hormonioTerapiaContinuo, 'hormonioTerapiaContinuo'));
+	d.appendChild(newContentNode('span', b.hormonioTerapiaNome, 'hormonioTerapiaNome'));
+	d.appendChild(newContentNode('span', b.ainh, 'ainh'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var insereNovoEscalas = function(a, b, c) {
+var insertNewEscalas = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' grey-50 flex flex-column');
 
-	d.appendChild(newNode('span', b.beckInicial, 'beckInicial'));
-	d.appendChild(newNode('span', b.vidaMioma, 'vidaMioma'));
+	d.appendChild(newContentNode('span', b.beckInicial, 'beckInicial'));
+	d.appendChild(newContentNode('span', b.vidaMioma, 'vidaMioma'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var insereNovoExameFisico = function(a, b, c) {
+var insertNewExameFisico = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' flex flex-column');
 
-	d.appendChild(newNode('span', b.peso, 'peso'));
-	d.appendChild(newNode('span', b.altura, 'altura'));
-	d.appendChild(newNode('span', b.imc, 'imc'));
-	d.appendChild(newNode('span', b.pressaoArterial, 'pressaoArterial'));
-	d.appendChild(newNode('span', b.circunferenciaAbdominal, 'circunferenciaAbdominal'));
-	d.appendChild(newNode('span', b.circunferenciaCervical, 'circunferenciaCervical'));
+	d.appendChild(newContentNode('span', b.peso, 'peso'));
+	d.appendChild(newContentNode('span', b.altura, 'altura'));
+	d.appendChild(newContentNode('span', b.imc, 'imc'));
+	d.appendChild(newContentNode('span', b.pressaoArterial, 'pressaoArterial'));
+	d.appendChild(newContentNode('span', b.circunferenciaAbdominal, 'circunferenciaAbdominal'));
+	d.appendChild(newContentNode('span', b.circunferenciaCervical, 'circunferenciaCervical'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var insereNovoExames = function(a, b, c) {
+var insertNewExames = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' green-100 flex flex-column');
 
-	d.appendChild(newNode('span', b.hb, 'hb'));
-	d.appendChild(newNode('span', b.ht, 'ht'));
-	d.appendChild(newNode('span', b.ferro, 'ferro'));
-	d.appendChild(newNode('span', b.ferritina, 'ferritina'));
-	d.appendChild(newNode('span', b.rdw, 'rdw'));
-	d.appendChild(newNode('span', b.vcm, 'vcm'));
-	d.appendChild(newNode('span', b.vitaminaD3, 'vitaminaD3'));
-	d.appendChild(newNode('span', b.tsh, 'tsh'));
-	d.appendChild(newNode('span', b.gj, 'gj'));
-	d.appendChild(newNode('span', b.ct, 'ct'));
-	d.appendChild(newNode('span', b.ldl, 'ldl'));
-	d.appendChild(newNode('span', b.hdl, 'hdl'));
-	d.appendChild(newNode('span', b.t4l, 't4l'));
+	d.appendChild(newContentNode('span', b.hb, 'hb'));
+	d.appendChild(newContentNode('span', b.ht, 'ht'));
+	d.appendChild(newContentNode('span', b.ferro, 'ferro'));
+	d.appendChild(newContentNode('span', b.ferritina, 'ferritina'));
+	d.appendChild(newContentNode('span', b.rdw, 'rdw'));
+	d.appendChild(newContentNode('span', b.vcm, 'vcm'));
+	d.appendChild(newContentNode('span', b.vitaminaD3, 'vitaminaD3'));
+	d.appendChild(newContentNode('span', b.tsh, 'tsh'));
+	d.appendChild(newContentNode('span', b.gj, 'gj'));
+	d.appendChild(newContentNode('span', b.ct, 'ct'));
+	d.appendChild(newContentNode('span', b.ldl, 'ldl'));
+	d.appendChild(newContentNode('span', b.hdl, 'hdl'));
+	d.appendChild(newContentNode('span', b.t4l, 't4l'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var insereNovoResultados = function(a, b, c) {
+var insertNewResultados = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' indigo-100 flex flex-column');
 
-	d.appendChild(newNode('span', b.pbacFinal, 'pbacFinal'));
-	d.appendChild(newNode('span', b.beckFinal, 'beckFinal'));
-	d.appendChild(newNode('span', b.vidaMioma, 'vidaMioma'));
+	d.appendChild(newContentNode('span', b.pbacFinal, 'pbacFinal'));
+	d.appendChild(newContentNode('span', b.beckFinal, 'beckFinal'));
+	d.appendChild(newContentNode('span', b.vidaMioma, 'vidaMioma'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var insereNovoSangramento = function(a, b, c) {
+var insertNewSangramento = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' flex flex-column');
 
-	d.appendChild(newNode('span', b.pbacInicial, 'pbacInicial'));
+	d.appendChild(newContentNode('span', b.pbacInicial, 'pbacInicial'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var insereNovoUteroMioma = function(a, b, c) {
+var insertNewUteroMioma = function(a, b, c) {
 	var d = document.createElement('div');
 	d.setAttribute('class', c + ' flex flex-column');
 
-	d.appendChild(newNode('span', b.us, 'us'));
-	d.appendChild(newNode('span', b.volumeInterino, 'volumeInterino'));
-	d.appendChild(newNode('span', b.ovarioDireito, 'ovarioDireito'));
-	d.appendChild(newNode('span', b.ovarioEsquerdo, 'ovarioEsquerdo'));
-	d.appendChild(newNode('span', b.endometro, 'endometro'));
-	d.appendChild(newNode('span', b.miomaQuantidade, 'miomaQuantidade'));
-	d.appendChild(newNode('span', b.mioma_1_caracteristicas, 'mioma_1_caracteristicas'));
-	d.appendChild(newNode('span', b.mioma_1_submucoso, 'mioma_1_submucoso'));
-	d.appendChild(newNode('span', b.mioma_1_subseroso, 'mioma_1_subseroso'));
-	d.appendChild(newNode('span', b.mioma_1_intramural, 'mioma_1_intramural'));
-	d.appendChild(newNode('span', b.mioma_2_caracteristicas, 'mioma_2_caracteristicas'));
-	d.appendChild(newNode('span', b.mioma_2_submucoso, 'mioma_2_submucoso'));
-	d.appendChild(newNode('span', b.mioma_2_subseroso, 'mioma_2_subseroso'));
-	d.appendChild(newNode('span', b.mioma_2_intramural, 'mioma_2_intramural'));
+	d.appendChild(newContentNode('span', b.us, 'us'));
+	d.appendChild(newContentNode('span', b.volumeInterino, 'volumeInterino'));
+	d.appendChild(newContentNode('span', b.ovarioDireito, 'ovarioDireito'));
+	d.appendChild(newContentNode('span', b.ovarioEsquerdo, 'ovarioEsquerdo'));
+	d.appendChild(newContentNode('span', b.endometro, 'endometro'));
+	d.appendChild(newContentNode('span', b.miomaQuantidade, 'miomaQuantidade'));
+	d.appendChild(newContentNode('span', b.mioma_1_caracteristicas, 'mioma_1_caracteristicas'));
+	d.appendChild(newContentNode('span', b.mioma_1_submucoso, 'mioma_1_submucoso'));
+	d.appendChild(newContentNode('span', b.mioma_1_subseroso, 'mioma_1_subseroso'));
+	d.appendChild(newContentNode('span', b.mioma_1_intramural, 'mioma_1_intramural'));
+	d.appendChild(newContentNode('span', b.mioma_2_caracteristicas, 'mioma_2_caracteristicas'));
+	d.appendChild(newContentNode('span', b.mioma_2_submucoso, 'mioma_2_submucoso'));
+	d.appendChild(newContentNode('span', b.mioma_2_subseroso, 'mioma_2_subseroso'));
+	d.appendChild(newContentNode('span', b.mioma_2_intramural, 'mioma_2_intramural'));
 
 	a.insertBefore(d, a.firstChild);
 };
 
-var newNode = function(a, b, c) {
-	var e = document.createElement(a);
 
-	if (c)
-		e.setAttribute('class', c);
 
-	if (b)
-		if (typeof b === 'object')
-			e.appendChild(b);
-		else if (typeof b === 'string')
-			e.appendChild(document.createTextNode(b));
 
-	return e;
-};
-
-var buildNote = function(a, b) {
-	if (b)
-		return a + ' (' + b + ')';
-	else
-		return a;
-};
 
 var appendObject = function(a, b, g) {
 	// get the object
