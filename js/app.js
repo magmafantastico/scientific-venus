@@ -303,6 +303,17 @@ var getPickDate = function (a) {
 	return a.pickadate('picker').get('select').obj.toISOString().substr(0, 10);
 };
 
+var getAge = function (a) {
+	var b, c, d;
+	a = new Date(a);
+	b = new Date();
+	c = b.getFullYear() - a.getFullYear();
+	d = b.getMonth() - a.getMonth();
+	if (d < 0 || (d === 0 && b.getDate() < a.getDate()))
+		c--;
+	return c;
+};
+
 +function ($) {
 	'use strict';
 
@@ -434,6 +445,7 @@ newContentNode = function (a, b, c) {
  */
 var newField;
 newField = function (a, b, c) {
+	console.log(a);
 	var e = document.createElement('span');
 	var className = 'field';
 	if (b) className += ' ' + b.toLowerCase().replace(/\s+/g, '').replace(/\.+/g, '');
@@ -452,7 +464,6 @@ newField = function (a, b, c) {
  */
 var renderConsulta;
 renderConsulta = function (a) {
-	console.log(a);
 	var c, d, e, f;
 
 	c = a.prontuario[0];
@@ -497,10 +508,6 @@ insertNewProntuario = function (a, b, c, d) {
 		year: 'numeric'
 	};
 
-	var date = new Date(c.nascimento);
-	date.setDate(date.getDate() + 1);
-	var paciente_nascimento = date.toLocaleDateString('pt-BR', dateOptions);
-
 	var date = new Date(b.data);
 	date.setDate(date.getDate() + 1);
 	var prontuario_data = date.toLocaleDateString('pt-BR', dateOptions);
@@ -537,7 +544,7 @@ insertNewProntuario = function (a, b, c, d) {
 	eba.appendChild(newField(c.sexo, 'sexo', 'value-bold'));
 	eba.appendChild(newField(b.registro, 'ambulatório'));
 
-	ebb.appendChild(newField(paciente_nascimento, 'nascimento', 'value-bold'));
+	ebb.appendChild(newField(getAge(c.nascimento) + ' anos', 'idade', 'value-bold'));
 	ebb.appendChild(newField(prontuario_data, 'data'));
 
 	eb.appendChild(eba);
@@ -636,9 +643,9 @@ insertNewUteroMioma = function (a, b, c) {
 	eaa.appendChild(newContentNode('h2', 'Características Útero / Mioma'));
 
 	eab.appendChild(newField(b.us, 'us'));
-	eab.appendChild(newField(b.volumeInterino, 'volumeInterino'));
-	eab.appendChild(newField(b.ovarioDireito, 'ovarioDireito'));
-	eab.appendChild(newField(b.ovarioEsquerdo, 'ovarioEsquerdo'));
+	eab.appendChild(newField(b.volumeInterino, 'volume Uterino'));
+	eab.appendChild(newField(b.ovarioDireito, 'ovario Direito'));
+	eab.appendChild(newField(b.ovarioEsquerdo, 'ovario Esquerdo'));
 	eab.appendChild(newField(b.endometro, 'endometro'));
 
 	eac.appendChild(newField(b.miomaQuantidade, 'miomaQuantidade'));
@@ -705,11 +712,10 @@ insertNewEscalas = function (a, b, c, d) {
 	var eab = newNode('div', 'flexbox');
 
 	eaa.appendChild(newContentNode('h2', 'Escalas'));
-	console.log(b);
 
 	eab.appendChild(newField(c.pbacInicial, 'pbac Inicial'));
 	eab.appendChild(newField(b.beckInicial, 'beck Inicial'));
-	eab.appendChild(newField(b.vidaMioma, 'vida Mioma'));
+	eab.appendChild(newField(b.vidaMioma, 'vida x Mioma'));
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
