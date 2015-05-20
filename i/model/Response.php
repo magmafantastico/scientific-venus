@@ -29,6 +29,36 @@ class Response {
 	}
 
 	/**
+	 * @param mysqli $c
+	 */
+	public function pushAll($c)
+	{
+		$this->antecedentes->push($c);
+		$this->conduta->push($c);
+		$this->escalas->push($c);
+		$this->exameFisico->push($c);
+		$this->exames->push($c);
+		$this->resultados->push($c);
+		$this->sangramento->push($c);
+		$this->uteroMioma->push($c);
+	}
+
+	/**
+	 * @param $a
+	 */
+	public function createAll($a)
+	{
+		$this->antecedentes = new Antecedentes($a);
+		$this->conduta = new Conduta($a);
+		$this->escalas = new Escalas($a);
+		$this->exameFisico = new ExameFisico($a);
+		$this->exames = new Exames($a);
+		$this->resultados = new Resultados($a);
+		$this->sangramento = new Sangramento($a);
+		$this->uteroMioma = new UteroMioma($a);
+	}
+
+	/**
 	 * @return mixed
 	 */
 	public function getRequest()

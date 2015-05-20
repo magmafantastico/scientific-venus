@@ -46,6 +46,9 @@ class ResponseConsulta {
 		$this->uteroMioma->push($c);
 	}
 
+	/**
+	 * @param $a
+	 */
 	public function createAll($a)
 	{
 		$this->antecedentes = new Antecedentes($a);

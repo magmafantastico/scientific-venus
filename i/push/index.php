@@ -77,15 +77,13 @@ try {
 				if ($response->prontuario->_id) {
 
 					// Cria consulta
-					$response->consulta = new $response->prontuario->_id;
+					$response->consulta = new Consulta($response->prontuario->_id);
 
 					$response->consulta->data = $r->prontuario->data;
 					$response->consulta->push($c);
 
 					// Preenche itens da consulta
 					$response->createAll($response->consulta->_id);
-
-					$response->antecedentes;
 
 					$response->antecedentes->situacaoAborto = $r->antecedentes->situacaoAborto;
 					$response->antecedentes->situacaoGestacao = $r->antecedentes->situacaoGestacao;
