@@ -8,7 +8,7 @@
 
 header('Content-Type: application/json; charset=UTF-8;');
 require_once('../../../var/connection.php');
-require_once('../index.php');
+require_once('../Thing.class.php');
 
 class Prontuario_Search extends Search
 {

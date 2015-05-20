@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Magma Scientific Connection Server v1.4.0 (http://getvilla.org/)
+ * Magma Scientific Connection Server v1.5.0 (http://getvilla.org/)
  * Copyright 2014-2015 Magma Fantastico
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
@@ -11,24 +11,23 @@ class Connection
 
 	public $connection;
 
+	private $_HOSTNAME = "localhost";
+
 	/**
 	 * BLUEHOST REMOTE
 	 */
 
-	private $_HOSTNAME = "localhost";
-	private $_USER = "empreen1_magma";
+	/*private $_USER = "empreen1_magma";
 	private $_PASSWD = "o6NRAoNk@0[!bV";
-	private $_SCHEMA = "empreen1_scientific_venus";
-
+	private $_SCHEMA = "empreen1_scientific_venus";*/
 
 	/**
 	 * HOME
 	 */
 
-	/*private $_HOSTNAME = "localhost";
 	private $_USER = "root";
 	private $_PASSWD = "sux";
-	private $_SCHEMA = "scientific_venus";*/
+	private $_SCHEMA = "scientific_venus";
 
 	public function __construct() {
 

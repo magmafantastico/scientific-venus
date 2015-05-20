@@ -8,10 +8,11 @@
 
 header('Content-Type: application/json; charset=UTF-8;');
 require_once('../../../var/connection.php');
-require_once('../index.php');
 
-class Consulta_Search extends Search
-{
+class ConsultaSearch {
+
+	public $request;
+	private $requestJSON;
 
 	public $consulta_id;
 	public $prontuario_id;
@@ -41,6 +42,12 @@ class Consulta_Search extends Search
 		'resultados',
 		'sangramento',
 		'uteroMioma');
+
+	public function __construct($a)
+	{
+		$this->setRequestJSON($a);
+		$this->setRequest(json_decode($this->getRequestJSON()));
+	}
 
 	/**
 	 * @return mixed
@@ -88,6 +95,38 @@ class Consulta_Search extends Search
 	public function setPacienteId($paciente_id)
 	{
 		$this->paciente_id = $paciente_id;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getRequest()
+	{
+		return $this->request;
+	}
+
+	/**
+	 * @param mixed $request
+	 */
+	public function setRequest($request)
+	{
+		$this->request = $request;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getRequestJSON()
+	{
+		return $this->requestJSON;
+	}
+
+	/**
+	 * @param mixed $requestJSON
+	 */
+	public function setRequestJSON($requestJSON)
+	{
+		$this->requestJSON = $requestJSON;
 	}
 
 	/**
@@ -193,21 +232,28 @@ class Consulta_Search extends Search
 		}
 	}
 
+	public function toJSON()
+	{
+		return json_encode($this);
+	}
+
 }
 
 if (!empty($_GET['prontuario_id'])) {
+
 	$s = $_GET['prontuario_id'];
-	$c = new Connection();
-	$conn = $c->getConnection();
-	$a = new Consulta_Search($s);
+	$connection = new Connection();
+	$c = $connection->getConnection();
 
-	$a->findProntuario($a->request, $conn);
+	$a = new ConsultaSearch($s);
+
+	$a->findProntuario($a->request, $c);
 	if (($a->getProntuarioId()))
-		$a->getProntuarioData($conn);
+		$a->getProntuarioData($c);
 
-	$a->findConsulta($a->getProntuarioId(), $conn);
+	$a->findConsulta($a->getProntuarioId(), $c);
 	if ($a->getProntuarioId())
-		$a->getData($a->getConsultaId(), $conn);
+		$a->getData($a->getConsultaId(), $c);
 
 } else {
 	$s = '{}';

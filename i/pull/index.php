@@ -9,8 +9,7 @@
 header('Content-Type: application/json; charset=UTF-8;');
 require_once('../var/connection.php');
 
-class Data
-{
+class Data {
 
 	private $conn;
 	public $objectList = array(
