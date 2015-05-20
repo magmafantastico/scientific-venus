@@ -11,7 +11,7 @@ require_once('../../var/connection.php');
 require_once('../../model/Thing.class.php');
 require_once('../../model/Paciente.class.php');
 require_once('../../model/Prontuario.class.php');
-require_once('../../model/ResponseProntuario.php');
+require_once('../../model/Response.php');
 
 function __autoload($name) {
 	echo "Want to load $name.\n";
@@ -26,7 +26,7 @@ try {
 	if ($_POST['response']) {
 
 		$a = $_POST['response'];
-		$response = new ResponseProntuario($a);
+		$response = new Response($a);
 
 		$r = $response->getRequest();
 

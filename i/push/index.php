@@ -21,7 +21,7 @@ require_once('../model/Exames.class.php');
 require_once('../model/Resultados.class.php');
 require_once('../model/Sangramento.class.php');
 require_once('../model/UteroMioma.class.php');
-require_once('../model/ResponseConsulta.php');
+require_once('../model/Response.php');
 
 function __autoload($name) {
 	echo "Want to load $name.\n";
@@ -34,92 +34,135 @@ try {
 	$c = $connection->getConnection();
 
 	if ($_POST['response']) {
+
 		$a = $_POST['response'];
 
 		// Preenche consulta
-		$response = new ResponseConsulta($a, 190);
+		$response = new Response($a);
 
 		$r = $response->getRequest();
 
-		$response->consulta->data = $r->prontuario->data;
-		$response->consulta->push($c);
+		// Testa se existe prontuario
+		if (!$r->prontuario->_id) {
 
-		// Preenche itens da consulta
-		$response->createAll($response->consulta->_id);
+			// Cria paciente
+			$response->paciente = new Paciente();
 
-		$response->antecedentes;
+			$response->paciente->nome = $r->paciente->nome;
+			$response->paciente->sexo = $r->paciente->sexo;
+			$response->paciente->nascimento = $r->paciente->nascimento;
+			$response->paciente->religiao = $r->paciente->religiao;
+			$response->paciente->religiaoNote = $r->paciente->religiaoNote;
+			$response->paciente->etnia = $r->paciente->etnia;
+			$response->paciente->etniaNote = $r->paciente->etniaNote;
+			$response->paciente->escolaridade = $r->paciente->escolaridade;
+			$response->paciente->escolaridadeNote = $r->paciente->escolaridadeNote;
+			$response->paciente->estadoCivil = $r->paciente->estadoCivil;
+			$response->paciente->estadoCivilNote = $r->paciente->estadoCivilNote;
 
-		$response->antecedentes->situacaoAborto = $r->antecedentes->situacaoAborto;
-		$response->antecedentes->situacaoGestacao = $r->antecedentes->situacaoGestacao;
-		$response->antecedentes->situacaoParidade = $r->antecedentes->situacaoParidade;
-		$response->antecedentes->tabagismo = $r->antecedentes->tabagismo;
-		$response->antecedentes->hac = $r->antecedentes->hac;
-		$response->antecedentes->hacType = $r->antecedentes->hacType;
-		$response->antecedentes->diabetes = $r->antecedentes->diabetes;
-		$response->antecedentes->diabetesType = $r->antecedentes->diabetesType;
-		$response->antecedentes->hipotireoidismo = $r->antecedentes->hipotireoidismo;
-		$response->antecedentes->hipotireoidismoType = $r->antecedentes->hipotireoidismoType;
-		$response->antecedentes->note = $r->antecedentes->note;
+			$response->paciente->push($c);
 
-		$response->conduta->conduta = $r->conduta->conduta;
-		$response->conduta->cirurgia = $r->conduta->cirurgia;
-		$response->conduta->hormonioTerapia = $r->conduta->hormonioTerapia;
-		$response->conduta->hormonioTerapiaCiclico = $r->conduta->hormonioTerapiaCiclico;
-		$response->conduta->hormonioTerapiaContinuo = $r->conduta->hormonioTerapiaContinuo;
-		$response->conduta->hormonioTerapiaNome = $r->conduta->hormonioTerapiaNome;
-		$response->conduta->ainh = $r->conduta->ainh;
+			// Testa _id de paciente
+			if ($response->paciente->_id) {
 
-		$response->escalas->beckInicial = $r->escalas->beckInicial;
-		$response->escalas->vidaMioma = $r->escalas->vidaMioma;
+				// Cria prontuario
+				$response->prontuario = new Prontuario($response->paciente->_id);
 
-		$response->exameFisico->peso = $r->exameFisico->peso;
-		$response->exameFisico->altura = $r->exameFisico->altura;
-		$response->exameFisico->imc = $r->exameFisico->imc;
-		$response->exameFisico->pressaoArterial = $r->exameFisico->pressaoArterial;
-		$response->exameFisico->circunferenciaAbdominal = $r->exameFisico->circunferenciaAbdominal;
-		$response->exameFisico->circunferenciaCervical = $r->exameFisico->circunferenciaCervical;
+				$response->prontuario->data = $r->prontuario->data;
+				$response->prontuario->registro = $r->prontuario->registro;
 
-		$response->exames->hb = $r->exames->hb;
-		$response->exames->ht = $r->exames->ht;
-		$response->exames->ferro = $r->exames->ferro;
-		$response->exames->ferritina = $r->exames->ferritina;
-		$response->exames->rdw = $r->exames->rdw;
-		$response->exames->vcm = $r->exames->vcm;
-		$response->exames->vitaminaD3 = $r->exames->vitaminaD3;
-		$response->exames->tsh = $r->exames->tsh;
-		$response->exames->gj = $r->exames->gj;
-		$response->exames->ct = $r->exames->ct;
-		$response->exames->ldl = $r->exames->ldl;
-		$response->exames->hdl = $r->exames->hdl;
-		$response->exames->t4l = $r->exames->t4l;
+				$response->prontuario->push($c);
 
-		$response->resultados->pbacFinal = $r->resultados->pbacFinal;
-		$response->resultados->beckFinal = $r->resultados->beckFinal;
-		$response->resultados->vidaMioma = $r->resultados->vidaMioma;
+				// Testa _id de prontuario
+				if ($response->prontuario->_id) {
 
-		$response->sangramento->pbacInicial = $r->sangramento->pbacInicial;
+					// Cria consulta
+					$response->consulta = new $response->prontuario->_id;
 
-		$response->uteroMioma->us = $r->uteroMioma->us;
-		$response->uteroMioma->volumeInterino = $r->uteroMioma->volumeInterino;
-		$response->uteroMioma->ovarioDireito = $r->uteroMioma->ovarioDireito;
-		$response->uteroMioma->ovarioEsquerdo = $r->uteroMioma->ovarioEsquerdo;
-		$response->uteroMioma->endometro = $r->uteroMioma->endometro;
-		$response->uteroMioma->miomaQuantidade = $r->uteroMioma->miomaQuantidade;
-		$response->uteroMioma->mioma_1_caracteristicas = $r->uteroMioma->mioma_1_caracteristicas;
-		$response->uteroMioma->mioma_1_submucoso = $r->uteroMioma->mioma_1_submucoso;
-		$response->uteroMioma->mioma_1_subseroso = $r->uteroMioma->mioma_1_subseroso;
-		$response->uteroMioma->mioma_1_intramural = $r->uteroMioma->mioma_1_intramural;
-		$response->uteroMioma->mioma_2_caracteristicas = $r->uteroMioma->mioma_2_caracteristicas;
-		$response->uteroMioma->mioma_2_submucoso = $r->uteroMioma->mioma_2_submucoso;
-		$response->uteroMioma->mioma_2_subseroso = $r->uteroMioma->mioma_2_subseroso;
-		$response->uteroMioma->mioma_2_intramural = $r->uteroMioma->mioma_2_intramural;
-		$response->uteroMioma->nd = $r->uteroMioma->nd;
+					$response->consulta->data = $r->prontuario->data;
+					$response->consulta->push($c);
 
-		// Realiza push de todos os itens da consulta
-		$response->pushAll($c);
+					// Preenche itens da consulta
+					$response->createAll($response->consulta->_id);
+
+					$response->antecedentes;
+
+					$response->antecedentes->situacaoAborto = $r->antecedentes->situacaoAborto;
+					$response->antecedentes->situacaoGestacao = $r->antecedentes->situacaoGestacao;
+					$response->antecedentes->situacaoParidade = $r->antecedentes->situacaoParidade;
+					$response->antecedentes->tabagismo = $r->antecedentes->tabagismo;
+					$response->antecedentes->hac = $r->antecedentes->hac;
+					$response->antecedentes->hacType = $r->antecedentes->hacType;
+					$response->antecedentes->diabetes = $r->antecedentes->diabetes;
+					$response->antecedentes->diabetesType = $r->antecedentes->diabetesType;
+					$response->antecedentes->hipotireoidismo = $r->antecedentes->hipotireoidismo;
+					$response->antecedentes->hipotireoidismoType = $r->antecedentes->hipotireoidismoType;
+					$response->antecedentes->note = $r->antecedentes->note;
+
+					$response->conduta->conduta = $r->conduta->conduta;
+					$response->conduta->cirurgia = $r->conduta->cirurgia;
+					$response->conduta->hormonioTerapia = $r->conduta->hormonioTerapia;
+					$response->conduta->hormonioTerapiaCiclico = $r->conduta->hormonioTerapiaCiclico;
+					$response->conduta->hormonioTerapiaContinuo = $r->conduta->hormonioTerapiaContinuo;
+					$response->conduta->hormonioTerapiaNome = $r->conduta->hormonioTerapiaNome;
+					$response->conduta->ainh = $r->conduta->ainh;
+
+					$response->escalas->beckInicial = $r->escalas->beckInicial;
+					$response->escalas->vidaMioma = $r->escalas->vidaMioma;
+
+					$response->exameFisico->peso = $r->exameFisico->peso;
+					$response->exameFisico->altura = $r->exameFisico->altura;
+					$response->exameFisico->imc = $r->exameFisico->imc;
+					$response->exameFisico->pressaoArterial = $r->exameFisico->pressaoArterial;
+					$response->exameFisico->circunferenciaAbdominal = $r->exameFisico->circunferenciaAbdominal;
+					$response->exameFisico->circunferenciaCervical = $r->exameFisico->circunferenciaCervical;
+
+					$response->exames->hb = $r->exames->hb;
+					$response->exames->ht = $r->exames->ht;
+					$response->exames->ferro = $r->exames->ferro;
+					$response->exames->ferritina = $r->exames->ferritina;
+					$response->exames->rdw = $r->exames->rdw;
+					$response->exames->vcm = $r->exames->vcm;
+					$response->exames->vitaminaD3 = $r->exames->vitaminaD3;
+					$response->exames->tsh = $r->exames->tsh;
+					$response->exames->gj = $r->exames->gj;
+					$response->exames->ct = $r->exames->ct;
+					$response->exames->ldl = $r->exames->ldl;
+					$response->exames->hdl = $r->exames->hdl;
+					$response->exames->t4l = $r->exames->t4l;
+
+					$response->resultados->pbacFinal = $r->resultados->pbacFinal;
+					$response->resultados->beckFinal = $r->resultados->beckFinal;
+					$response->resultados->vidaMioma = $r->resultados->vidaMioma;
+
+					$response->sangramento->pbacInicial = $r->sangramento->pbacInicial;
+
+					$response->uteroMioma->us = $r->uteroMioma->us;
+					$response->uteroMioma->volumeInterino = $r->uteroMioma->volumeInterino;
+					$response->uteroMioma->ovarioDireito = $r->uteroMioma->ovarioDireito;
+					$response->uteroMioma->ovarioEsquerdo = $r->uteroMioma->ovarioEsquerdo;
+					$response->uteroMioma->endometro = $r->uteroMioma->endometro;
+					$response->uteroMioma->miomaQuantidade = $r->uteroMioma->miomaQuantidade;
+					$response->uteroMioma->mioma_1_caracteristicas = $r->uteroMioma->mioma_1_caracteristicas;
+					$response->uteroMioma->mioma_1_submucoso = $r->uteroMioma->mioma_1_submucoso;
+					$response->uteroMioma->mioma_1_subseroso = $r->uteroMioma->mioma_1_subseroso;
+					$response->uteroMioma->mioma_1_intramural = $r->uteroMioma->mioma_1_intramural;
+					$response->uteroMioma->mioma_2_caracteristicas = $r->uteroMioma->mioma_2_caracteristicas;
+					$response->uteroMioma->mioma_2_submucoso = $r->uteroMioma->mioma_2_submucoso;
+					$response->uteroMioma->mioma_2_subseroso = $r->uteroMioma->mioma_2_subseroso;
+					$response->uteroMioma->mioma_2_intramural = $r->uteroMioma->mioma_2_intramural;
+					$response->uteroMioma->nd = $r->uteroMioma->nd;
+
+					// Realiza push de todos os itens da consulta
+					$response->pushAll($c);
+				}
+			}
+
+		}
 
 		// Print JSON
 		print_r($response->toJSON());
+
 	}
 
 } catch (Exception $e) {

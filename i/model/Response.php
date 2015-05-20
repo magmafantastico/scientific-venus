@@ -5,7 +5,7 @@
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
-class ResponseConsulta {
+class Response {
 
 	private $request;
 	private $requestJSON;
@@ -22,40 +22,10 @@ class ResponseConsulta {
 	public $sangramento;
 	public $uteroMioma;
 
-	/**
-	 * @param $a
-	 */
 	public function __construct($a)
 	{
 		$this->setRequestJSON($a);
 		$this->setRequest(json_decode($this->getRequestJSON()));
-	}
-
-	/**
-	 * @param mysqli $c
-	 */
-	public function pushAll($c)
-	{
-		$this->antecedentes->push($c);
-		$this->conduta->push($c);
-		$this->escalas->push($c);
-		$this->exameFisico->push($c);
-		$this->exames->push($c);
-		$this->resultados->push($c);
-		$this->sangramento->push($c);
-		$this->uteroMioma->push($c);
-	}
-
-	public function createAll($a)
-	{
-		$this->antecedentes = new Antecedentes($a);
-		$this->conduta = new Conduta($a);
-		$this->escalas = new Escalas($a);
-		$this->exameFisico = new ExameFisico($a);
-		$this->exames = new Exames($a);
-		$this->resultados = new Resultados($a);
-		$this->sangramento = new Sangramento($a);
-		$this->uteroMioma = new UteroMioma($a);
 	}
 
 	/**
@@ -88,6 +58,30 @@ class ResponseConsulta {
 	public function setRequestJSON($requestJSON)
 	{
 		$this->requestJSON = $requestJSON;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPaciente()
+	{
+		return $this->paciente;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getProntuario()
+	{
+		return $this->prontuario;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getConsulta()
+	{
+		return $this->consulta;
 	}
 
 	public function toJSON()

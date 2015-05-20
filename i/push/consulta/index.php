@@ -21,7 +21,7 @@ require_once('../../model/Exames.class.php');
 require_once('../../model/Resultados.class.php');
 require_once('../../model/Sangramento.class.php');
 require_once('../../model/UteroMioma.class.php');
-require_once('../../model/ResponseConsulta.php');
+require_once('../../model/Response.php');
 
 function __autoload($name) {
 	echo "Want to load $name.\n";
@@ -40,9 +40,11 @@ try {
 		/**
 		 * TODO - Adicionar método para criar prontuario_id
 		 */
-		$response = new ResponseConsulta($a, 190);
+		$response = new ResponseConsulta($a);
 
 		$r = $response->getRequest();
+
+		$response->consulta = new Consulta(190);
 
 		$response->consulta->data = $r->prontuario->data;
 		$response->consulta->push($c);
