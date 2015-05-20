@@ -9,6 +9,7 @@ if (typeof __API_DIR === 'undefined')
 
 $('#btn').click(function() {
 
+
 	$.ajax({
 		data: {response: JSON.stringify(getResponse())},
 		error: function(data) {
@@ -18,7 +19,7 @@ $('#btn').click(function() {
 		success: function(data) {
 			console.log(data);
 		},
-		url: __API_DIR +  'i/push/consulta/'
+		url: __API_DIR +  'i/push/prontuario/'
 	});
 
 });
