@@ -18,27 +18,13 @@ $('#btn').click(function() {
 		success: function(data) {
 			console.log(data);
 		},
-		url: __API_DIR +  'i/push/'
+		url: __API_DIR +  'i/push/consulta/'
 	});
 
 });
 
 $('#prontuario_novo').click(function() {
 	createProntuario();
-});
-
-$('#btn').click(function() {
-	$.ajax({
-		cache: false,
-		dataType: 'json',
-		error: function(data) {
-			console.log(data.responseText);
-		},
-		success: function(data) {
-			console.log(data);
-		},
-		url: __API_DIR +  'i/pull/'
-	});
 });
 
 $('#prontuario_create').click(function() {
@@ -181,9 +167,9 @@ getResponse = function () {
 			circunferenciaCervical: getTextField('exameFisico_circunferenciaCervical')
 		},
 		antecedentes: {
-			situacaoAborto: toBoolean(getActiveCheckbox('antecedentes_situacao_aborto', true)),
-			situacaoGestacao: toBoolean(getActiveCheckbox('antecedentes_situacao_gestaçao', true)),
-			situacaoParidade: toBoolean(getActiveCheckbox('antecedentes_situacao_paridade', true)),
+			situacaoAborto: getTextField('antecedentes_situacao_aborto'),
+			situacaoGestacao: getTextField('antecedentes_situacao_gestaçao'),
+			situacaoParidade: getTextField('antecedentes_situacao_paridade'),
 			tabagismo: parseBoolean(getActiveRadio('antecedentes_tabagismo')),
 			hac: parseBoolean(getActiveRadio('antecedentes_hac')),
 			hacType: getActiveRadio('antecedentes_hac_type'),
