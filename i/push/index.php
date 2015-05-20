@@ -1,216 +1,127 @@
 <?php
 
 /**
- * Magma Scientific Push Server v1.3.0 (http://getvilla.org/)
+ * Magma Scientific Push Server v1.9.0 (http://getvilla.org/)
  * Copyright 2014-2015 Magma Fantastico
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8;');
 require_once('../var/connection.php');
+require_once('../model/Thing.class.php');
+require_once('../model/Paciente.class.php');
+require_once('../model/Prontuario.class.php');
+require_once('../model/ConsultaThing.class.php');
+require_once('../model/Consulta.class.php');
+require_once('../model/Antecedentes.class.php');
+require_once('../model/Conduta.class.php');
+require_once('../model/Escalas.class.php');
+require_once('../model/ExameFisico.class.php');
+require_once('../model/Exames.class.php');
+require_once('../model/Resultados.class.php');
+require_once('../model/Sangramento.class.php');
+require_once('../model/UteroMioma.class.php');
+require_once('../model/ResponseConsulta.php');
 
-/*$a = '{"prontuario":{"_id":"111","data":"2015-05-15"},"paciente":{"nome":"Dudu","sexo":"Masculino","nascimento":"2015-11-26","religiao":"Outro","religiaoNote":"agnostico","etnia":"Branco","etniaNote":false,"escolaridade":"Superior","escolaridadeNote":false,"estadoCivil":"Solteiro(a)","estadoCivilNote":false},"exameFisico":{"peso":"72.00","altura":"1.74","imc":"1.50","pressaoArterial":"12.5","circunferenciaAbdominal":"60","circunferenciaCervical":"69.5"},"antecedentes":{"situacaoAborto":false,"situacaoGestacao":false,"situacaoParidade":true,"tabagismo":false,"hac":"true","hacType":"Descompensado","diabetes":"true","diabetesType":"Compensado","hipotireoidismo":"false","hipotireoidismoTYpe":false,"note":"Isso é apenas um teste"},"uteroMioma":{"us":false,"volumeInterino":false,"ovarioDireito":false,"ovarioEsquerdo":false,"endometro":false,"miomaQuantidade":false,"mioma_1_caracteristicas":false,"mioma_1_type":false,"mioma_2_caracteristicas":false,"mioma_2_type":false,"nd":false},"sangramento":{"pbacInicial":false},"escalas":{"beckInicial":false,"vidaMioma":false},"exames":{"ht":false,"ferro":false,"ferritina":false,"rdw":false,"vcm":false,"vitaminaD3":false,"tsh":false,"gj":false,"ct":false,"ldl":false,"hdl":false,"t4l":false},"conduta":{"conduta":false,"cirurgia":false,"hormonioTerapia":false,"hormonioTerapiaCiclico":false,"hormonioTerapiaContinuo":false,"ainh":false},"resultados":{"pbacFinal":false,"beckFinal":false,"vidaMioma":false}}';*/
-$a = new Response($_POST['response']);
-$b = json_decode($a->getRequest());
+function __autoload($name) {
+	echo "Want to load $name.\n";
+	throw new Exception("Unable to load $name.");
+}
 
-$c = new Connection();
-$mysqli = $c->getConnection();
+try {
 
-if (!$mysqli->query("INSERT INTO paciente(
-	nome,
-    sexo,
-    nascimento,
-    religiao,
-    religiaoNote,
-    etnia,
-    etniaNote,
-    escolaridade,
-    escolaridadeNote,
-    estadoCivil,
-    estadoCivilNote) VALUES ('" .
-	$b->paciente->nome . "', '" .
-	$b->paciente->sexo . "', '" .
-	$b->paciente->nascimento . "', '" .
-	$b->paciente->religiao . "', '" .
-	$b->paciente->religiaoNote . "', '" .
-	$b->paciente->etnia . "', '" .
-	$b->paciente->etniaNote . "', '" .
-	$b->paciente->escolaridade . "', '" .
-	$b->paciente->escolaridadeNote . "', '" .
-	$b->paciente->estadoCivil . "', '" .
-	$b->paciente->estadoCivilNote . "')"))
-	echo "Insert failed(paciente): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+	$connection = new Connection();
+	$c = $connection->getConnection();
 
-$paciente_id = $mysqli->insert_id;
+	if ($_POST['response']) {
+		$a = $_POST['response'];
 
-if (!$mysqli->query("INSERT INTO prontuario(data, paciente_id) VALUES ('" .
-	$b->prontuario->data . "', '" .
-	$paciente_id . "')"))
-	echo "Insert failed(prontuario): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		// Preenche consulta
+		$response = new ResponseConsulta($a, 190);
 
-$prontuario_id = $mysqli->insert_id;
+		$r = $response->getRequest();
 
-echo($prontuario_id);
+		$response->consulta->data = $r->prontuario->data;
+		$response->consulta->push($c);
 
-if (!$mysqli->query("INSERT INTO consulta(data, prontuario_id) VALUES ('" .
-	$b->prontuario->data . "', '" .
-	$prontuario_id . "')"))
-	echo "Insert failed(consulta): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		// Preenche itens da consulta
+		$response->createAll($response->consulta->_id);
 
-$consulta_id = $mysqli->insert_id;
+		$response->antecedentes;
 
-if (!$mysqli->query("INSERT INTO exameFisico(
-	consulta_id,
-    peso,
-    altura,
-    imc,
-    pressaoArterial,
-    circunferenciaAbdominal,
-    circunferenciaCervical) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->exameFisico->peso . "', '" .
-	$b->exameFisico->altura . "', '" .
-	$b->exameFisico->imc . "', '" .
-	$b->exameFisico->pressaoArterial . "', '" .
-	$b->exameFisico->circunferenciaAbdominal . "', '" .
-	$b->exameFisico->circunferenciaCervical . "')"))
-	echo "Insert failed(exameFisico): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->antecedentes->situacaoAborto = $r->antecedentes->situacaoAborto;
+		$response->antecedentes->situacaoGestacao = $r->antecedentes->situacaoGestacao;
+		$response->antecedentes->situacaoParidade = $r->antecedentes->situacaoParidade;
+		$response->antecedentes->tabagismo = $r->antecedentes->tabagismo;
+		$response->antecedentes->hac = $r->antecedentes->hac;
+		$response->antecedentes->hacType = $r->antecedentes->hacType;
+		$response->antecedentes->diabetes = $r->antecedentes->diabetes;
+		$response->antecedentes->diabetesType = $r->antecedentes->diabetesType;
+		$response->antecedentes->hipotireoidismo = $r->antecedentes->hipotireoidismo;
+		$response->antecedentes->hipotireoidismoType = $r->antecedentes->hipotireoidismoType;
+		$response->antecedentes->note = $r->antecedentes->note;
 
-if (!$mysqli->query("INSERT INTO antecedentes(
-	consulta_id,
-	situacaoAborto,
-    situacaoGestacao,
-    situacaoParidade,
-    tabagismo,
-    hac,
-    hacType,
-    diabetes,
-    diabetesType,
-    hipotireoidismo,
-    hipotireoidismoType,
-    note) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->antecedentes->situacaoAborto . "', '" .
-	$b->antecedentes->situacaoGestacao . "', '" .
-	$b->antecedentes->situacaoParidade . "', '" .
-	$b->antecedentes->tabagismo . "', '" .
-	$b->antecedentes->hac . "', '" .
-	$b->antecedentes->hacType . "', '" .
-	$b->antecedentes->diabetes . "', '" .
-	$b->antecedentes->diabetesType . "', '" .
-	$b->antecedentes->hipotireoidismo . "', '" .
-	$b->antecedentes->hipotireoidismoType . "', '" .
-	$b->antecedentes->note . "')"))
-	echo "Insert failed(antecedentes): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->conduta->conduta = $r->conduta->conduta;
+		$response->conduta->cirurgia = $r->conduta->cirurgia;
+		$response->conduta->hormonioTerapia = $r->conduta->hormonioTerapia;
+		$response->conduta->hormonioTerapiaCiclico = $r->conduta->hormonioTerapiaCiclico;
+		$response->conduta->hormonioTerapiaContinuo = $r->conduta->hormonioTerapiaContinuo;
+		$response->conduta->hormonioTerapiaNome = $r->conduta->hormonioTerapiaNome;
+		$response->conduta->ainh = $r->conduta->ainh;
 
-if (!$mysqli->query("INSERT INTO uteroMioma(
-	consulta_id,
-	us,
-    volumeInterino,
-    ovarioDireito,
-    ovarioEsquerdo,
-    endometro,
-    miomaQuantidade,
-    mioma_1_caracteristicas,
-    mioma_1_submucoso,
-    mioma_1_subseroso,
-    mioma_1_intramural,
-    mioma_2_caracteristicas,
-    mioma_2_submucoso,
-    mioma_2_subseroso,
-    mioma_2_intramural,
-    nd) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->uteroMioma->us . "', '" .
-	$b->uteroMioma->volumeInterino . "', '" .
-	$b->uteroMioma->ovarioDireito . "', '" .
-	$b->uteroMioma->ovarioEsquerdo . "', '" .
-	$b->uteroMioma->endometro . "', '" .
-	$b->uteroMioma->miomaQuantidade . "', '" .
-	$b->uteroMioma->mioma_1_caracteristicas . "', '" .
-	$b->uteroMioma->mioma_1_submucoso . "', '" .
-	$b->uteroMioma->mioma_1_subseroso . "', '" .
-	$b->uteroMioma->mioma_1_intramural . "', '" .
-	$b->uteroMioma->mioma_2_caracteristicas . "', '" .
-	$b->uteroMioma->mioma_2_submucoso . "', '" .
-	$b->uteroMioma->mioma_2_subseroso . "', '" .
-	$b->uteroMioma->mioma_2_intramural . "', '" .
-	$b->uteroMioma->nd . "')"))
-	echo "Insert failed(uteroMioma): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->escalas->beckInicial = $r->escalas->beckInicial;
+		$response->escalas->vidaMioma = $r->escalas->vidaMioma;
 
-if (!$mysqli->query("INSERT INTO sangramento(
-	consulta_id,
-    pbacInicial) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->sangramento->pbacInicial . "')"))
-	echo "Insert failed(sangramento): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->exameFisico->peso = $r->exameFisico->peso;
+		$response->exameFisico->altura = $r->exameFisico->altura;
+		$response->exameFisico->imc = $r->exameFisico->imc;
+		$response->exameFisico->pressaoArterial = $r->exameFisico->pressaoArterial;
+		$response->exameFisico->circunferenciaAbdominal = $r->exameFisico->circunferenciaAbdominal;
+		$response->exameFisico->circunferenciaCervical = $r->exameFisico->circunferenciaCervical;
 
-if (!$mysqli->query("INSERT INTO escalas(
-	consulta_id,
-    beckInicial,
-    vidaMioma) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->escalas->beckInicial . "', '" .
-	$b->escalas->vidaMioma . "')"))
-	echo "Insert failed(escalas): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->exames->hb = $r->exames->hb;
+		$response->exames->ht = $r->exames->ht;
+		$response->exames->ferro = $r->exames->ferro;
+		$response->exames->ferritina = $r->exames->ferritina;
+		$response->exames->rdw = $r->exames->rdw;
+		$response->exames->vcm = $r->exames->vcm;
+		$response->exames->vitaminaD3 = $r->exames->vitaminaD3;
+		$response->exames->tsh = $r->exames->tsh;
+		$response->exames->gj = $r->exames->gj;
+		$response->exames->ct = $r->exames->ct;
+		$response->exames->ldl = $r->exames->ldl;
+		$response->exames->hdl = $r->exames->hdl;
+		$response->exames->t4l = $r->exames->t4l;
 
-if (!$mysqli->query("INSERT INTO exames(
-	consulta_id,
-	hb,
-    ht,
-    ferro,
-    ferritina,
-    rdw,
-    vcm,
-    vitaminaD3,
-    tsh,
-    gj,
-    ct,
-    ldl,
-    hdl,
-    t4l) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->exames->hb . "', '" .
-	$b->exames->ht . "', '" .
-	$b->exames->ferro . "', '" .
-	$b->exames->ferritina . "', '" .
-	$b->exames->rdw . "', '" .
-	$b->exames->vcm . "', '" .
-	$b->exames->vitaminaD3 . "', '" .
-	$b->exames->tsh . "', '" .
-	$b->exames->gj . "', '" .
-	$b->exames->ct . "', '" .
-	$b->exames->ldl . "', '" .
-	$b->exames->hdl . "', '" .
-	$b->exames->t4l . "')"))
-	echo "Insert failed(exames): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->resultados->pbacFinal = $r->resultados->pbacFinal;
+		$response->resultados->beckFinal = $r->resultados->beckFinal;
+		$response->resultados->vidaMioma = $r->resultados->vidaMioma;
 
-if (!$mysqli->query("INSERT INTO conduta(
-	consulta_id,
-	conduta,
-    cirurgia,
-    hormonioTerapia,
-    hormonioTerapiaCiclico,
-    hormonioTerapiaContinuo,
-    hormonioTerapiaNome,
-    ainh) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->conduta->conduta . "', '" .
-	$b->conduta->cirurgia . "', '" .
-	$b->conduta->hormonioTerapia . "', '" .
-	$b->conduta->hormonioTerapiaCiclico . "', '" .
-	$b->conduta->hormonioTerapiaContinuo . "', '" .
-	$b->conduta->hormonioTerapiaNome . "', '" .
-	$b->conduta->ainh . "')"))
-	echo "Insert failed(conduta): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->sangramento->pbacInicial = $r->sangramento->pbacInicial;
 
-if (!$mysqli->query("INSERT INTO resultados(
-	consulta_id,
-    pbacFinal,
-    beckFinal,
-    vidaMioma) VALUES ('" .
-	$consulta_id . "', '" .
-	$b->resultados->pbacFinal . "', '" .
-	$b->resultados->beckFinal . "', '" .
-	$b->resultados->vidaMioma . "')"))
-	echo "Insert failed(resultados): (" . $mysqli->errno . ") " . $mysqli->error . "/n";
+		$response->uteroMioma->us = $r->uteroMioma->us;
+		$response->uteroMioma->volumeInterino = $r->uteroMioma->volumeInterino;
+		$response->uteroMioma->ovarioDireito = $r->uteroMioma->ovarioDireito;
+		$response->uteroMioma->ovarioEsquerdo = $r->uteroMioma->ovarioEsquerdo;
+		$response->uteroMioma->endometro = $r->uteroMioma->endometro;
+		$response->uteroMioma->miomaQuantidade = $r->uteroMioma->miomaQuantidade;
+		$response->uteroMioma->mioma_1_caracteristicas = $r->uteroMioma->mioma_1_caracteristicas;
+		$response->uteroMioma->mioma_1_submucoso = $r->uteroMioma->mioma_1_submucoso;
+		$response->uteroMioma->mioma_1_subseroso = $r->uteroMioma->mioma_1_subseroso;
+		$response->uteroMioma->mioma_1_intramural = $r->uteroMioma->mioma_1_intramural;
+		$response->uteroMioma->mioma_2_caracteristicas = $r->uteroMioma->mioma_2_caracteristicas;
+		$response->uteroMioma->mioma_2_submucoso = $r->uteroMioma->mioma_2_submucoso;
+		$response->uteroMioma->mioma_2_subseroso = $r->uteroMioma->mioma_2_subseroso;
+		$response->uteroMioma->mioma_2_intramural = $r->uteroMioma->mioma_2_intramural;
+		$response->uteroMioma->nd = $r->uteroMioma->nd;
+
+		// Realiza push de todos os itens da consulta
+		$response->pushAll($c);
+
+		// Print JSON
+		print_r($response->toJSON());
+	}
+
+} catch (Exception $e) {
+	echo $e->getMessage(), "\n";
+}

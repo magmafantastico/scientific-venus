@@ -21,97 +21,11 @@ require_once('../../model/Exames.class.php');
 require_once('../../model/Resultados.class.php');
 require_once('../../model/Sangramento.class.php');
 require_once('../../model/UteroMioma.class.php');
+require_once('../../model/ResponseConsulta.php');
 
 function __autoload($name) {
 	echo "Want to load $name.\n";
 	throw new Exception("Unable to load $name.");
-}
-
-class ResponseConsulta {
-
-	private $request;
-	private $requestJSON;
-
-	public $antecedentes;
-	public $conduta;
-	public $consulta;
-	public $escalas;
-	public $exameFisico;
-	public $exames;
-	public $paciente;
-	public $prontuario;
-	public $resultados;
-	public $sangramento;
-	public $uteroMioma;
-
-	public function __construct($a)
-	{
-		$this->setRequestJSON($a);
-		$this->setRequest(json_decode($this->getRequestJSON()));
-		$this->consulta = new Consulta($this->getRequest()->prontuario->_id);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getRequest()
-	{
-		return $this->request;
-	}
-
-	/**
-	 * @param mixed $request
-	 */
-	public function setRequest($request)
-	{
-		$this->request = $request;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getRequestJSON()
-	{
-		return $this->requestJSON;
-	}
-
-	/**
-	 * @param mixed $requestJSON
-	 */
-	public function setRequestJSON($requestJSON)
-	{
-		$this->requestJSON = $requestJSON;
-	}
-
-	public function createAll($a)
-	{
-		$this->antecedentes = new Antecedentes($a);
-		$this->conduta = new Conduta($a);
-		$this->escalas = new Escalas($a);
-		$this->exameFisico = new ExameFisico($a);
-		$this->exames = new Exames($a);
-		$this->resultados = new Resultados($a);
-		$this->sangramento = new Sangramento($a);
-		$this->uteroMioma = new UteroMioma($a);
-	}
-
-	public function pushAll($c)
-	{
-		$this->antecedentes->push($c);
-		$this->conduta->push($c);
-		$this->escalas->push($c);
-		$this->exameFisico->push($c);
-		$this->exames->push($c);
-		$this->resultados->push($c);
-		$this->sangramento->push($c);
-		$this->uteroMioma->push($c);
-	}
-
-	public function toJSON()
-	{
-		return json_encode($this);
-	}
-
 }
 
 try {
@@ -119,12 +33,14 @@ try {
 	$connection = new Connection();
 	$c = $connection->getConnection();
 
-	if (!empty($_POST['response'])) {
-		//$a = $_GET['prontuario_id'];
-		$a = '{"prontuario":{"_id":"200","registro":"666","data":"2015-06-18"},"paciente":{"nome":"Maria Antonieta","sexo":false,"nascimento":"2002-04-09","religiao":"Testemunha de Jeová","religiaoNote":"_b1000","etnia":"Negro","etniaNote":"_a2000","escolaridade":"Fundamental","escolaridadeNote":"_a3000","estadoCivil":"Solteiro(a)","estadoCivilNote":"_z40"},"exameFisico":{"peso":"60","altura":"180","imc":"18","pressaoArterial":"54","circunferenciaAbdominal":"54","circunferenciaCervical":"54"},"antecedentes":{"situacaoAborto":"9","situacaoGestacao":"9","situacaoParidade":"1","tabagismo":true,"hac":true,"hacType":"Descompensado","diabetes":true,"diabetesType":"Compensado","hipotireoidismo":true,"hipotireoidismoType":"Compensado","note":"aborteira"},"uteroMioma":{"us":false,"volumeInterino":"650","ovarioDireito":"650","ovarioEsquerdo":"650","endometro":"65","miomaQuantidade":"2","mioma_1_caracteristicas":"65","mioma_1_submucoso":true,"mioma_1_subseroso":false,"mioma_1_intramural":false,"mioma_2_caracteristicas":"50","mioma_2_submucoso":false,"mioma_2_subseroso":true,"mioma_2_intramural":false,"nd":false},"sangramento":{"pbacInicial":"65"},"escalas":{"beckInicial":"65","vidaMioma":"65"},"exames":{"hb":"65","ht":"65","ferro":"65","ferritina":"65","rdw":"6","vcm":"5","vitaminaD3":"65","tsh":"65","gj":"65","ct":"65","ldl":false,"hdl":"65","t4l":"65"},"conduta":{"conduta":"Hormônio Terapia","cirurgia":false,"hormonioTerapia":"A.C.Os","hormonioTerapiaCiclico":true,"hormonioTerapiaContinuo":true,"hormonioTerapiaNome":"asdfa","ainh":false},"resultados":{"pbacFinal":"650","beckFinal":"650","vidaMioma":"650"}}';
+	if ($_POST['response']) {
+		$a = $_POST['response'];
 
 		// Preenche consulta
-		$response = new ResponseConsulta($a);
+		/**
+		 * TODO - Adicionar método para criar prontuario_id
+		 */
+		$response = new ResponseConsulta($a, 190);
 
 		$r = $response->getRequest();
 
