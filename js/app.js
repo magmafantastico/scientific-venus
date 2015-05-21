@@ -353,7 +353,6 @@ newContentNode = function (a, b, c) {
  */
 var newField;
 newField = function (a, b, c) {
-	console.log(a);
 	var e = document.createElement('span');
 	var className = 'field';
 	//if (b) className += ' ' + b.toLowerCase().replace(/\s+/g, '').replace(/\.+/g, '');
@@ -362,6 +361,26 @@ newField = function (a, b, c) {
 
 	e.appendChild(newContentNode('span', b, 'title'));
 	if (b) e.appendChild(newContentNode('span', a, 'value'));
+
+	return e;
+};
+
+/**
+ * Cria um field de informação para o prontuário (nome, sexo, etc)
+ * @param a content
+ * @param b title
+ * @param c class
+ * @returns {Element}
+ */
+var newEmptyField;
+newEmptyField = function (c) {
+	var e = document.createElement('span');
+	var className = 'field empty';
+	if (c) className += ' ' + c;
+	e.setAttribute('class', className);
+
+	e.appendChild(newContentNode('span', '-', 'title'));
+	e.appendChild(newContentNode('span', '', 'value'));
 
 	return e;
 };
@@ -390,6 +409,7 @@ renderConsulta = function (a) {
 	insertNewProntuario(e, c, d, 'prontuario');
 
 	insertNewResultados(g, a.resultados[0], 'resultados');
+	//insertNewCondutaExames(g, a.conduta[0], a.exames[0], 'conduta');
 	insertNewConduta(g, a.conduta[0], 'conduta');
 	insertNewExames(g, a.exames[0], 'exames');
 	insertNewEscalas(g, a.escalas[0], a.sangramento[0], 'escalas');
@@ -640,34 +660,42 @@ var insertNewExames;
 insertNewExames = function (a, b, c) {
 	var e = newNode('div', c + ' content-box');
 
-	var ea = newNode('div', 'flexbox flex-column flex-4');
+	var ea = newNode('div', 'flexbox flex-column');
 	var eaa = newNode('div', 'flexbox');
 	var eab = newNode('div', 'flexbox');
 	var eaba = newNode('div', 'flexbox flex-column');
 	var eabb = newNode('div', 'flexbox flex-column');
 	var eabc = newNode('div', 'flexbox flex-column');
+	var eabd = newNode('div', 'flexbox flex-column');
+	var eabe = newNode('div', 'flexbox flex-column');
 
 	eaa.appendChild(newContentNode('h2', 'Exames'));
 
 	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase'));
 	eaba.appendChild(newField(b.ht, 'Ht', 'defaultcase'));
 	eaba.appendChild(newField(b.vcm, 'vcm'));
-	eaba.appendChild(newField(b.rdw, 'rdw'));
 
+	eabb.appendChild(newField(b.rdw, 'rdw'));
 	eabb.appendChild(newField(b.ferro, 'ferro'));
 	eabb.appendChild(newField(b.ferritina, 'ferritina'));
-	eabb.appendChild(newField(b.vitaminaD3, 'vitaminaD3'));
-	eabb.appendChild(newField(b.gj, 'gj'));
 
-	eabc.appendChild(newField(b.ct, 'ct'));
-	eabc.appendChild(newField(b.ldl, 'ldl'));
-	eabc.appendChild(newField(b.hdl, 'hdl'));
-	eabc.appendChild(newField(b.tsh, 'tsh'));
-	eabc.appendChild(newField(b.t4l, 't4l'));
+	eabc.appendChild(newField(b.vitaminaD3, 'VITAMINA D3 (ng/dL)', 'defaultcase'));
+	eabc.appendChild(newField(b.gj, 'GJ (mg/dL)', 'defaultcase'));
+	eabc.appendChild(newField(b.ct, 'CT (mg/dL)', 'defaultcase'));
+
+	eabd.appendChild(newField(b.ldl, 'LDL (mg/dL)', 'defaultcase'));
+	eabd.appendChild(newField(b.hdl, 'HDL (mg/dL)', 'defaultcase'));
+	eabd.appendChild(newField(b.tsh, 'TSH (mU/L)', 'defaultcase'));
+
+	eabe.appendChild(newField(b.t4l, 'T4L (ng/dL)', 'defaultcase'));
+	eabe.appendChild(newEmptyField());
+	eabe.appendChild(newEmptyField());
 
 	eab.appendChild(eaba);
 	eab.appendChild(eabb);
 	eab.appendChild(eabc);
+	eab.appendChild(eabd);
+	eab.appendChild(eabe);
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
@@ -713,7 +741,14 @@ insertNewConduta = function (a, b, c) {
 	a.insertBefore(e, a.firstChild);
 };
 
-var insertNewResultados = function(a, b, c) {
+/**
+ * Insere elemento de Resultados no parent
+ * @param a parent
+ * @param b resultados
+ * @param c class
+ */
+var insertNewResultados;
+insertNewResultados = function (a, b, c) {
 	var e = newNode('div', c + ' content-box');
 
 	var ea = newNode('div', 'flexbox flex-column flex-4');
@@ -724,7 +759,7 @@ var insertNewResultados = function(a, b, c) {
 
 	eab.appendChild(newField(b.pbacFinal, 'pbac Final'));
 	eab.appendChild(newField(b.beckFinal, 'beck Final'));
-	eab.appendChild(newField(b.vidaMioma, 'vida Mioma'));
+	eab.appendChild(newField(b.vidaMioma, 'vida x Mioma'));
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
