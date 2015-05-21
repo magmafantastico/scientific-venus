@@ -352,15 +352,19 @@ newContentNode = function (a, b, c) {
  * @returns {Element}
  */
 var newField;
-newField = function (a, b, c) {
+newField = function (a, b, c, d) {
 	var e = document.createElement('span');
 	var className = 'field';
 	//if (b) className += ' ' + b.toLowerCase().replace(/\s+/g, '').replace(/\.+/g, '');
 	if (c) className += ' ' + c;
 	e.setAttribute('class', className);
 
+	var ea = newNode('span', 'content');
+	ea.appendChild(newContentNode('span', a, 'value'));
+	if (d) ea.appendChild(newContentNode('span', d, 'holder'));
+
 	e.appendChild(newContentNode('span', b, 'title'));
-	if (b) e.appendChild(newContentNode('span', a, 'value'));
+	if (b) e.appendChild(ea);
 
 	return e;
 };
@@ -380,7 +384,7 @@ newEmptyField = function (c) {
 	e.setAttribute('class', className);
 
 	e.appendChild(newContentNode('span', '-', 'title'));
-	e.appendChild(newContentNode('span', '', 'value'));
+	e.appendChild(newContentNode('span', '', 'content'));
 
 	return e;
 };
@@ -499,12 +503,12 @@ insertNewExameFisico = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Exame Físico'));
 
-	eab.appendChild(newField(b.peso, 'peso (kg)'));
-	eab.appendChild(newField(b.altura, 'altura (cm)'));
+	eab.appendChild(newField(b.peso, 'peso', '', 'kg'));
+	eab.appendChild(newField(b.altura, 'altura', '', 'cm'));
 	eab.appendChild(newField(b.imc, 'imc'));
-	eab.appendChild(newField(b.pressaoArterial, 'PA. ARTERIAL (mmHg)', 'defaultcase'));
-	eab.appendChild(newField(b.circunferenciaAbdominal, 'C. Abdominal (cm)'));
-	eab.appendChild(newField(b.circunferenciaCervical, 'C. Cervical (cm)'));
+	eab.appendChild(newField(b.pressaoArterial, 'PA. ARTERIAL', '', 'mmHg'));
+	eab.appendChild(newField(b.circunferenciaAbdominal, 'C. Abdominal', '', 'cm'));
+	eab.appendChild(newField(b.circunferenciaCervical, 'C. Cervical', '', 'cm'));
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
@@ -671,7 +675,7 @@ insertNewExames = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Exames'));
 
-	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase'));
+	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase', 'mg/dL'));
 	eaba.appendChild(newField(b.ht, 'Ht', 'defaultcase'));
 	eaba.appendChild(newField(b.vcm, 'vcm'));
 
