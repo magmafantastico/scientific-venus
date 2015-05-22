@@ -567,3 +567,23 @@ var appendObject = function (a, b, g) {
 
 	a.insertBefore(e, a.firstChild);
 };
+
+if (typeof _id !== 'undefined') {
+	$.ajax({
+		cache: false,
+		data: {prontuario_id: _id},
+		dataType: 'json',
+		error: function (data) {
+			console.log(data.responseText);
+			return false;
+		},
+		method: 'get',
+		success: function (data) {
+			if (data.prontuario)
+				renderConsulta(data);
+			else
+				return false;
+		},
+		url: __API_DIR + 'i/pull/find/consulta/'
+	});
+}
