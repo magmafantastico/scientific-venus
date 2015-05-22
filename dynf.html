@@ -50,9 +50,15 @@
 </style>
 <div class="container">
 
+	<div class="flex">
+		<button id="createmioma">New</button>
+		<button id="removemioma">Delete</button>
+		<input type="number" id="numbermioma"/>
+	</div>
+
 	<div id="dynf">
 
-		<div class="mioma">
+		<!--<div class="mioma">
 
 			<div class="mioma-length">
 				<span class="field flex-column">
@@ -76,8 +82,12 @@
 				</span>
 			</div>
 
-		</div>
+		</div>-->
 
+	</div>
+
+	<div>
+		<button id="testmioma">Test</button>
 	</div>
 
 </div>
@@ -87,72 +97,25 @@
 
 <script>
 
-	var newMiomaFieldRadio;
-	newMiomaFieldRadio = function (a, b) {
-		var e = newNode('span', 'field');
-
-		var ea = newNode('input');
-		ea.type = 'radio';
-		ea.id = 'mioma_type_' + a + '_' + b;
-		ea.name = 'mioma_type_' + a;
-		ea.value = b;
-
-		var eb = newContentNode('label', b);
-		eb.htmlFor = ea.id;
-
-		e.appendChild(ea);
-		e.appendChild(eb);
-
-		return e;
-	};
-
 	/**
-	 * @param a element number
+	 * Função teste para executar funções de elemento de Mioma
 	 */
-	var newMiomaField;
-	newMiomaField = function (a) {
-		var e = newNode('div', 'mioma');
-
-		var ea = newNode('div', 'mioma-length');
-
-		var eaa = newNode('span', 'field flex-column');
-
-		var eaaa = newNode('input');
-		eaaa.type = 'text';
-		eaaa.id = 'mioma_medida_' + a;
-
-		var eaab = newContentNode('label', 'medida');
-		eaab.htmlFor = eaaa.id;
-
-		eaa.appendChild(eaab);
-		eaa.appendChild(eaaa);
-
-		ea.appendChild(eaa);
-
-		var eb = newNode('div', 'mioma-type flex flex-wrap');
-
-		var eba = newNode('span', 'field');
-		var ebb = newNode('span', 'field');
-		var ebc = newNode('span', 'field');
-
-		eba.appendChild(newMiomaFieldRadio(a, 'intramural'));
-		ebb.appendChild(newMiomaFieldRadio(a, 'submucoso'));
-		ebc.appendChild(newMiomaFieldRadio(a, 'subseroso'));
-
-		eb.appendChild(eba);
-		eb.appendChild(ebb);
-		eb.appendChild(ebc);
-
-		e.appendChild(ea);
-		e.appendChild(eb);
-
-		return e;
+	var testMiomas;
+	testMiomas = function() {
+		console.log(getMiomas());
 	};
 
-	var a = document.getElementById('dynf');
+	var b = document.getElementById('testmioma');
+	b.addEventListener('click', testMiomas);
 
-	for (var i = 1; i < 8; i++)
-		a.insertBefore(newMiomaField(i), a.firstChild);
+	var c = document.getElementById('createmioma');
+	c.addEventListener('click', createMioma);
+
+	var d = document.getElementById('removemioma');
+	d.addEventListener('click', removeMioma);
+
+	var e = document.getElementById('numbermioma');
+	e.addEventListener('change', numberMioma);
 
 </script>
 
