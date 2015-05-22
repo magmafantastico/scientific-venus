@@ -9,6 +9,8 @@ if (typeof __API_DIR === 'undefined')
 
 $('#btn').click(function () {
 
+	document.cookie = "response=" + JSON.stringify(getResponse());
+/*
 	document.getElementById('prontuario__id').value = '';
 	$.ajax({
 		data: {response: JSON.stringify(getResponse())},
@@ -21,6 +23,7 @@ $('#btn').click(function () {
 		},
 		url: __API_DIR + 'i/push/'
 	});
+*/
 
 });
 
@@ -83,16 +86,16 @@ getResponse = function () {
 		exames: {
 			hb: getTextField('exames_hb'),
 			ht: getTextField('exames_ht'),
+			vcm: getTextField('exames_vcm'),
+			rdw: getTextField('exames_rdw'),
 			ferro: getTextField('exames_ferro'),
 			ferritina: getTextField('exames_ferritina'),
-			rdw: getTextField('exames_rdw'),
-			vcm: getTextField('exames_vcm'),
 			vitaminaD3: getTextField('exames_vitaminaD3'),
-			tsh: getTextField('exames_tsh'),
 			gj: getTextField('exames_gj'),
 			ct: getTextField('exames_ct'),
 			ldl: getTextField('exames_ldl'),
 			hdl: getTextField('exames_hdl'),
+			tsh: getTextField('exames_tsh'),
 			t4l: getTextField('exames_t4l')
 		},
 		conduta: {
