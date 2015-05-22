@@ -463,16 +463,11 @@
 
 				<h2>Características do Utero / Mioma</h2>
 
-				<div class="field">
-					<label for="uteroMioma_us">US</label>
-					<input type="text" id="uteroMioma_us" name="uteroMioma_us"/>
-				</div>
-
 				<div class="flex justify-between">
 
 					<div class="field flex-4">
-						<label for="uteroMioma_volumeInterino">Volume Interino</label>
-						<input type="tel" id="uteroMioma_volumeInterino" maxlength="4" name="uteroMioma_volumeInterino" placeholder="cm³"/>
+						<label for="uteroMioma_volumeUterino">Volume Uterino</label>
+						<input type="tel" id="uteroMioma_volumeUterino" maxlength="4" name="uteroMioma_volumeUterino" placeholder="cm³"/>
 					</div>
 
 					<div class="field grey-50 flex-5" style="margin-left: 2em">
@@ -496,100 +491,22 @@
 					<input type="tel" id="uteroMioma_endometro" maxlength="2" name="uteroMioma_endometro" placeholder="mm"/>
 				</div>
 
-				<div class="flex flex-column">
+				<div class="flex">
 
-					<div class="flex justify-between">
-
-						<div class="field flex-4">
-							<label for="uteroMioma_miomaQuantidade">Quantidade de Miomas</label>
-							<input type="tel" id="uteroMioma_miomaQuantidade" maxlength="1" name="uteroMioma_miomaQuantidade"/>
-						</div>
-
-						<div class="flex flex-column flex-5" style="margin-left: 2em">
-
-							<div class="field grey-50">
-
-								<div class="flex">
-
-									<div class="flex flex-column">
-
-										<span class="flex">
-											<input type="checkbox" id="uteroMioma_mioma_1_type_1" name="uteroMioma_mioma_1_submucoso" value="true"/>
-											<label for="uteroMioma_mioma_1_type_1">Submucoso</label>
-										</span>
-
-										<span class="flex">
-											<input type="checkbox" id="uteroMioma_mioma_1_type_2" name="uteroMioma_mioma_1_subseroso" value="true"/>
-											<label for="uteroMioma_mioma_1_type_2">Subseroso</label>
-										</span>
-
-										<span class="flex">
-											<input type="checkbox" id="uteroMioma_mioma_1_type_3" name="uteroMioma_mioma_1_intramural" value="true"/>
-											<label for="uteroMioma_mioma_1_type_3">Intramural</label>
-										</span>
-
-									</div>
-
-									<div class="field">
-
-										<span class="flex">
-											<label for="uteroMioma_mioma_1_caracteristicas">Caracteristicas do Mioma</label>
-											<input type="tel" id="uteroMioma_mioma_1_caracteristicas" maxlength="2" name="uteroMioma_mioma_1_caracteristicas" placeholder="mm"/>
-										</span>
-
-									</div>
-
-								</div>
-
-							</div>
-
-							<div class="field grey-50">
-
-								<div class="flex">
-
-									<div class="flex flex-column">
-
-										<span class="flex">
-											<input type="checkbox" id="uteroMioma_mioma_2_type_1" name="uteroMioma_mioma_2_submucoso" value="true"/>
-											<label for="uteroMioma_mioma_2_type_1">Submucoso</label>
-										</span>
-
-										<span class="flex">
-											<input type="checkbox" id="uteroMioma_mioma_2_type_2" name="uteroMioma_mioma_2_subseroso" value="true"/>
-											<label for="uteroMioma_mioma_2_type_2">Subseroso</label>
-										</span>
-
-										<span class="flex">
-											<input type="checkbox" id="uteroMioma_mioma_2_type_3" name="uteroMioma_mioma_2_intramural" value="true"/>
-											<label for="uteroMioma_mioma_2_type_3">Intramural</label>
-										</span>
-
-									</div>
-
-									<div class="field">
-
-										<span class="flex">
-											<label for="uteroMioma_mioma_2_caracteristicas">Caracteristicas do Mioma</label>
-											<input type="tel" id="uteroMioma_mioma_2_caracteristicas" maxlength="2" name="uteroMioma_mioma_2_caracteristicas" placeholder="mm"/>
-										</span>
-
-									</div>
-
-								</div>
-
-							</div>
-
-						</div>
-
+					<div class="">
+						<label for="uteroMioma_miomaQuantidade">Quantidade de Miomas</label>
+						<input type="number" id="uteroMioma_miomaQuantidade" maxlength="1" name="uteroMioma_miomaQuantidade"/>
 					</div>
 
-					<div class="field">
+					<div id="dynf"></div>
 
-						<div class="flex">
-							<input type="checkbox" id="uteroMioma_nd" name="uteroMioma_nd" value="true"/>
-							<label for="uteroMioma_nd">Dados não disponíveis</label>
-						</div>
+				</div>
 
+				<div class="field">
+
+					<div class="flex">
+						<input type="checkbox" id="uteroMioma_nd" name="uteroMioma_nd" value="true"/>
+						<label for="uteroMioma_nd">Dados não disponíveis</label>
 					</div>
 
 				</div>
@@ -867,6 +784,9 @@
 	<script src="js/app.js"></script>
 
 	<script>
+		var miomaField = document.getElementById('uteroMioma_miomaQuantidade');
+		miomaField.addEventListener('change', numberMioma);
+
 		$('input[name=conduta]').distinct({
 			prefix: 'conduta',
 			target: document.getElementById('conduta')

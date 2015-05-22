@@ -320,28 +320,21 @@ getMiomas = function() {
  * Cria novo elemento de Mioma
  */
 var createMioma;
-createMioma = function() {
-	var a, n;
+createMioma = function(a, b) {
+	var n = b.length;
 
-	a = document.getElementById('dynf');
-	n = a.getElementsByClassName('mioma');
-
-	a.insertBefore(newMiomaField(n.length + 1), a.lastChild);
+	a.insertBefore(newMiomaField(n + 1), b[n]);
 };
 
 /**
  * Remove último elemento de Mioma
  */
 var removeMioma;
-removeMioma = function() {
-	var a, b, n;
-
-	a = document.getElementById('dynf');
-	b = a.getElementsByClassName('mioma');
-	n = b.length - 1;
+removeMioma = function(a, b) {
+	var n = b.length;
 
 	if (n >= 0)
-		a.removeChild(b[n]);
+		a.removeChild(b[n - 1]);
 };
 
 /**
@@ -358,10 +351,10 @@ controlMioma = function(n) {
 
 	if (n > bn)
 		for (i = n - bn; i--; )
-			createMioma();
+			createMioma(a, b);
 	else if (n < bn)
 		for (i = bn - n; i--; )
-			removeMioma();
+			removeMioma(a, b);
 };
 
 /**
