@@ -67,19 +67,17 @@ getResponse = function () {
 			hipotireoidismoType: getActiveRadio('antecedentes_hipotireoidismo_type'),
 			note: getTextField('antecedentes_note')
 		},
-		uteroMioma: {
+		ultrassom: {
 			volumeUterino: getTextField('uteroMioma_volumeUterino'),
 			ovarioDireito: getTextField('uteroMioma_ovarioDireito'),
 			ovarioEsquerdo: getTextField('uteroMioma_ovarioEsquerdo'),
 			endometro: getTextField('uteroMioma_endometro'),
-			mioma: getMiomas(),
 			nd: getActiveCheckbox('uteroMioma_nd')
 		},
-		sangramento: {
-			pbacInicial: getTextField('sangramento_pbacInicial')
-		},
+		mioma: getMiomas(),
 		escalas: {
 			beckInicial: getTextField('escalas_beckInicial'),
+			pbacInicial: getTextField('sangramento_pbacInicial'),
 			vidaMioma: getTextField('escalas_vidaMioma')
 		},
 		exames: {

@@ -292,8 +292,8 @@ getMiomaType = function(a) {
 var getMioma;
 getMioma = function(a) {
 	return {
-		length: getMiomaLength(a),
-		type: getMiomaType(a)
+		medida: getMiomaLength(a),
+		tipo: getMiomaType(a)
 	};
 };
 
