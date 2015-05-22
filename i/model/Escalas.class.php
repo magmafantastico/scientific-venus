@@ -7,6 +7,7 @@
  */
 
 class Escalas extends ConsultaThing {
+	public $pbacInicial;
 	public $beckInicial;
 	public $vidaMioma;
 }

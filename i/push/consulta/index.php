@@ -19,8 +19,7 @@ require_once('../../model/Escalas.class.php');
 require_once('../../model/ExameFisico.class.php');
 require_once('../../model/Exames.class.php');
 require_once('../../model/Resultados.class.php');
-require_once('../../model/Sangramento.class.php');
-require_once('../../model/UteroMioma.class.php');
+require_once('../../model/Ultrassom.class.php');
 require_once('../../model/Response.php');
 
 function __autoload($name) {
@@ -74,6 +73,7 @@ try {
 		$response->conduta->hormonioTerapiaNome = $r->conduta->hormonioTerapiaNome;
 		$response->conduta->ainh = $r->conduta->ainh;
 
+		$response->escalas->pbacInicial = $r->escalas->pbacInicial;
 		$response->escalas->beckInicial = $r->escalas->beckInicial;
 		$response->escalas->vidaMioma = $r->escalas->vidaMioma;
 
@@ -102,23 +102,11 @@ try {
 		$response->resultados->beckFinal = $r->resultados->beckFinal;
 		$response->resultados->vidaMioma = $r->resultados->vidaMioma;
 
-		$response->sangramento->pbacInicial = $r->sangramento->pbacInicial;
-
-		$response->uteroMioma->us = $r->uteroMioma->us;
-		$response->uteroMioma->volumeInterino = $r->uteroMioma->volumeInterino;
-		$response->uteroMioma->ovarioDireito = $r->uteroMioma->ovarioDireito;
-		$response->uteroMioma->ovarioEsquerdo = $r->uteroMioma->ovarioEsquerdo;
-		$response->uteroMioma->endometro = $r->uteroMioma->endometro;
-		$response->uteroMioma->miomaQuantidade = $r->uteroMioma->miomaQuantidade;
-		$response->uteroMioma->mioma_1_caracteristicas = $r->uteroMioma->mioma_1_caracteristicas;
-		$response->uteroMioma->mioma_1_submucoso = $r->uteroMioma->mioma_1_submucoso;
-		$response->uteroMioma->mioma_1_subseroso = $r->uteroMioma->mioma_1_subseroso;
-		$response->uteroMioma->mioma_1_intramural = $r->uteroMioma->mioma_1_intramural;
-		$response->uteroMioma->mioma_2_caracteristicas = $r->uteroMioma->mioma_2_caracteristicas;
-		$response->uteroMioma->mioma_2_submucoso = $r->uteroMioma->mioma_2_submucoso;
-		$response->uteroMioma->mioma_2_subseroso = $r->uteroMioma->mioma_2_subseroso;
-		$response->uteroMioma->mioma_2_intramural = $r->uteroMioma->mioma_2_intramural;
-		$response->uteroMioma->nd = $r->uteroMioma->nd;
+		$response->utero->volumeInterino = $r->utero->volumeInterino;
+		$response->utero->ovarioDireito = $r->utero->ovarioDireito;
+		$response->utero->ovarioEsquerdo = $r->utero->ovarioEsquerdo;
+		$response->utero->endometro = $r->utero->endometro;
+		$response->utero->nd = $r->utero->nd;
 
 		// Realiza push de todos os itens da consulta
 		$response->pushAll($c);

@@ -19,8 +19,7 @@ class ResponseConsulta {
 	public $paciente;
 	public $prontuario;
 	public $resultados;
-	public $sangramento;
-	public $uteroMioma;
+	public $ultrassom;
 
 	/**
 	 * @param $a
@@ -42,8 +41,7 @@ class ResponseConsulta {
 		$this->exameFisico->push($c);
 		$this->exames->push($c);
 		$this->resultados->push($c);
-		$this->sangramento->push($c);
-		$this->uteroMioma->push($c);
+		$this->ultrassom->push($c);
 	}
 
 	/**
@@ -57,8 +55,7 @@ class ResponseConsulta {
 		$this->exameFisico = new ExameFisico($a);
 		$this->exames = new Exames($a);
 		$this->resultados = new Resultados($a);
-		$this->sangramento = new Sangramento($a);
-		$this->uteroMioma = new UteroMioma($a);
+		$this->ultrassom = new Ultrassom($a);
 	}
 
 	/**

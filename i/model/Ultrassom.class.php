@@ -6,6 +6,9 @@
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
 
-class Sangramento extends ConsultaThing {
-	public $pbacInicial;
+class Ultrassom extends ConsultaThing {
+	public $volumeUterino;
+	public $ovarioDireito;
+	public $ovarioEsquerdo;
+	public $endometro;
 }

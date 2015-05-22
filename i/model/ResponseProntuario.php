@@ -20,8 +20,7 @@ class ResponseProntuario
 	public $paciente;
 	public $prontuario;
 	public $resultados;
-	public $sangramento;
-	public $uteroMioma;
+	public $ultrassom;
 
 	public function __construct($a)
 	{

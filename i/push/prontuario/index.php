@@ -38,7 +38,7 @@ try {
 
 			$response->paciente->nome = $r->paciente->nome;
 			$response->paciente->sexo = $r->paciente->sexo;
-			$response->paciente->nascimento = $r->paciente->nascimento;
+			$response->paciente->nascimento = $r->paciente-U>nascimento;
 			$response->paciente->religiao = $r->paciente->religiao;
 			$response->paciente->religiaoNote = $r->paciente->religiaoNote;
 			$response->paciente->etnia = $r->paciente->etnia;
