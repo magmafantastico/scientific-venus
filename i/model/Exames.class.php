@@ -9,15 +9,15 @@
 class Exames extends ConsultaThing {
 	public $hb;
 	public $ht;
+	public $vcm;
+	public $rdw;
 	public $ferro;
 	public $ferritina;
-	public $rdw;
-	public $vcm;
 	public $vitaminaD3;
-	public $tsh;
 	public $gj;
 	public $ct;
 	public $ldl;
 	public $hdl;
+	public $tsh;
 	public $t4l;
 }

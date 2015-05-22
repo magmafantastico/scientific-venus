@@ -117,16 +117,16 @@ try {
 
 					$response->exames->hb = $r->exames->hb;
 					$response->exames->ht = $r->exames->ht;
+					$response->exames->vcm = $r->exames->vcm;
+					$response->exames->rdw = $r->exames->rdw;
 					$response->exames->ferro = $r->exames->ferro;
 					$response->exames->ferritina = $r->exames->ferritina;
-					$response->exames->rdw = $r->exames->rdw;
-					$response->exames->vcm = $r->exames->vcm;
 					$response->exames->vitaminaD3 = $r->exames->vitaminaD3;
-					$response->exames->tsh = $r->exames->tsh;
 					$response->exames->gj = $r->exames->gj;
 					$response->exames->ct = $r->exames->ct;
 					$response->exames->ldl = $r->exames->ldl;
 					$response->exames->hdl = $r->exames->hdl;
+					$response->exames->tsh = $r->exames->tsh;
 					$response->exames->t4l = $r->exames->t4l;
 
 					$response->resultados->pbacFinal = $r->resultados->pbacFinal;

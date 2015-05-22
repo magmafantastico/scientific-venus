@@ -16,6 +16,7 @@ class ResponseConsulta {
 	public $escalas;
 	public $exameFisico;
 	public $exames;
+	public $mioma;
 	public $paciente;
 	public $prontuario;
 	public $resultados;
