@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>Prontuario | Magma Scientific</title>
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<script src="js/villa.js"></script>
+	<link rel="stylesheet" href="css/villa-foundation.css"/>
+	<link rel="stylesheet" href="css/villa-grid.css"/>
+	<link rel="stylesheet" href="css/polar-font.css"/>
+	<link rel="stylesheet" href="css/villa.css"/>
+	<link rel="stylesheet" href="css/polar.css"/>
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="css/material-colors.css"/>
+	<script type="text/javascript" src="js/html5shiv.js"></script>
+	<script type="text/javascript" src="js/html5shiv-printshiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<style>
+	.mioma {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		flex-flow: column;
+		flex-direction: column;
+	}
+
+	.field {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		margin: 4px;
+	}
+
+	.field input[type=text],
+	.field label {
+		/*min-width: 12em;*/
+	}
+
+	.field label {
+		text-transform: capitalize;
+	}
+</style>
+<div class="container">
+
+	<div id="dynf">
+
+		<div class="mioma">
+
+			<div class="mioma-length">
+				<span class="field flex-column">
+					<label for="mioma_length_1">medida</label>
+					<input type="text" id="mioma_length_1"/>
+				</span>
+			</div>
+
+			<div class="mioma-type flex flex-wrap">
+				<span class="field">
+					<input type="radio" id="mioma_type_intramural" name="mioma_type" value="intramural"/>
+					<label for="mioma_type_intramural">intramural</label>
+				</span>
+				<span class="field">
+					<input type="radio" id="mioma_type_submucoso" name="mioma_type" value="submucoso"/>
+					<label for="mioma_type_submucoso">submucoso</label>
+				</span>
+				<span class="field">
+					<input type="radio" id="mioma_type_subseroso" name="mioma_type" value="subseroso"/>
+					<label for="mioma_type_subseroso">subseroso</label>
+				</span>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<script src="js/jquery-min.js"></script>
+<script src="js/scientific.js"></script>
+
+<script>
+
+	var newMiomaFieldRadio;
+	newMiomaFieldRadio = function (a, b) {
+		var e = newNode('span', 'field');
+
+		var ea = newNode('input');
+		ea.type = 'radio';
+		ea.id = 'mioma_type_' + a + '_' + b;
+		ea.name = 'mioma_type_' + a;
+		ea.value = b;
+
+		var eb = newContentNode('label', b);
+		eb.htmlFor = ea.id;
+
+		e.appendChild(ea);
+		e.appendChild(eb);
+
+		return e;
+	};
+
+	/**
+	 * @param a element number
+	 */
+	var newMiomaField;
+	newMiomaField = function (a) {
+		var e = newNode('div', 'mioma');
+
+		var ea = newNode('div', 'mioma-length');
+
+		var eaa = newNode('span', 'field flex-column');
+
+		var eaaa = newNode('input');
+		eaaa.type = 'text';
+		eaaa.id = 'mioma_medida_' + a;
+
+		var eaab = newContentNode('label', 'medida');
+		eaab.htmlFor = eaaa.id;
+
+		eaa.appendChild(eaab);
+		eaa.appendChild(eaaa);
+
+		ea.appendChild(eaa);
+
+		var eb = newNode('div', 'mioma-type flex flex-wrap');
+
+		var eba = newNode('span', 'field');
+		var ebb = newNode('span', 'field');
+		var ebc = newNode('span', 'field');
+
+		eba.appendChild(newMiomaFieldRadio(a, 'intramural'));
+		ebb.appendChild(newMiomaFieldRadio(a, 'submucoso'));
+		ebc.appendChild(newMiomaFieldRadio(a, 'subseroso'));
+
+		eb.appendChild(eba);
+		eb.appendChild(ebb);
+		eb.appendChild(ebc);
+
+		e.appendChild(ea);
+		e.appendChild(eb);
+
+		return e;
+	};
+
+	var a = document.getElementById('dynf');
+
+	for (var i = 1; i < 8; i++)
+		a.insertBefore(newMiomaField(i), a.firstChild);
+
+</script>
+
+<style type="text/css">
+	html,
+	body {
+		height: auto;
+		overflow: visible;
+	}
+
+	input[type=radio],
+	input[type=checkbox] {
+		width: auto;
+	}
+
+	form {
+		display: block;
+	}
+
+	h2 {
+		margin-top: .75em;
+	}
+
+	@media print {
+		.page-break {
+			display: block;
+			page-break-before: always;
+		}
+	}
+</style>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
