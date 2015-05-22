@@ -17,46 +17,12 @@ $('#btn').click(function () {
 		},
 		method: 'post',
 		success: function (data) {
-			var a = data;
-			document.getElementById('prontuario__id').value = a.prontuario._id;
+			document.getElementById('prontuario__id').value = data.prontuario._id;
 		},
 		url: __API_DIR + 'i/push/'
 	});
 
 });
-
-$('#prontuario_novo').click(function () {
-	createProntuario();
-});
-
-$('#prontuario_create').click(function () {
-	createProntuario();
-});
-
-var getProntuario = function () {
-	return {
-
-		prontuario: {
-			_id: getTextField('prontuario__id'),
-			registro: getTextField('prontuario_registro'),
-			data: getPickDate($prontuario_data)
-		},
-		paciente: {
-			nome: getTextField('paciente_nome'),
-			sexo: getActiveRadio('paciente_sexo'),
-			nascimento: getPickDate($paciente_nascimento),
-			religiao: getActiveRadio('paciente_religiao'),
-			religiaoNote: getTextField('paciente_religiao_note'),
-			etnia: getActiveRadio('paciente_etnia'),
-			etniaNote: getTextField('paciente_etnia_note'),
-			escolaridade: getActiveRadio('paciente_escolaridade'),
-			escolaridadeNote: getTextField('paciente_escolaridade_note'),
-			estadoCivil: getActiveRadio('paciente_estadoCivil'),
-			estadoCivilNote: getTextField('paciente_estadoCivil_note')
-		}
-
-	};
-};
 
 var getResponse;
 getResponse = function () {
@@ -102,20 +68,11 @@ getResponse = function () {
 			note: getTextField('antecedentes_note')
 		},
 		uteroMioma: {
-			us: getTextField('uteroMioma_us'),
-			volumeInterino: getTextField('uteroMioma_volumeInterino'),
+			volumeUterino: getTextField('uteroMioma_volumeUterino'),
 			ovarioDireito: getTextField('uteroMioma_ovarioDireito'),
 			ovarioEsquerdo: getTextField('uteroMioma_ovarioEsquerdo'),
 			endometro: getTextField('uteroMioma_endometro'),
-			miomaQuantidade: getTextField('uteroMioma_miomaQuantidade'),
-			mioma_1_caracteristicas: getTextField('uteroMioma_mioma_1_caracteristicas'),
-			mioma_1_submucoso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_1_submucoso', true)),
-			mioma_1_subseroso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_1_subseroso', true)),
-			mioma_1_intramural: parseBoolean(getActiveCheckbox('uteroMioma_mioma_1_intramural', true)),
-			mioma_2_caracteristicas: getTextField('uteroMioma_mioma_2_caracteristicas'),
-			mioma_2_submucoso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_2_submucoso', true)),
-			mioma_2_subseroso: parseBoolean(getActiveCheckbox('uteroMioma_mioma_2_subseroso', true)),
-			mioma_2_intramural: parseBoolean(getActiveCheckbox('uteroMioma_mioma_2_intramural', true)),
+			mioma: getMiomas(),
 			nd: getActiveCheckbox('uteroMioma_nd')
 		},
 		sangramento: {
@@ -165,7 +122,7 @@ getResponse = function () {
  */
 var renderConsulta;
 renderConsulta = function (a) {
-	var c, d, e, f;
+	var c, d, e, f, g;
 
 	c = a.prontuario[0];
 	d = a.paciente[0];
