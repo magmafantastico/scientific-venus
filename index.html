@@ -30,15 +30,6 @@
 		overflow: visible;
 	}
 
-	.field {
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		margin: 4px;
-	}
-
 	input[type=radio],
 	input[type=checkbox] {
 		width: auto;
@@ -76,169 +67,166 @@
 
 			<h2>Paciente</h2>
 
-			<div class="flex justify-between flex-wrap">
+			<div class="flex flex-wrap">
 
-				<div class="field flex-2">
+				<span class="field flex-2">
 					<label for="prontuario_registro">Registro Ambulatorio</label>
 					<input type="text" id="prontuario_registro" name="prontuario_registro"/>
-				</div>
+				</span>
 
-				<div class="field flex-3" style="margin-left: 2em">
+				<span class="field flex-1">
 					<label for="prontuario_data">Data Cadastro</label>
 					<input type="text" id="prontuario_data" name="prontuario_data" required/>
-				</div>
+				</span>
 
 			</div>
 
-			<div class="field">
-				<label for="paciente_nome">Nome</label>
-				<input type="text" class="font-large" id="paciente_nome" name="paciente_nome" required/>
-			</div>
+			<div class="flex flex-wrap">
 
-			<div class="flex justify-between">
-
-				<div class="field">
-
-					<label>Sexo</label>
-
-					<div class="flex">
-
-						<span class="flex">
-							<input type="radio" id="paciente_sexo_1" name="paciente_sexo" value="Feminino" required/>
-							<label for="paciente_sexo_1">Feminino</label>
-						</span>
-
-						<span class="flex">
-							<input type="radio" id="paciente_sexo_2" name="paciente_sexo" value="Masculino" required/>
-							<label for="paciente_sexo_2">Masculino</label>
-						</span>
-
-					</div>
-
+				<div class="field flex-2">
+					<label for="paciente_nome">Nome</label>
+					<input type="text" class="font-large" id="paciente_nome" name="paciente_nome" required/>
 				</div>
 
-				<div class="field flex-1" style="margin-left: 2em">
+				<div class="field flex-1">
 					<label for="paciente_nascimento">Data de Nascimento</label>
 					<input type="text" id="paciente_nascimento" name="paciente_nascimento"/>
 				</div>
 
 			</div>
+
+			<div>
+
+				<label class="field-label">Sexo</label>
+
+				<div class="flex flex-1">
+
+					<span class="field row">
+						<input type="radio" id="paciente_sexo_1" name="paciente_sexo" value="Feminino" required/>
+						<label for="paciente_sexo_1">Feminino</label>
+					</span>
+
+					<span class="field row">
+						<input type="radio" id="paciente_sexo_2" name="paciente_sexo" value="Masculino" required/>
+						<label for="paciente_sexo_2">Masculino</label>
+					</span>
+
+				</div>
+
+			</div>
+
 			<div class="flex justify-between flex-wrap">
 
-				<div class="field">
+				<div class="flex flex-column">
 
-					<label>Religião</label>
+					<label class="field-label">Religião</label>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_religiao_1" name="paciente_religiao" value="Católico"/>
 						<label for="paciente_religiao_1">Católico</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_religiao_2" name="paciente_religiao" value="Evangélico"/>
 						<label for="paciente_religiao_2">Evangélico</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_religiao_3" name="paciente_religiao" value="Espirita"/>
 						<label for="paciente_religiao_3">Espirita</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_religiao_4" name="paciente_religiao" value="Testemunha de Jeová"/>
 						<label for="paciente_religiao_4">Testemunha de Jeová</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_religiao_5" name="paciente_religiao" value="Outro"/>
-						<label for="paciente_religiao_5">Outro</label>
-						<input type="text" id="paciente_religiao_note" name="paciente_religiao_note"/>
+						<input type="text" class="small" id="paciente_religiao_note" name="paciente_religiao_note" placeholder="Outro"/>
 					</span>
 
 				</div>
 
-				<div class="field">
+				<div class="flex flex-column">
 
-					<label>Etnia</label>
+					<label class="field-label">Etnia</label>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_etnia_1" name="paciente_etnia" value="Branco"/>
 						<label for="paciente_etnia_1">Branco</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_etnia_2" name="paciente_etnia" value="Indígena"/>
 						<label for="paciente_etnia_2">Indígena</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_etnia_3" name="paciente_etnia" value="Negro"/>
 						<label for="paciente_etnia_3">Negro</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_etnia_4" name="paciente_etnia" value="Outro"/>
-						<label for="paciente_etnia_4">Outro</label>
-						<input type="text" id="paciente_etnia_note" name="paciente_etnia_note"/>
+						<input type="text" class="small" id="paciente_etnia_note" name="paciente_etnia_note" placeholder="Outro"/>
 					</span>
 
 				</div>
 
-				<div class="field">
+				<div class="flex flex-column">
 
-					<label>Escolaridade</label>
+					<label class="field-label">Escolaridade</label>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_escolaridade_1" name="paciente_escolaridade" value="Fundamental"/>
 						<label for="paciente_escolaridade_1">Ensino Fundamental</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_escolaridade_2" name="paciente_escolaridade" value="Médio"/>
 						<label for="paciente_escolaridade_2">Ensino Médio</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_escolaridade_3" name="paciente_escolaridade" value="Superior"/>
 						<label for="paciente_escolaridade_3">Ensino Superior</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_escolaridade_4" name="paciente_escolaridade" value="Outro"/>
-						<label for="paciente_escolaridade_4">Outro</label>
-						<input type="text" id="paciente_escolaridade_note" name="paciente_escolaridade_note"/>
+						<input type="text" class="small" id="paciente_escolaridade_note" name="paciente_escolaridade_note" placeholder="Outro"/>
 					</span>
 
 				</div>
 
-				<div class="field">
+				<div class="flex flex-column">
 
-					<label>Estado Cívil</label>
+					<label class="field-label">Estado Cívil</label>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_estadoCivil_1" name="paciente_estadoCivil" value="Casado(a)"/>
 						<label for="paciente_estadoCivil_1">Casado(a)</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_estadoCivil_2" name="paciente_estadoCivil" value="Solteiro(a)"/>
 						<label for="paciente_estadoCivil_2">Solteiro(a)</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_estadoCivil_3" name="paciente_estadoCivil" value="Divorciado(a)"/>
 						<label for="paciente_estadoCivil_3">Divorciado(a)</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_estadoCivil_4" name="paciente_estadoCivil" value="Viúvo(a)"/>
 						<label for="paciente_estadoCivil_4">Viúvo(a)</label>
 					</span>
 
-					<span class="flex">
+					<span class="field row">
 						<input type="radio" id="paciente_estadoCivil_5" name="paciente_estadoCivil" value="Outro"/>
-						<label for="paciente_estadoCivil_5">Outro</label>
-						<input type="text" id="paciente_estadoCivil_note" name="paciente_estadoCivil_note"/>
+						<input type="text" class="small" id="paciente_estadoCivil_note" name="paciente_estadoCivil_note" placeholder="Outro"/>
 					</span>
 
 				</div>
@@ -261,38 +249,57 @@
 
 				<h2>Exame Físico</h2>
 
-				<div class="flex justify-between">
+				<div class="flex flex-wrap">
 
-					<div class="field">
+					<span class="field flex-1">
 						<label for="exameFisico_peso">Peso</label>
-						<input type="tel" placeholder="kg" id="exameFisico_peso" name="exameFisico_peso"/>
-					</div>
+						<span class="helper">
+							<input type="number" id="exameFisico_peso" name="exameFisico_peso"/>
+							<span>kg</span>
+						</span>
+					</span>
 
-					<div class="field" style="margin-left: 2em">
+					<span class="field flex-1">
 						<label for="exameFisico_altura">Altura</label>
-						<input type="tel" placeholder="cm" id="exameFisico_altura" name="exameFisico_altura"/>
-					</div>
+						<span class="helper">
+							<input type="number" id="exameFisico_altura" name="exameFisico_altura"/>
+							<span>cm</span>
+						</span>
+					</span>
 
-					<div class="field" style="margin-left: 2em">
+					<span class="field flex-1">
 						<label for="exameFisico_imc">IMC</label>
-						<input type="tel" id="exameFisico_imc" name="exameFisico_imc"/>
-					</div>
+						<input type="text" id="exameFisico_imc" name="exameFisico_imc" readonly/>
+					</span>
 
 				</div>
 
-				<div class="field">
-					<label for="exameFisico_pressaoArterial">Pressão Arterial</label>
-					<input type="tel" id="exameFisico_pressaoArterial" name="exameFisico_pressaoArterial"/>
-				</div>
+				<div class="flex flex-wrap">
 
-				<div class="field">
-					<label for="exameFisico_circunferenciaAbdominal">Circunferência Abdominal</label>
-					<input type="tel" id="exameFisico_circunferenciaAbdominal" name="exameFisico_circunferenciaAbdominal"/>
-				</div>
+					<span class="field flex-1">
+						<label for="exameFisico_pressaoArterial">Pressão Arterial</label>
+						<span class="helper">
+							<input type="number" id="exameFisico_pressaoArterial" name="exameFisico_pressaoArterial"/>
+							<span>mmHg</span>
+						</span>
+					</span>
 
-				<div class="field">
-					<label for="exameFisico_circunferenciaCervical">Circunferência Cervical</label>
-					<input type="tel" id="exameFisico_circunferenciaCervical" name="exameFisico_circunferenciaCervical"/>
+					<span class="field flex-1">
+						<label for="exameFisico_circunferenciaAbdominal">Circunferência Abdominal</label>
+						<span class="helper">
+							<input type="number" id="exameFisico_circunferenciaAbdominal" name="exameFisico_circunferenciaAbdominal"/>
+							<span>cm</span>
+						</span>
+					</span>
+
+					<span class="field flex-1">
+						<label for="exameFisico_circunferenciaCervical">Circunferência Cervical</label>
+						<span class="helper">
+							<input type="number" id="exameFisico_circunferenciaCervical" name="exameFisico_circunferenciaCervical"/>
+							<span>cm</span>
+						</span>
+					</span>
+
 				</div>
 
 			</div>
@@ -301,154 +308,135 @@
 
 				<h2>Antecedentes</h2>
 
+				<div class="flex flex-wrap">
 
-				<div class="flex flex-column">
-
-					<div class="field">
+					<div class="field flex-1">
 						<label for="antecedentes_situacao_gestaçao">Gestação</label>
-						<input type="text" id="antecedentes_situacao_gestaçao" name="antecedentes_situacao_gestaçao"/>
+						<input type="number" id="antecedentes_situacao_gestaçao" name="antecedentes_situacao_gestaçao"/>
 					</div>
 
-					<div class="field">
+					<div class="field flex-1">
 						<label for="antecedentes_situacao_paridade">Paridade</label>
-						<input type="text" id="antecedentes_situacao_paridade" name="antecedentes_situacao_paridade"/>
+						<input type="number" id="antecedentes_situacao_paridade" name="antecedentes_situacao_paridade"/>
 					</div>
 
-					<div class="field">
+					<div class="field flex-1">
 						<label for="antecedentes_situacao_aborto">Aborto</label>
-						<input type="text" id="antecedentes_situacao_aborto" name="antecedentes_situacao_aborto"/>
+						<input type="number" id="antecedentes_situacao_aborto" name="antecedentes_situacao_aborto"/>
 					</div>
 
 				</div>
 
-				<div class="field">
+				<div>
 
-					<label>Tabagismo</label>
+					<label class="field-label">Tabagismo</label>
 
-					<span class="flex">
-						<input type="radio" id="antecedentes_tabagismo_1" name="antecedentes_tabagismo" value="true"/>
-						<label for="antecedentes_tabagismo_1">Sim</label>
+					<div class="flex">
+
+						<span class="field row">
+							<input type="radio" id="antecedentes_tabagismo_1" name="antecedentes_tabagismo" value="true"/>
+							<label for="antecedentes_tabagismo_1">Sim</label>
+						</span>
+
+						<span class="field row">
+							<input type="radio" id="antecedentes_tabagismo_2" name="antecedentes_tabagismo" value="false"/>
+							<label for="antecedentes_tabagismo_2">Não</label>
+						</span>
+
+					</div>
+
+				</div>
+
+
+				<div>
+
+					<label class="field-label">H.A.C.</label>
+
+					<span class="field row">
+						<input type="radio" id="antecedentes_hac_1" name="antecedentes_hac" value="true"/>
+						<label for="antecedentes_hac_1">Sim</label>
 					</span>
 
-					<span class="flex">
-						<input type="radio" id="antecedentes_tabagismo_2" name="antecedentes_tabagismo" value="false"/>
-						<label for="antecedentes_tabagismo_2">Não</label>
+					<div class="flex grey-50" id="antecedentes_hac_type">
+
+						<span class="field row">
+							<input type="radio" id="antecedentes_hac_type_1" name="antecedentes_hac_type" value="Compensado"/>
+							<label for="antecedentes_hac_type_1">Compensado</label>
+						</span>
+
+						<span class="field row">
+							<input type="radio" id="antecedentes_hac_type_2" name="antecedentes_hac_type" value="Descompensado"/>
+							<label for="antecedentes_hac_type_2">Descompensado</label>
+						</span>
+
+					</div>
+
+					<span class="field row">
+						<input type="radio" id="antecedentes_hac_2" name="antecedentes_hac" value="false"/>
+						<label for="antecedentes_hac_2">Não</label>
 					</span>
 
 				</div>
 
+				<div>
 
-				<div class="flex">
+					<label class="field-label">Diabetes Mellitus</label>
 
-					<div class="field">
+					<span class="field row">
 
-						<label>H.A.C.</label>
+						<input type="radio" id="antecedentes_diabetes_1" name="antecedentes_diabetes" value="true"/>
+						<label for="antecedentes_diabetes_1">Sim</label>
 
-						<span class="flex">
+					</span>
 
-							<input type="radio" id="antecedentes_hac_1" name="antecedentes_hac" value="true"/>
-							<label for="antecedentes_hac_1">Sim</label>
+					<div class="flex grey-50" id="antecedentes_diabetes_type">
 
-							<span class="field grey-50" id="antecedentes_hac_type">
-
-								<label></label>
-
-								<span class="flex">
-									<input type="radio" id="antecedentes_hac_type_1" name="antecedentes_hac_type" value="Compensado"/>
-									<label for="antecedentes_hac_type_1">Compensado</label>
-								</span>
-
-								<span class="flex">
-									<input type="radio" id="antecedentes_hac_type_2" name="antecedentes_hac_type" value="Descompensado"/>
-									<label for="antecedentes_hac_type_2">Descompensado</label>
-								</span>
-
-							</span>
-
+						<span class="field row">
+							<input type="radio" id="antecedentes_diabetes_type_1" name="antecedentes_diabetes_type" value="Compensado"/>
+							<label for="antecedentes_diabetes_type_1">Compensado</label>
 						</span>
 
-						<span class="flex">
-							<input type="radio" id="antecedentes_hac_2" name="antecedentes_hac" value="false"/>
-							<label for="antecedentes_hac_2">Não</label>
+						<span class="field row">
+							<input type="radio" id="antecedentes_diabetes_type_2" name="antecedentes_diabetes_type" value="Descompensado"/>
+							<label for="antecedentes_diabetes_type_2">Descompensado</label>
 						</span>
 
 					</div>
+
+					<span class="field row">
+						<input type="radio" id="antecedentes_diabetes_2" name="antecedentes_diabetes" value="false"/>
+						<label for="antecedentes_diabetes_2">Não</label>
+					</span>
 
 				</div>
 
-				<div class="flex">
+				<div>
 
-					<div class="field">
+					<label>Hipotireoidismo</label>
 
-						<label>Diabetes Mellitus</label>
+					<span class="field row">
+						<input type="radio" id="antecedentes_hipotireoidismo_1" name="antecedentes_hipotireoidismo" value="true"/>
+						<label for="antecedentes_hipotireoidismo_1">Sim</label>
+					</span>
 
-						<span class="flex">
+					<span class="flex grey-50" id="antecedentes_hipotireoidismo_type">
 
-							<input type="radio" id="antecedentes_diabetes_1" name="antecedentes_diabetes" value="true"/>
-							<label for="antecedentes_diabetes_1">Sim</label>
-
-							<span class="field grey-50" id="antecedentes_diabetes_type">
-
-								<label></label>
-
-								<span class="flex">
-									<input type="radio" id="antecedentes_diabetes_type_1" name="antecedentes_diabetes_type" value="Compensado"/>
-									<label for="antecedentes_diabetes_type_1">Compensado</label>
-								</span>
-
-								<span class="flex">
-									<input type="radio" id="antecedentes_diabetes_type_2" name="antecedentes_diabetes_type" value="Descompensado"/>
-									<label for="antecedentes_diabetes_type_2">Descompensado</label>
-								</span>
-
-							</span>
-
+						<span class="field row">
+							<input type="radio" id="antecedentes_hipotireoidismo_type_1" name="antecedentes_hipotireoidismo_type" value="Compensado"/>
+							<label for="antecedentes_hipotireoidismo_type_1">Compensado</label>
 						</span>
 
-						<span class="flex">
-							<input type="radio" id="antecedentes_diabetes_2" name="antecedentes_diabetes" value="false"/>
-							<label for="antecedentes_diabetes_2">Não</label>
+						<span class="field row">
+							<input type="radio" id="antecedentes_hipotireoidismo_type_2" name="antecedentes_hipotireoidismo_type" value="Descompensado"/>
+							<label for="antecedentes_hipotireoidismo_type_2">Descompensado</label>
 						</span>
 
-					</div>
+					</span>
 
-				</div>
-
-				<div class="flex">
-
-					<div class="field">
-
-						<label>Hipotireoidismo</label>
-
-						<span class="flex">
-
-							<input type="radio" id="antecedentes_hipotireoidismo_1" name="antecedentes_hipotireoidismo" value="true"/>
-							<label for="antecedentes_hipotireoidismo_1">Sim</label>
-
-							<span class="field grey-50" id="antecedentes_hipotireoidismo_type">
-
-								<label></label>
-
-								<span class="flex">
-									<input type="radio" id="antecedentes_hipotireoidismo_type_1" name="antecedentes_hipotireoidismo_type" value="Compensado"/>
-									<label for="antecedentes_hipotireoidismo_type_1">Compensado</label>
-								</span>
-
-								<span class="flex">
-									<input type="radio" id="antecedentes_hipotireoidismo_type_2" name="antecedentes_hipotireoidismo_type" value="Descompensado"/>
-									<label for="antecedentes_hipotireoidismo_type_2">Descompensado</label>
-								</span>
-
-							</span>
-
-						</span>
-
-						<span class="flex">
-							<input type="radio" id="antecedentes_hipotireoidismo_2" name="antecedentes_hipotireoidismo" value="false"/>
-							<label for="antecedentes_hipotireoidismo_2">Não</label>
-						</span>
-
-					</div>
+					<span class="field row">
+						<input type="radio" id="antecedentes_hipotireoidismo_2" name="antecedentes_hipotireoidismo" value="false"/>
+						<label for="antecedentes_hipotireoidismo_2">Não</label>
+					</span>
 
 				</div>
 
@@ -463,14 +451,14 @@
 
 				<h2>Características do Utero / Mioma</h2>
 
-				<div class="flex justify-between">
+				<div class="flex flex-wrap justify-between">
 
 					<div class="field flex-4">
 						<label for="ultrassom_volumeUterino">Volume Uterino</label>
 						<input type="tel" id="ultrassom_volumeUterino" maxlength="4" name="ultrassom_volumeUterino" placeholder="cm³"/>
 					</div>
 
-					<div class="field grey-50 flex-5" style="margin-left: 2em">
+					<div class="field grey-50 flex-5">
 
 						<span class="flex">
 							<label for="ultrassom_ovarioDireito">Ovário Direito</label>
@@ -491,26 +479,25 @@
 					<input type="tel" id="ultrassom_endometro" maxlength="2" name="ultrassom_endometro" placeholder="mm"/>
 				</div>
 
-				<div class="flex">
+				<div class="flex flex-wrap">
 
-					<div class="">
-						<label for="mioma_quantidade">Quantidade de Miomas</label>
-						<input type="number" id="mioma_quantidade" maxlength="1" name="mioma_quantidade"/>
+					<div class="flex flex-column">
+
+						<span class="field">
+							<label for="mioma_quantidade">Quantidade de Miomas</label>
+							<input type="number" id="mioma_quantidade" maxlength="1" name="mioma_quantidade"/>
+						</span>
+
+						<span class="field row">
+							<input type="checkbox" id="ultrassom_nd" name="ultrassom_nd" value="true"/>
+							<label for="ultrassom_nd">Dados não disponíveis</label>
+						</span>
+
 					</div>
 
 					<div id="dynf"></div>
 
 				</div>
-
-				<div class="field">
-
-					<div class="flex">
-						<input type="checkbox" id="ultrassom_nd" name="ultrassom_nd" value="true"/>
-						<label for="ultrassom_nd">Dados não disponíveis</label>
-					</div>
-
-				</div>
-
 
 			</div>
 
@@ -518,99 +505,143 @@
 
 				<h2>Sangramento</h2>
 
-				<div class="field">
+				<span class="field">
 					<label for="sangramento_pbacInicial">Escore PBAC Inicíal</label>
 					<input type="tel" id="sangramento_pbacInicial" name="sangramento_pbacInicial"/>
-				</div>
+				</span>
 
 			</div>
 
 			<h2>Escalas</h2>
 
-			<div class="field">
-				<label for="escalas_beckInicial">Depressão Beck Inicial</label>
-				<input type="tel" id="escalas_beckInicial" name="escalas_beckInicial"/>
-			</div>
-			<div class="field">
-				<label for="escalas_vidaMioma">Qualidade de Vida x Mioma</label>
-				<input type="tel" id="escalas_vidaMioma" name="escalas_vidaMioma"/>
+			<div class="flex flex-wrap">
+
+				<span class="field flex-1">
+					<label for="escalas_beckInicial">Depressão Beck Inicial</label>
+					<input type="tel" id="escalas_beckInicial" name="escalas_beckInicial"/>
+				</span>
+
+				<span class="field flex-1">
+					<label for="escalas_vidaMioma">Qualidade de Vida x Mioma</label>
+					<input type="tel" id="escalas_vidaMioma" name="escalas_vidaMioma"/>
+				</span>
+
 			</div>
 
 			<div>
 
 				<h2>Exames</h2>
 
-				<div class="flex flex-wrap justify-center">
+				<div class="flex flex-wrap">
 
-					<div class="flex flex-column">
+					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
-							<label for="exames_hb" class="flex-9">Hb</label>
-							<input type="tel" id="exames_hb" name="exames_hb"/>
+							<label for="exames_hb" class="default-case">Hb</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_hb" name="exames_hb"/>
+								<span>%</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_ht" class="flex-9">Ht</label>
-							<input type="tel" id="exames_ht" name="exames_ht"/>
+							<label for="exames_ht" class="default-case">Ht</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_ht" name="exames_ht"/>
+								<span>%</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_vcm" class="flex-9">V.C.M</label>
-							<input type="tel" id="exames_vcm" name="exames_vcm"/>
+							<label for="exames_vcm" class="default-case">V.C.M</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_vcm" name="exames_vcm"/>
+								<span>ft</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_rdw" class="flex-9">R.D.W</label>
-							<input type="tel" id="exames_rdw" name="exames_rdw"/>
+							<label for="exames_rdw" class="default-case">R.D.W</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_rdw" name="exames_rdw"/>
+								<span>%</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_ferro" class="flex-9">Ferro</label>
-							<input type="tel" id="exames_ferro" name="exames_ferro"/>
+							<label for="exames_ferro" class="default-case">Ferro</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_ferro" name="exames_ferro"/>
+								<span>mg</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_ferritina" class="flex-9">Ferritina</label>
-							<input type="tel" id="exames_ferritina" name="exames_ferritina"/>
+							<label for="exames_ferritina" class="default-case">Ferritina</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_ferritina" name="exames_ferritina"/>
+								<span>ng/dL</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_vitaminaD3" class="flex-9">Vitamina D3</label>
-							<input type="tel" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
+							<label for="exames_vitaminaD3" class="default-case">Vitamina D3</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
+								<span>ng/mL</span>
+							</span>
 						</span>
 
 					</div>
 
-					<div class="flex flex-column">
+					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
-							<label for="exames_gj" class="flex-9">G.J</label>
-							<input type="tel" id="exames_gj" name="exames_gj"/>
+							<label for="exames_gj" class="default-case">G.J</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_gj" name="exames_gj"/>
+								<span>mg/dL</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_ct" class="flex-9">C.T</label>
-							<input type="tel" id="exames_ct" name="exames_ct"/>
+							<label for="exames_ct" class="default-case">C.T</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_ct" name="exames_ct"/>
+								<span>mg/dL</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_ldl" class="flex-9">L.D.L</label>
-							<input type="tel" id="exames_ldl" name="exames_ldl"/>
+							<label for="exames_ldl" class="default-case">L.D.L</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_ldl" name="exames_ldl"/>
+								<span>mg/dL</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_hdl" class="flex-9">H.D.L</label>
-							<input type="tel" id="exames_hdl" name="exames_hdl"/>
+							<label for="exames_hdl" class="default-case">H.D.L</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_hdl" name="exames_hdl"/>
+								<span>mg/dL</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_tsh" class="flex-9">T.S.H</label>
-							<input type="tel" id="exames_tsh" name="exames_tsh"/>
+							<label for="exames_tsh" class="default-case">T.S.H</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_tsh" name="exames_tsh"/>
+								<span>mU/L</span>
+							</span>
 						</span>
 
 						<span class="field">
-							<label for="exames_t4l" class="flex-9">T.4.L</label>
-							<input type="tel" id="exames_t4l" name="exames_t4l"/>
+							<label for="exames_t4l" class="default-case">T.4.L</label>
+							<span class="helper">
+								<input type="tel" class="small" id="exames_t4l" name="exames_t4l"/>
+								<span>ng/dL</span>
+							</span>
 						</span>
 
 					</div>
@@ -625,39 +656,29 @@
 
 				<div class="flex" id="conduta">
 
-					<div class="field">
+					<div class="flex flex-column">
 
-						<span class="flex">
-
+						<span class="field row">
 							<input type="radio" id="conduta_1" name="conduta" value="Cirurgia"/>
 							<label for="conduta_1">Cirurgia</label>
-
 						</span>
 
-						<span class="flex">
-
+						<span class="field row">
 							<input type="radio" id="conduta_2" name="conduta" value="S.I.U - L.N.G"/>
 							<label for="conduta_2">S.I.U - L.N.G</label>
-
 						</span>
 
-						<span class="flex">
-
+						<span class="field row">
 							<input type="radio" id="conduta_3" name="conduta" value="Hormônio Terapia"/>
 							<label for="conduta_3">Hormônio Terapia</label>
-
 						</span>
 
-						<span class="flex">
-
+						<span class="field row">
 							<input type="radio" id="conduta_4" name="conduta" value="A.I.N.H."/>
 							<label for="conduta_4">A.I.N.H.</label>
-
 						</span>
 
 					</div>
-
-
 
 					<!--
 						Cirurgia
@@ -765,19 +786,23 @@
 
 				<h2>Resultados</h2>
 
-				<div class="field">
-					<label for="resultados_pbacFinal">Escore PBAC Final</label>
-					<input type="tel" id="resultados_pbacFinal" name="resultados_pbacFinal"/>
-				</div>
+				<div class="flex flex-wrap">
 
-				<div class="field">
-					<label for="resultados_beckFinal">Depressão Beck Final</label>
-					<input type="tel" id="resultados_beckFinal" name="resultados_beckFinal"/>
-				</div>
+					<span class="field flex-1">
+						<label for="resultados_pbacFinal">Escore PBAC Final</label>
+						<input type="tel" id="resultados_pbacFinal" name="resultados_pbacFinal"/>
+					</span>
 
-				<div class="field">
-					<label for="resultados_vidaMiomaFinal">Qualidade Vida x Mioma</label>
-					<input type="tel" id="resultados_vidaMiomaFinal" name="resultados_vidaMiomaFinal"/>
+					<span class="field flex-1">
+						<label for="resultados_beckFinal">Depressão Beck Final</label>
+						<input type="tel" id="resultados_beckFinal" name="resultados_beckFinal"/>
+					</span>
+
+					<span class="field flex-1">
+						<label for="resultados_vidaMiomaFinal">Qualidade Vida x Mioma</label>
+						<input type="tel" id="resultados_vidaMiomaFinal" name="resultados_vidaMiomaFinal"/>
+					</span>
+
 				</div>
 
 			</div>
@@ -820,6 +845,12 @@
 	</script>
 
 	<style>
+
+		.mioma {
+			background-color: #eeeeee;
+			margin: .5em;
+		}
+
 		/*#antecedentes_hipotireoidismo_type,
 		#antecedentes_hac_type,
 		#antecedentes_diabetes_type*/
@@ -831,8 +862,6 @@
 		#conduta_ainh {
 			display: none;
 		}
-
-
 
 		.conduta_1 #conduta_cirurgia,
 		.conduta_3 #conduta_hormonioTerapia,

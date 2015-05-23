@@ -192,7 +192,7 @@ newEmptyField = function (c) {
  */
 var newMiomaFieldRadio;
 newMiomaFieldRadio = function (a, b) {
-	var e = newNode('span', 'field');
+	var e = newNode('span', 'field row');
 
 	var ea = newNode('input');
 	ea.type = 'radio';
@@ -222,14 +222,21 @@ newMiomaField = function (a) {
 
 	var eaa = newNode('span', 'field flex-column');
 
-	var eaaa = newNode('input');
-	eaaa.type = 'text';
-	eaaa.id = 'mioma_medida_' + a;
-	eaaa.name = 'mioma_medida_' + a;
-	eaaa.placeholder = a;
+	var eaaa = newNode('span', 'helper');
+
+	var eaaaa = newNode('input');
+	eaaaa.type = 'text';
+	eaaaa.id = 'mioma_medida_' + a;
+	eaaaa.name = 'mioma_medida_' + a;
+	eaaaa.placeholder = 'Mioma ' + a;
+
+	var eaaab = newContentNode('span', 'mm');
+
+	eaaa.appendChild(eaaaa);
+	eaaa.appendChild(eaaab);
 
 	var eaab = newContentNode('label', 'medida');
-	eaab.htmlFor = eaaa.id;
+	eaab.htmlFor = eaaaa.id;
 
 	eaa.appendChild(eaab);
 	eaa.appendChild(eaaa);
@@ -238,14 +245,10 @@ newMiomaField = function (a) {
 
 	var eb = newNode('div', 'mioma-type flex flex-wrap');
 
-	var eba = newNode('span', 'field');
-	var ebb = newNode('span', 'field');
-	var ebc = newNode('span', 'field');
-
 	// Para adicionar novo tipo, é só adicionar novo append de radio em um novo field
-	eba.appendChild(newMiomaFieldRadio(a, 'intramural'));
-	ebb.appendChild(newMiomaFieldRadio(a, 'submucoso'));
-	ebc.appendChild(newMiomaFieldRadio(a, 'subseroso'));
+	var eba = newMiomaFieldRadio(a, 'Intramural');
+	var ebb = newMiomaFieldRadio(a, 'Submucoso');
+	var ebc = newMiomaFieldRadio(a, 'Subseroso');
 
 	eb.appendChild(eba);
 	eb.appendChild(ebb);
