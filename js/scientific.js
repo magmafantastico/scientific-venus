@@ -372,6 +372,44 @@ numberMioma = function() {
 };
 
 /**
+ * Executa a formula para retornar o IMC
+ * @param a peso (kg)
+ * @param b altura (m)
+ * return imc
+ */
+var calcIMC;
+calcIMC = function(a, b) {
+	var c = a / Math.pow(b, 2);
+
+	return parseFloat(c).toFixed(2);
+};
+
+/**
+ * Faz alteração do valor do campo IMC baseado na função calcIMC(a, b)
+ * Recebe eventTarget
+ */
+var getIMC;
+getIMC = function() {
+	var a = document.getElementById('exameFisico_peso').value;
+	var b = document.getElementById('exameFisico_altura').value;
+
+	if (!isNaN(a) || !isNaN(b)) {
+		a = parseInt(a);
+		b = parseInt(b);
+
+		c = calcIMC(a, b / 100);
+
+		if ((c < 18.49) || (c > 25))
+			if ((c < 17) || (c > 30))
+				this.className = 'font-red-900';
+			else this.className = 'font-red';
+		else this.className = 'font-green';
+
+		this.value = c;
+	}
+};
+
+/**
  * EXTERNAL FUNCTIONS
  */
 

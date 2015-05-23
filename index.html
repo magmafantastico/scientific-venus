@@ -540,72 +540,80 @@
 
 				<h2>Exames</h2>
 
-				<div class="flex flex-wrap justify-around">
+				<div class="flex flex-wrap justify-center">
 
-					<span class="field">
-						<label for="exames_hb" class="flex-9">Hb</label>
-						<input type="tel" id="exames_hb" name="exames_hb"/>
-					</span>
+					<div class="flex flex-column">
 
-					<span class="field">
-						<label for="exames_ht" class="flex-9">Ht</label>
-						<input type="tel" id="exames_ht" name="exames_ht"/>
-					</span>
+						<span class="field">
+							<label for="exames_hb" class="flex-9">Hb</label>
+							<input type="tel" id="exames_hb" name="exames_hb"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_vcm" class="flex-9">V.C.M</label>
-						<input type="tel" id="exames_vcm" name="exames_vcm"/>
-					</span>
+						<span class="field">
+							<label for="exames_ht" class="flex-9">Ht</label>
+							<input type="tel" id="exames_ht" name="exames_ht"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_rdw" class="flex-9">R.D.W</label>
-						<input type="tel" id="exames_rdw" name="exames_rdw"/>
-					</span>
+						<span class="field">
+							<label for="exames_vcm" class="flex-9">V.C.M</label>
+							<input type="tel" id="exames_vcm" name="exames_vcm"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_ferro" class="flex-9">Ferro</label>
-						<input type="tel" id="exames_ferro" name="exames_ferro"/>
-					</span>
+						<span class="field">
+							<label for="exames_rdw" class="flex-9">R.D.W</label>
+							<input type="tel" id="exames_rdw" name="exames_rdw"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_ferritina" class="flex-9">Ferritina</label>
-						<input type="tel" id="exames_ferritina" name="exames_ferritina"/>
-					</span>
+						<span class="field">
+							<label for="exames_ferro" class="flex-9">Ferro</label>
+							<input type="tel" id="exames_ferro" name="exames_ferro"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_vitaminaD3" class="flex-9">Vitamina D3</label>
-						<input type="tel" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
-					</span>
+						<span class="field">
+							<label for="exames_ferritina" class="flex-9">Ferritina</label>
+							<input type="tel" id="exames_ferritina" name="exames_ferritina"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_gj" class="flex-9">G.J</label>
-						<input type="tel" id="exames_gj" name="exames_gj"/>
-					</span>
+						<span class="field">
+							<label for="exames_vitaminaD3" class="flex-9">Vitamina D3</label>
+							<input type="tel" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_ct" class="flex-9">C.T</label>
-						<input type="tel" id="exames_ct" name="exames_ct"/>
-					</span>
+					</div>
 
-					<span class="field">
-						<label for="exames_ldl" class="flex-9">L.D.L</label>
-						<input type="tel" id="exames_ldl" name="exames_ldl"/>
-					</span>
+					<div class="flex flex-column">
 
-					<span class="field">
-						<label for="exames_hdl" class="flex-9">H.D.L</label>
-						<input type="tel" id="exames_hdl" name="exames_hdl"/>
-					</span>
+						<span class="field">
+							<label for="exames_gj" class="flex-9">G.J</label>
+							<input type="tel" id="exames_gj" name="exames_gj"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_tsh" class="flex-9">T.S.H</label>
-						<input type="tel" id="exames_tsh" name="exames_tsh"/>
-					</span>
+						<span class="field">
+							<label for="exames_ct" class="flex-9">C.T</label>
+							<input type="tel" id="exames_ct" name="exames_ct"/>
+						</span>
 
-					<span class="field">
-						<label for="exames_t4l" class="flex-9">T.4.L</label>
-						<input type="tel" id="exames_t4l" name="exames_t4l"/>
-					</span>
+						<span class="field">
+							<label for="exames_ldl" class="flex-9">L.D.L</label>
+							<input type="tel" id="exames_ldl" name="exames_ldl"/>
+						</span>
+
+						<span class="field">
+							<label for="exames_hdl" class="flex-9">H.D.L</label>
+							<input type="tel" id="exames_hdl" name="exames_hdl"/>
+						</span>
+
+						<span class="field">
+							<label for="exames_tsh" class="flex-9">T.S.H</label>
+							<input type="tel" id="exames_tsh" name="exames_tsh"/>
+						</span>
+
+						<span class="field">
+							<label for="exames_t4l" class="flex-9">T.4.L</label>
+							<input type="tel" id="exames_t4l" name="exames_t4l"/>
+						</span>
+
+					</div>
 
 				</div>
 
@@ -776,7 +784,6 @@
 
 		</form>
 
-
 		<div class="flex justify-end" style="margin-top: 1em">
 			<a class="button flat" id="consulta_create">Salvar e Imprimir</a>
 		</div>
@@ -807,6 +814,9 @@
 			selectYears: 180,
 			selectMonths: true
 		});
+
+		var $exameFisico_imc = document.getElementById('exameFisico_imc');
+		$exameFisico_imc.addEventListener('focus', getIMC);
 	</script>
 
 	<style>
