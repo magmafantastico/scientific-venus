@@ -2,9 +2,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `empreen1_scientific_venus` ;
-CREATE SCHEMA IF NOT EXISTS `empreen1_scientific_venus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `empreen1_scientific_venus` ;
 
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`paciente`
@@ -37,8 +34,8 @@ DROP TABLE IF EXISTS `empreen1_scientific_venus`.`prontuario` ;
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`prontuario` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `paciente_id` INT NOT NULL,
-  `registro` INT NOT NULL,
   `data` DATE NOT NULL,
+  `registro` INT NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
   INDEX `paciente_id_idx` (`paciente_id` ASC),
@@ -126,52 +123,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `empreen1_scientific_venus`.`uteroMioma`
+-- Table `empreen1_scientific_venus`.`ultrassom`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `empreen1_scientific_venus`.`uteroMioma` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`ultrassom` ;
 
-CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`uteroMioma` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`ultrassom` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
-  `us` VARCHAR(45) NULL,
-  `volumeInterino` FLOAT NULL,
+  `volumeUterino` FLOAT NULL,
   `ovarioDireito` FLOAT NULL,
   `ovarioEsquerdo` FLOAT NULL,
   `endometro` FLOAT NULL,
-  `miomaQuantidade` INT NULL,
-  `mioma_1_caracteristicas` FLOAT NULL,
-  `mioma_1_submucoso` TINYINT(1) NULL,
-  `mioma_1_subseroso` TINYINT(1) NULL,
-  `mioma_1_intramural` TINYINT(1) NULL,
-  `mioma_2_caracteristicas` FLOAT NULL,
-  `mioma_2_submucoso` TINYINT(1) NULL,
-  `mioma_2_subseroso` TINYINT(1) NULL,
-  `mioma_2_intramural` TINYINT(1) NULL,
   `nd` VARCHAR(45) NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
-  INDEX `fk_uteroMioma_1_idx` (`consulta_id` ASC),
-  CONSTRAINT `fk_uteroMioma_1`
-    FOREIGN KEY (`consulta_id`)
-    REFERENCES `empreen1_scientific_venus`.`consulta` (`_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `empreen1_scientific_venus`.`sangramento`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `empreen1_scientific_venus`.`sangramento` ;
-
-CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`sangramento` (
-  `_id` INT NOT NULL AUTO_INCREMENT,
-  `consulta_id` INT NOT NULL,
-  `pbacInicial` FLOAT NOT NULL,
-  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`_id`),
-  INDEX `fk_sangramento_1_idx` (`consulta_id` ASC),
-  CONSTRAINT `fk_sangramento_1`
+  INDEX `fk_ultrassom_1_idx` (`consulta_id` ASC),
+  CONSTRAINT `fk_ultrassom_1`
     FOREIGN KEY (`consulta_id`)
     REFERENCES `empreen1_scientific_venus`.`consulta` (`_id`)
     ON DELETE NO ACTION
@@ -187,8 +154,9 @@ DROP TABLE IF EXISTS `empreen1_scientific_venus`.`escalas` ;
 CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`escalas` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
-  `beckInicial` FLOAT NOT NULL,
-  `vidaMioma` FLOAT NOT NULL,
+  `pbacInicial` VARCHAR(45) NULL,
+  `beckInicial` VARCHAR(45) NULL,
+  `vidaMioma` VARCHAR(45) NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
   INDEX `fk_escalas_1_idx` (`consulta_id` ASC),
@@ -210,16 +178,16 @@ CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`exames` (
   `consulta_id` INT NOT NULL,
   `hb` FLOAT NULL,
   `ht` FLOAT NULL,
+  `vcm` FLOAT NULL,
+  `rdw` FLOAT NULL,
   `ferro` FLOAT NULL,
   `ferritina` FLOAT NULL,
-  `rdw` FLOAT NULL,
-  `vcm` FLOAT NULL,
   `vitaminaD3` FLOAT NULL,
-  `tsh` FLOAT NULL,
   `gj` FLOAT NULL,
   `ct` FLOAT NULL,
   `ldl` FLOAT NULL,
   `hdl` FLOAT NULL,
+  `tsh` FLOAT NULL,
   `t4l` FLOAT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`_id`),
@@ -243,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`conduta` (
   `conduta` VARCHAR(45) NULL,
   `cirurgia` VARCHAR(45) NULL,
   `hormonioTerapia` VARCHAR(45) NULL,
+  `hormonioTerapiaAINH` VARCHAR(45) NULL,
   `hormonioTerapiaCiclico` TINYINT(1) NULL,
   `hormonioTerapiaContinuo` TINYINT(1) NULL,
   `hormonioTerapiaNome` VARCHAR(45) NULL,
@@ -273,6 +242,27 @@ CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`resultados` (
   PRIMARY KEY (`_id`),
   INDEX `fk_resultados_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_resultados_1`
+    FOREIGN KEY (`consulta_id`)
+    REFERENCES `empreen1_scientific_venus`.`consulta` (`_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `empreen1_scientific_venus`.`mioma`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`mioma` ;
+
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`mioma` (
+  `_id` INT NOT NULL AUTO_INCREMENT,
+  `consulta_id` INT NOT NULL,
+  `medida` FLOAT NULL,
+  `tipo` VARCHAR(45) NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`_id`),
+  INDEX `fk_mioma_1_idx` (`consulta_id` ASC),
+  CONSTRAINT `fk_mioma_1`
     FOREIGN KEY (`consulta_id`)
     REFERENCES `empreen1_scientific_venus`.`consulta` (`_id`)
     ON DELETE NO ACTION

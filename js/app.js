@@ -26,6 +26,29 @@ $('#btn').click(function () {
 
 });
 
+// Adaptaçao da funçao acima
+$('#consulta_create').click(function() {
+
+	document.cookie = "response=" + JSON.stringify(getResponse());
+
+	document.getElementById('prontuario__id').value = '';
+
+	$.ajax({
+		error: function (data) {
+			console.log(data.responseText);
+		},
+		method: 'post',
+		success: function (data) {
+			if (data.prontuario._id) {
+				document.getElementById('prontuario__id').value = data.prontuario._id;
+				document.forms['carry_id'].submit();
+			}
+		},
+		url: __API_DIR + 'i/push/'
+	});
+
+});
+
 var getResponse;
 getResponse = function () {
 	return {
