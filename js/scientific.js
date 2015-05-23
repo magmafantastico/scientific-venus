@@ -89,13 +89,14 @@ buildNote = function (a, b) {
 var toLocaleBool;
 toLocaleBool = function (a) {
 	if (a == 1) return 'Sim';
-	else return 'Não';
+	else return '';
 };
 
 var buildTypeNote = function (a, b) {
 	if (a > 0)
-		return toLocaleBool(a) + ' (' + b + ')';
-	else return b;
+		if (b)
+			return toLocaleBool(a) + ' (' + b + ')';
+	else return toLocaleBool(a);
 };
 
 /**

@@ -349,7 +349,7 @@
 							<input type="radio" id="antecedentes_hac_1" name="antecedentes_hac" value="true"/>
 							<label for="antecedentes_hac_1">Sim</label>
 
-							<span class="field grey-50">
+							<span class="field grey-50" id="antecedentes_hac_type">
 
 								<label></label>
 
@@ -387,7 +387,7 @@
 							<input type="radio" id="antecedentes_diabetes_1" name="antecedentes_diabetes" value="true"/>
 							<label for="antecedentes_diabetes_1">Sim</label>
 
-							<span class="field grey-50">
+							<span class="field grey-50" id="antecedentes_diabetes_type">
 
 								<label></label>
 
@@ -425,7 +425,7 @@
 							<input type="radio" id="antecedentes_hipotireoidismo_1" name="antecedentes_hipotireoidismo" value="true"/>
 							<label for="antecedentes_hipotireoidismo_1">Sim</label>
 
-							<span class="field grey-50">
+							<span class="field grey-50" id="antecedentes_hipotireoidismo_type">
 
 								<label></label>
 
@@ -466,20 +466,20 @@
 				<div class="flex justify-between">
 
 					<div class="field flex-4">
-						<label for="uteroMioma_volumeUterino">Volume Uterino</label>
-						<input type="tel" id="uteroMioma_volumeUterino" maxlength="4" name="uteroMioma_volumeUterino" placeholder="cm³"/>
+						<label for="ultrassom_volumeUterino">Volume Uterino</label>
+						<input type="tel" id="ultrassom_volumeUterino" maxlength="4" name="ultrassom_volumeUterino" placeholder="cm³"/>
 					</div>
 
 					<div class="field grey-50 flex-5" style="margin-left: 2em">
 
 						<span class="flex">
-							<label for="uteroMioma_ovarioDireito">Ovário Direito</label>
-							<input type="tel" id="uteroMioma_ovarioDireito" maxlength="3" name="uteroMioma_ovarioDireito" placeholder="cm³"/>
+							<label for="ultrassom_ovarioDireito">Ovário Direito</label>
+							<input type="tel" id="ultrassom_ovarioDireito" maxlength="3" name="ultrassom_ovarioDireito" placeholder="cm³"/>
 						</span>
 
 						<span class="flex">
-							<label for="uteroMioma_ovarioEsquerdo">Ovário Esquerdo</label>
-							<input type="tel" id="uteroMioma_ovarioEsquerdo" maxlength="3" name="uteroMioma_ovarioEsquerdo" placeholder="cm³"/>
+							<label for="ultrassom_ovarioEsquerdo">Ovário Esquerdo</label>
+							<input type="tel" id="ultrassom_ovarioEsquerdo" maxlength="3" name="ultrassom_ovarioEsquerdo" placeholder="cm³"/>
 						</span>
 
 					</div>
@@ -487,15 +487,15 @@
 				</div>
 
 				<div class="field">
-					<label for="uteroMioma_endometro">Endométro</label>
-					<input type="tel" id="uteroMioma_endometro" maxlength="2" name="uteroMioma_endometro" placeholder="mm"/>
+					<label for="ultrassom_endometro">Endométro</label>
+					<input type="tel" id="ultrassom_endometro" maxlength="2" name="ultrassom_endometro" placeholder="mm"/>
 				</div>
 
 				<div class="flex">
 
 					<div class="">
-						<label for="uteroMioma_miomaQuantidade">Quantidade de Miomas</label>
-						<input type="number" id="uteroMioma_miomaQuantidade" maxlength="1" name="uteroMioma_miomaQuantidade"/>
+						<label for="mioma_quantidade">Quantidade de Miomas</label>
+						<input type="number" id="mioma_quantidade" maxlength="1" name="mioma_quantidade"/>
 					</div>
 
 					<div id="dynf"></div>
@@ -505,8 +505,8 @@
 				<div class="field">
 
 					<div class="flex">
-						<input type="checkbox" id="uteroMioma_nd" name="uteroMioma_nd" value="true"/>
-						<label for="uteroMioma_nd">Dados não disponíveis</label>
+						<input type="checkbox" id="ultrassom_nd" name="ultrassom_nd" value="true"/>
+						<label for="ultrassom_nd">Dados não disponíveis</label>
 					</div>
 
 				</div>
@@ -729,6 +729,11 @@
 									<label for="conduta_hormonioterapia_continuo">Contínuo</label>
 								</span>
 
+								<span class="flex">
+									<label for="conduta_hormonioterapia_ainh">A.I.N.H.</label>
+									<input type="text" id="conduta_hormonioterapia_ainh" name="conduta_hormonioterapia_ainh"/>
+								</span>
+
 							</span>
 
 						</span>
@@ -784,7 +789,7 @@
 	<script src="js/app.js"></script>
 
 	<script>
-		var miomaField = document.getElementById('uteroMioma_miomaQuantidade');
+		var miomaField = document.getElementById('mioma_quantidade');
 		miomaField.addEventListener('change', numberMioma);
 
 		$('input[name=conduta]').distinct({
@@ -805,6 +810,10 @@
 	</script>
 
 	<style>
+		/*#antecedentes_hipotireoidismo_type,
+		#antecedentes_hac_type,
+		#antecedentes_diabetes_type*/
+
 		#conduta_cirurgia,
 		#conduta_hormonioTerapia,
 		#conduta_hormonioTerapia_caracteristicas,
@@ -812,6 +821,8 @@
 		#conduta_ainh {
 			display: none;
 		}
+
+
 
 		.conduta_1 #conduta_cirurgia,
 		.conduta_3 #conduta_hormonioTerapia,

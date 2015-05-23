@@ -10,10 +10,10 @@ if (typeof __API_DIR === 'undefined')
 $('#btn').click(function () {
 
 	document.cookie = "response=" + JSON.stringify(getResponse());
-/*
+
 	document.getElementById('prontuario__id').value = '';
+
 	$.ajax({
-		data: {response: JSON.stringify(getResponse())},
 		error: function (data) {
 			console.log(data.responseText);
 		},
@@ -23,7 +23,6 @@ $('#btn').click(function () {
 		},
 		url: __API_DIR + 'i/push/'
 	});
-*/
 
 });
 
@@ -31,32 +30,6 @@ var getResponse;
 getResponse = function () {
 	return {
 
-		prontuario: {
-			_id: getTextField('prontuario__id'),
-			registro: getTextField('prontuario_registro'),
-			data: getPickDate($prontuario_data)
-		},
-		paciente: {
-			nome: getTextField('paciente_nome'),
-			sexo: getActiveRadio('paciente_sexo'),
-			nascimento: getPickDate($paciente_nascimento),
-			religiao: getActiveRadio('paciente_religiao'),
-			religiaoNote: getTextField('paciente_religiao_note'),
-			etnia: getActiveRadio('paciente_etnia'),
-			etniaNote: getTextField('paciente_etnia_note'),
-			escolaridade: getActiveRadio('paciente_escolaridade'),
-			escolaridadeNote: getTextField('paciente_escolaridade_note'),
-			estadoCivil: getActiveRadio('paciente_estadoCivil'),
-			estadoCivilNote: getTextField('paciente_estadoCivil_note')
-		},
-		exameFisico: {
-			peso: getTextField('exameFisico_peso'),
-			altura: getTextField('exameFisico_altura'),
-			imc: getTextField('exameFisico_imc'),
-			pressaoArterial: getTextField('exameFisico_pressaoArterial'),
-			circunferenciaAbdominal: getTextField('exameFisico_circunferenciaAbdominal'),
-			circunferenciaCervical: getTextField('exameFisico_circunferenciaCervical')
-		},
 		antecedentes: {
 			situacaoAborto: getTextField('antecedentes_situacao_aborto'),
 			situacaoGestacao: getTextField('antecedentes_situacao_gestaçao'),
@@ -70,14 +43,24 @@ getResponse = function () {
 			hipotireoidismoType: getActiveRadio('antecedentes_hipotireoidismo_type'),
 			note: getTextField('antecedentes_note')
 		},
-		ultrassom: {
-			volumeUterino: getTextField('uteroMioma_volumeUterino'),
-			ovarioDireito: getTextField('uteroMioma_ovarioDireito'),
-			ovarioEsquerdo: getTextField('uteroMioma_ovarioEsquerdo'),
-			endometro: getTextField('uteroMioma_endometro'),
-			nd: getActiveCheckbox('uteroMioma_nd')
+		conduta: {
+			conduta: getActiveRadio('conduta'),
+			cirurgia: getActiveRadio('conduta_cirurgia'),
+			hormonioTerapia: getActiveRadio('conduta_hormonioTerapia'),
+			hormonioTerapiaAINH: getTextField('conduta_hormonioterapia_ainh'),
+			hormonioTerapiaCiclico: parseBoolean(getActiveCheckbox('conduta_hormonioterapia_ciclico', true)),
+			hormonioTerapiaContinuo: parseBoolean(getActiveCheckbox('conduta_hormonioterapia_continuo', true)),
+			hormonioTerapiaNome: getTextField('conduta_hormonioterapia_nome'),
+			ainh: getTextField('conduta_ainh_nome')
 		},
-		mioma: getMiomas(),
+		exameFisico: {
+			peso: getTextField('exameFisico_peso'),
+			altura: getTextField('exameFisico_altura'),
+			imc: getTextField('exameFisico_imc'),
+			pressaoArterial: getTextField('exameFisico_pressaoArterial'),
+			circunferenciaAbdominal: getTextField('exameFisico_circunferenciaAbdominal'),
+			circunferenciaCervical: getTextField('exameFisico_circunferenciaCervical')
+		},
 		escalas: {
 			beckInicial: getTextField('escalas_beckInicial'),
 			pbacInicial: getTextField('sangramento_pbacInicial'),
@@ -98,19 +81,36 @@ getResponse = function () {
 			tsh: getTextField('exames_tsh'),
 			t4l: getTextField('exames_t4l')
 		},
-		conduta: {
-			conduta: getActiveRadio('conduta'),
-			cirurgia: getActiveRadio('conduta_cirurgia'),
-			hormonioTerapia: getActiveRadio('conduta_hormonioTerapia'),
-			hormonioTerapiaCiclico: parseBoolean(getActiveCheckbox('conduta_hormonioterapia_ciclico', true)),
-			hormonioTerapiaContinuo: parseBoolean(getActiveCheckbox('conduta_hormonioterapia_continuo', true)),
-			hormonioTerapiaNome: getTextField('conduta_hormonioterapia_nome'), // name
-			ainh: getTextField('conduta_ainh_nome')
+		mioma: getMiomas(),
+		paciente: {
+			nome: getTextField('paciente_nome'),
+			sexo: getActiveRadio('paciente_sexo'),
+			nascimento: getPickDate($paciente_nascimento),
+			religiao: getActiveRadio('paciente_religiao'),
+			religiaoNote: getTextField('paciente_religiao_note'),
+			etnia: getActiveRadio('paciente_etnia'),
+			etniaNote: getTextField('paciente_etnia_note'),
+			escolaridade: getActiveRadio('paciente_escolaridade'),
+			escolaridadeNote: getTextField('paciente_escolaridade_note'),
+			estadoCivil: getActiveRadio('paciente_estadoCivil'),
+			estadoCivilNote: getTextField('paciente_estadoCivil_note')
+		},
+		prontuario: {
+			_id: getTextField('prontuario__id'),
+			registro: getTextField('prontuario_registro'),
+			data: getPickDate($prontuario_data)
 		},
 		resultados: {
 			pbacFinal: getTextField('resultados_pbacFinal'),
 			beckFinal: getTextField('resultados_beckFinal'),
 			vidaMioma: getTextField('resultados_vidaMiomaFinal')
+		},
+		ultrassom: {
+			volumeUterino: getTextField('ultrassom_volumeUterino'),
+			ovarioDireito: getTextField('ultrassom_ovarioDireito'),
+			ovarioEsquerdo: getTextField('ultrassom_ovarioEsquerdo'),
+			endometro: getTextField('ultrassom_endometro'),
+			nd: getActiveCheckbox('ultrassom_nd')
 		}
 
 	};
@@ -144,8 +144,9 @@ renderConsulta = function (a) {
 	//insertNewCondutaExames(g, a.conduta[0], a.exames[0], 'conduta');
 	insertNewConduta(g, a.conduta[0], 'conduta');
 	insertNewExames(g, a.exames[0], 'exames');
-	insertNewEscalas(g, a.escalas[0], a.sangramento[0], 'escalas');
-	insertNewUteroMioma(g, a.uteroMioma[0], 'uteroMioma');
+	insertNewEscalas(g, a.escalas[0], 'escalas');
+	insertNewUltrassom(g, a.ultrassom[0], 'ultrassom');
+	insertNewMioma(g, a.mioma, 'mioma');
 	insertNewAntecedentes(g, a.antecedentes[0], 'antecedentes');
 	insertNewExameFisico(g, a.exameFisico[0], 'exameFisico');
 
@@ -283,46 +284,28 @@ insertNewAntecedentes = function (a, b, c) {
 };
 
 /**
- * Insere elemento de UteroMioma no parent
+ * Insere elemento de ultrassom no parent
  * @param a parent
- * @param b uteroMioma
+ * @param b ultrassom
  * @param c class
  */
-var insertNewUteroMioma;
-insertNewUteroMioma = function (a, b, c) {
+var insertNewUltrassom;
+insertNewUltrassom = function (a, b, c) {
 	var e = newNode('div', c + ' content-box');
 
 	var ea = newNode('div', 'flexbox flex-column flex-4');
 	var eaa = newNode('div', 'flexbox');
 	var eab = newNode('div', 'flexbox');
-	var eac = newNode('div', 'flexbox');
-	var ead = newNode('div', 'flexbox');
-	var eae = newNode('div', 'flexbox');
 
 	eaa.appendChild(newContentNode('h2', 'Características Útero / Mioma'));
 
-	eab.appendChild(newField(b.volumeInterino, 'volume Uterino'));
+	eab.appendChild(newField(b.volumeUterino, 'volume Uterino'));
 	eab.appendChild(newField(b.ovarioDireito, 'ovario Direito'));
 	eab.appendChild(newField(b.ovarioEsquerdo, 'ovario Esquerdo'));
 	eab.appendChild(newField(b.endometro, 'endometro'));
 
-	eac.appendChild(newField(b.miomaQuantidade, 'miomaQuantidade'));
-
-	ead.appendChild(newField(b.mioma_1_caracteristicas, 'medida'));
-	ead.appendChild(newField(toLocaleBool(b.mioma_1_submucoso), 'submucoso'));
-	ead.appendChild(newField(toLocaleBool(b.mioma_1_subseroso), 'subseroso'));
-	ead.appendChild(newField(toLocaleBool(b.mioma_1_intramural), 'intramural'));
-
-	eae.appendChild(newField(b.mioma_2_caracteristicas, 'medida'));
-	eae.appendChild(newField(toLocaleBool(b.mioma_2_submucoso), 'submucoso'));
-	eae.appendChild(newField(toLocaleBool(b.mioma_2_subseroso), 'subseroso'));
-	eae.appendChild(newField(toLocaleBool(b.mioma_2_intramural), 'intramural'));
-
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
-	ea.appendChild(eac);
-	ea.appendChild(ead);
-	ea.appendChild(eae);
 
 	e.appendChild(ea);
 
@@ -330,26 +313,25 @@ insertNewUteroMioma = function (a, b, c) {
 };
 
 /**
- * Insere elemento de Sangramento no parent
+ * Insere elemento de ultrassom no parent
  * @param a parent
- * @param b sangramento
+ * @param b ultrassom
  * @param c class
  */
-var insertNewSangramento;
-insertNewSangramento = function (a, b, c) {
+var insertNewMioma;
+insertNewMioma = function (a, b, c) {
 	var e = newNode('div', c + ' content-box');
 
-	var ea = newNode('div', 'flexbox flex-column flex-4');
-	var eaa = newNode('div', 'flexbox');
-	var eab = newNode('div', 'flexbox');
+	for (var i = b.length; i--; ) {
+		var ea = newNode('div', 'flexbox flex-column flex-4');
+		var eaa = newNode('div', 'flexbox');
 
-	eaa.appendChild(newContentNode('h2', 'Sangramento'));
+		eaa.appendChild(newField(b[i].medida, 'pbac Inicial'));
+		eaa.appendChild(newField(b[i].tipo, 'beck Inicial'));
 
-	eab.appendChild(newField(b.pbacInicial, 'pbac Inicial'));
-
-	ea.appendChild(eaa);
-	ea.appendChild(eab);
-	e.appendChild(ea);
+		ea.appendChild(eaa);
+		e.appendChild(ea);
+	}
 
 	a.insertBefore(e, a.firstChild);
 };
@@ -358,12 +340,11 @@ insertNewSangramento = function (a, b, c) {
  * Insere elemento de Escalas no parent
  * @param a parent
  * @param b escalas
- * @param c sangramento
- * @param d class
+ * @param c class
  */
 var insertNewEscalas;
-insertNewEscalas = function (a, b, c, d) {
-	var e = newNode('div', d + ' content-box');
+insertNewEscalas = function (a, b, c) {
+	var e = newNode('div', c + ' content-box');
 
 	var ea = newNode('div', 'flexbox flex-column flex-4');
 	var eaa = newNode('div', 'flexbox');
@@ -461,6 +442,7 @@ insertNewConduta = function (a, b, c) {
 		eab.appendChild(newField(toLocaleBool(b.hormonioTerapiaCiclico), 'Ciclico'));
 		eab.appendChild(newField(toLocaleBool(b.hormonioTerapiaContinuo), 'Continuo'));
 		eab.appendChild(newField(b.hormonioTerapiaNome, 'Nome'));
+		eab.appendChild(newField(b.hormonioTerapiaAINH, 'ainh'));
 	}
 	if (b.ainh)
 		eab.appendChild(newField(b.ainh, 'ainh'));
