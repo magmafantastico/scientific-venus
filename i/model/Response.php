@@ -16,11 +16,15 @@ class Response {
 	public $escalas;
 	public $exameFisico;
 	public $exames;
+	public $mioma;
 	public $paciente;
 	public $prontuario;
 	public $resultados;
 	public $ultrassom;
 
+	/**
+	 * @param $a
+	 */
 	public function __construct($a)
 	{
 		$this->setRequestJSON($a);

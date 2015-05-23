@@ -22,9 +22,6 @@ class ResponseConsulta {
 	public $resultados;
 	public $ultrassom;
 
-	/**
-	 * @param $a
-	 */
 	public function __construct($a)
 	{
 		$this->setRequestJSON($a);

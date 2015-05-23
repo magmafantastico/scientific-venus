@@ -23,12 +23,12 @@ class ConsultaSearch {
 	public $conduta;
 	public $resultados;
 	public $consulta;
-	public $sangramento;
 	public $exames;
 	public $exameFisico;
 	public $escalas;
+	public $mioma;
 	public $antecedentes;
-	public $uteroMioma;
+	public $ultrassom;
 
 	private $objectList = array(
 		'antecedentes',
@@ -37,11 +37,12 @@ class ConsultaSearch {
 		'escalas',
 		'exameFisico',
 		'exames',
+		'mioma',
 		'paciente',
 		'prontuario',
 		'resultados',
 		'sangramento',
-		'uteroMioma');
+		'ultrassom');
 
 	public function __construct($a)
 	{
@@ -206,8 +207,8 @@ class ConsultaSearch {
 		$this->exameFisico = $this->getDataArray('exameFisico', $a, $c);
 		$this->exames = $this->getDataArray('exames', $a, $c);
 		$this->resultados = $this->getDataArray('resultados', $a, $c);
-		$this->sangramento = $this->getDataArray('sangramento', $a, $c);
-		$this->uteroMioma = $this->getDataArray('uteroMioma', $a, $c);
+		$this->mioma = $this->getDataArray('mioma', $a, $c);
+		$this->ultrassom = $this->getDataArray('ultrassom', $a, $c);
 	}
 
 	/**

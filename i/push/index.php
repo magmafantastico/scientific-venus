@@ -19,7 +19,8 @@ require_once('../model/Escalas.class.php');
 require_once('../model/ExameFisico.class.php');
 require_once('../model/Exames.class.php');
 require_once('../model/Resultados.class.php');
-require_once('../model/ultrassom.class.php');
+require_once('../model/Ultrassom.class.php');
+require_once('../model/Mioma.class.php');
 require_once('../model/Response.php');
 
 function __autoload($name) {
@@ -32,9 +33,9 @@ try {
 	$connection = new Connection();
 	$c = $connection->getConnection();
 
-	if ($_POST['response']) {
+	if ($_COOKIE['response']) {
 
-		$a = $_POST['response'];
+		$a = $_COOKIE['response'];
 
 		// Preenche consulta
 		$response = new Response($a);
@@ -42,7 +43,7 @@ try {
 		$r = $response->getRequest();
 
 		// Testa se existe prontuario
-		if (!$r->prontuario->_id) {
+		if ((!$r->prontuario->_id) || ($r->prontuario->_id == 'false')) {
 
 			// Cria paciente
 			$response->paciente = new Paciente();
@@ -81,67 +82,90 @@ try {
 					$response->consulta->data = $r->prontuario->data;
 					$response->consulta->push($c);
 
-					// Preenche itens da consulta
-					$response->createAll($response->consulta->_id);
+					if ($response->consulta->_id) {
 
-					$response->antecedentes->situacaoAborto = $r->antecedentes->situacaoAborto;
-					$response->antecedentes->situacaoGestacao = $r->antecedentes->situacaoGestacao;
-					$response->antecedentes->situacaoParidade = $r->antecedentes->situacaoParidade;
-					$response->antecedentes->tabagismo = $r->antecedentes->tabagismo;
-					$response->antecedentes->hac = $r->antecedentes->hac;
-					$response->antecedentes->hacType = $r->antecedentes->hacType;
-					$response->antecedentes->diabetes = $r->antecedentes->diabetes;
-					$response->antecedentes->diabetesType = $r->antecedentes->diabetesType;
-					$response->antecedentes->hipotireoidismo = $r->antecedentes->hipotireoidismo;
-					$response->antecedentes->hipotireoidismoType = $r->antecedentes->hipotireoidismoType;
-					$response->antecedentes->note = $r->antecedentes->note;
+						$_id = $response->consulta->_id;
 
-					$response->conduta->conduta = $r->conduta->conduta;
-					$response->conduta->cirurgia = $r->conduta->cirurgia;
-					$response->conduta->hormonioTerapia = $r->conduta->hormonioTerapia;
-					$response->conduta->hormonioTerapiaCiclico = $r->conduta->hormonioTerapiaCiclico;
-					$response->conduta->hormonioTerapiaContinuo = $r->conduta->hormonioTerapiaContinuo;
-					$response->conduta->hormonioTerapiaNome = $r->conduta->hormonioTerapiaNome;
-					$response->conduta->ainh = $r->conduta->ainh;
+						// Preenche itens da consulta
+						$response->createAll($_id);
 
-					$response->escalas->pbacInicial = $r->escalas->pbacInicial;
-					$response->escalas->beckInicial = $r->escalas->beckInicial;
-					$response->escalas->vidaMioma = $r->escalas->vidaMioma;
+						$response->antecedentes->situacaoAborto = $r->antecedentes->situacaoAborto;
+						$response->antecedentes->situacaoGestacao = $r->antecedentes->situacaoGestacao;
+						$response->antecedentes->situacaoParidade = $r->antecedentes->situacaoParidade;
+						$response->antecedentes->tabagismo = $r->antecedentes->tabagismo;
+						$response->antecedentes->hac = $r->antecedentes->hac;
+						$response->antecedentes->hacType = $r->antecedentes->hacType;
+						$response->antecedentes->diabetes = $r->antecedentes->diabetes;
+						$response->antecedentes->diabetesType = $r->antecedentes->diabetesType;
+						$response->antecedentes->hipotireoidismo = $r->antecedentes->hipotireoidismo;
+						$response->antecedentes->hipotireoidismoType = $r->antecedentes->hipotireoidismoType;
+						$response->antecedentes->note = $r->antecedentes->note;
 
-					$response->exameFisico->peso = $r->exameFisico->peso;
-					$response->exameFisico->altura = $r->exameFisico->altura;
-					$response->exameFisico->imc = $r->exameFisico->imc;
-					$response->exameFisico->pressaoArterial = $r->exameFisico->pressaoArterial;
-					$response->exameFisico->circunferenciaAbdominal = $r->exameFisico->circunferenciaAbdominal;
-					$response->exameFisico->circunferenciaCervical = $r->exameFisico->circunferenciaCervical;
+						$response->conduta->conduta = $r->conduta->conduta;
+						$response->conduta->cirurgia = $r->conduta->cirurgia;
+						$response->conduta->hormonioTerapia = $r->conduta->hormonioTerapia;
+						$response->conduta->hormonioTerapiaAINH = $r->conduta->hormonioTerapiaAINH;
+						$response->conduta->hormonioTerapiaCiclico = $r->conduta->hormonioTerapiaCiclico;
+						$response->conduta->hormonioTerapiaContinuo = $r->conduta->hormonioTerapiaContinuo;
+						$response->conduta->hormonioTerapiaNome = $r->conduta->hormonioTerapiaNome;
+						$response->conduta->ainh = $r->conduta->ainh;
 
-					$response->exames->hb = $r->exames->hb;
-					$response->exames->ht = $r->exames->ht;
-					$response->exames->vcm = $r->exames->vcm;
-					$response->exames->rdw = $r->exames->rdw;
-					$response->exames->ferro = $r->exames->ferro;
-					$response->exames->ferritina = $r->exames->ferritina;
-					$response->exames->vitaminaD3 = $r->exames->vitaminaD3;
-					$response->exames->gj = $r->exames->gj;
-					$response->exames->ct = $r->exames->ct;
-					$response->exames->ldl = $r->exames->ldl;
-					$response->exames->hdl = $r->exames->hdl;
-					$response->exames->tsh = $r->exames->tsh;
-					$response->exames->t4l = $r->exames->t4l;
+						$response->escalas->pbacInicial = $r->escalas->pbacInicial;
+						$response->escalas->beckInicial = $r->escalas->beckInicial;
+						$response->escalas->vidaMioma = $r->escalas->vidaMioma;
 
-					$response->resultados->pbacFinal = $r->resultados->pbacFinal;
-					$response->resultados->beckFinal = $r->resultados->beckFinal;
-					$response->resultados->vidaMioma = $r->resultados->vidaMioma;
+						$response->exameFisico->peso = $r->exameFisico->peso;
+						$response->exameFisico->altura = $r->exameFisico->altura;
+						$response->exameFisico->imc = $r->exameFisico->imc;
+						$response->exameFisico->pressaoArterial = $r->exameFisico->pressaoArterial;
+						$response->exameFisico->circunferenciaAbdominal = $r->exameFisico->circunferenciaAbdominal;
+						$response->exameFisico->circunferenciaCervical = $r->exameFisico->circunferenciaCervical;
 
-					$response->ultrassom->volumeInterino = $r->ultrassom->volumeInterino;
-					$response->ultrassom->ovarioDireito = $r->ultrassom->ovarioDireito;
-					$response->ultrassom->ovarioEsquerdo = $r->ultrassom->ovarioEsquerdo;
-					$response->ultrassom->endometro = $r->ultrassom->endometro;
-					$response->ultrassom->nd = $r->ultrassom->nd;
+						$response->exames->hb = $r->exames->hb;
+						$response->exames->ht = $r->exames->ht;
+						$response->exames->vcm = $r->exames->vcm;
+						$response->exames->rdw = $r->exames->rdw;
+						$response->exames->ferro = $r->exames->ferro;
+						$response->exames->ferritina = $r->exames->ferritina;
+						$response->exames->vitaminaD3 = $r->exames->vitaminaD3;
+						$response->exames->gj = $r->exames->gj;
+						$response->exames->ct = $r->exames->ct;
+						$response->exames->ldl = $r->exames->ldl;
+						$response->exames->hdl = $r->exames->hdl;
+						$response->exames->tsh = $r->exames->tsh;
+						$response->exames->t4l = $r->exames->t4l;
 
-					// Realiza push de todos os itens da consulta
-					$response->pushAll($c);
+						$response->resultados->pbacFinal = $r->resultados->pbacFinal;
+						$response->resultados->beckFinal = $r->resultados->beckFinal;
+						$response->resultados->vidaMioma = $r->resultados->vidaMioma;
+
+						$response->ultrassom->volumeUterino = $r->ultrassom->volumeUterino;
+						$response->ultrassom->ovarioDireito = $r->ultrassom->ovarioDireito;
+						$response->ultrassom->ovarioEsquerdo = $r->ultrassom->ovarioEsquerdo;
+						$response->ultrassom->endometro = $r->ultrassom->endometro;
+						$response->ultrassom->nd = $r->ultrassom->nd;
+
+						// Realiza push de todos os itens da consulta
+						$response->pushAll($c);
+
+						// Faz push dos miomas
+						if (count($r->mioma) > 0) {
+							$response->mioma = array();
+
+							for ($i = count($r->mioma); $i--; ) {
+								$m = new Mioma($_id);
+								$m->medida = $r->mioma[$i]->medida;
+								$m->tipo = $r->mioma[$i]->tipo;
+								$m->push($c);
+								array_push($response->mioma, $m);
+							}
+
+						}
+
+					}
+
 				}
+
 			}
 
 		}

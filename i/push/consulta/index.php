@@ -102,7 +102,7 @@ try {
 		$response->resultados->beckFinal = $r->resultados->beckFinal;
 		$response->resultados->vidaMioma = $r->resultados->vidaMioma;
 
-		$response->utero->volumeInterino = $r->utero->volumeInterino;
+		$response->utero->volumeUterino = $r->utero->volumeUterino;
 		$response->utero->ovarioDireito = $r->utero->ovarioDireito;
 		$response->utero->ovarioEsquerdo = $r->utero->ovarioEsquerdo;
 		$response->utero->endometro = $r->utero->endometro;

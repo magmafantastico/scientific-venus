@@ -10,6 +10,7 @@ class Conduta extends ConsultaThing {
 	public $conduta;
 	public $cirurgia;
 	public $hormonioTerapia;
+	public $hormonioTerapiaAINH;
 	public $hormonioTerapiaCiclico;
 	public $hormonioTerapiaContinuo;
 	public $hormonioTerapiaNome;
