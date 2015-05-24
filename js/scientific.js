@@ -413,6 +413,53 @@ getIMC = function() {
 };
 
 /**
+ * Faz o processo de distinct se o valor de b for superior a 0
+ * @param a super parent
+ * @param b value
+ * @param c className
+ */
+var doDistinctRadio;
+doDistinctRadio = function(a, b, c) {
+	var n;
+	if (!isNaN(b)) {
+		n = parseInt(b);
+
+		if (n > 0)
+			a.classList.add(c);
+		else a.classList.remove(c);
+	}
+};
+
+/**
+ * Obtem o super parent e o valor do radio
+ */
+var distinctRadio;
+distinctRadio = function(a) {
+	var b, c;
+	b = a.target.parentNode.parentNode;
+	c = a.target.c;
+	doDistinctRadio(b, a.target.value, c);
+};
+
+/**
+ * Recebe lista de itens e adiciona o eventListener e também verifica se radios estão ativos
+ * @param a nodeList
+ * @param c className
+ */
+var addDistinctRadio;
+addDistinctRadio = function(a, c) {
+	var b;
+	for (var i = a.length; i--; ) {
+		a[i].addEventListener('change', distinctRadio);
+		a[i].c = c;
+		if (a[i].checked) {
+			b = a[i].parentNode.parentNode;
+			doDistinctRadio(b, a[i].value, c);
+		}
+	}
+};
+
+/**
  * EXTERNAL FUNCTIONS
  */
 

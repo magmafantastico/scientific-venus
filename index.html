@@ -353,7 +353,7 @@
 					<label class="field-label">H.A.C.</label>
 
 					<span class="field row">
-						<input type="radio" id="antecedentes_hac_1" name="antecedentes_hac" value="true"/>
+						<input type="radio" id="antecedentes_hac_1" name="antecedentes_hac" value="1"/>
 						<label for="antecedentes_hac_1">Sim</label>
 					</span>
 
@@ -372,7 +372,7 @@
 					</div>
 
 					<span class="field row">
-						<input type="radio" id="antecedentes_hac_2" name="antecedentes_hac" value="false"/>
+						<input type="radio" id="antecedentes_hac_2" name="antecedentes_hac" value="0"/>
 						<label for="antecedentes_hac_2">Não</label>
 					</span>
 
@@ -384,7 +384,7 @@
 
 					<span class="field row">
 
-						<input type="radio" id="antecedentes_diabetes_1" name="antecedentes_diabetes" value="true"/>
+						<input type="radio" id="antecedentes_diabetes_1" name="antecedentes_diabetes" value="1"/>
 						<label for="antecedentes_diabetes_1">Sim</label>
 
 					</span>
@@ -404,7 +404,7 @@
 					</div>
 
 					<span class="field row">
-						<input type="radio" id="antecedentes_diabetes_2" name="antecedentes_diabetes" value="false"/>
+						<input type="radio" id="antecedentes_diabetes_2" name="antecedentes_diabetes" value="0"/>
 						<label for="antecedentes_diabetes_2">Não</label>
 					</span>
 
@@ -415,7 +415,7 @@
 					<label>Hipotireoidismo</label>
 
 					<span class="field row">
-						<input type="radio" id="antecedentes_hipotireoidismo_1" name="antecedentes_hipotireoidismo" value="true"/>
+						<input type="radio" id="antecedentes_hipotireoidismo_1" name="antecedentes_hipotireoidismo" value="1"/>
 						<label for="antecedentes_hipotireoidismo_1">Sim</label>
 					</span>
 
@@ -434,7 +434,7 @@
 					</span>
 
 					<span class="field row">
-						<input type="radio" id="antecedentes_hipotireoidismo_2" name="antecedentes_hipotireoidismo" value="false"/>
+						<input type="radio" id="antecedentes_hipotireoidismo_2" name="antecedentes_hipotireoidismo" value="0"/>
 						<label for="antecedentes_hipotireoidismo_2">Não</label>
 					</span>
 
@@ -453,21 +453,30 @@
 
 				<div class="flex flex-wrap justify-between">
 
-					<div class="field flex-4">
+					<span class="field flex-4">
 						<label for="ultrassom_volumeUterino">Volume Uterino</label>
-						<input type="tel" id="ultrassom_volumeUterino" maxlength="4" name="ultrassom_volumeUterino" placeholder="cm³"/>
-					</div>
+						<span class="helper">
+							<input type="tel" id="ultrassom_volumeUterino" maxlength="4" name="ultrassom_volumeUterino"/>
+							<span>cm³</span>
+						</span>
+					</span>
 
 					<div class="field grey-50 flex-5">
 
 						<span class="flex">
 							<label for="ultrassom_ovarioDireito">Ovário Direito</label>
-							<input type="tel" id="ultrassom_ovarioDireito" maxlength="3" name="ultrassom_ovarioDireito" placeholder="cm³"/>
+							<span class="helper">
+								<input type="tel" id="ultrassom_ovarioDireito" maxlength="3" name="ultrassom_ovarioDireito"/>
+								<span>cm³</span>
+							</span>
 						</span>
 
 						<span class="flex">
 							<label for="ultrassom_ovarioEsquerdo">Ovário Esquerdo</label>
-							<input type="tel" id="ultrassom_ovarioEsquerdo" maxlength="3" name="ultrassom_ovarioEsquerdo" placeholder="cm³"/>
+							<span class="helper">
+								<input type="tel" id="ultrassom_ovarioEsquerdo" maxlength="3" name="ultrassom_ovarioEsquerdo"/>
+								<span>cm³</span>
+							</span>
 						</span>
 
 					</div>
@@ -842,6 +851,11 @@
 
 		var $exameFisico_imc = document.getElementById('exameFisico_imc');
 		$exameFisico_imc.addEventListener('focus', getIMC);
+
+		var keepClass = 'keep';
+		addDistinctRadio(document.getElementsByName('antecedentes_diabetes'), keepClass);
+		addDistinctRadio(document.getElementsByName('antecedentes_hac'), keepClass);
+		addDistinctRadio(document.getElementsByName('antecedentes_hipotireoidismo'), keepClass);
 	</script>
 
 	<style>
@@ -871,6 +885,18 @@
 		.conduta_3 .conduta_hormonioTerapia_1 #conduta_hormonioTerapia_caracteristicas_tipo,
 		.conduta_3 .conduta_hormonioTerapia_2 #conduta_hormonioTerapia_caracteristicas_tipo,
 		.conduta_4 #conduta_ainh {
+			display: flex;
+		}
+
+		#antecedentes_diabetes_type,
+		#antecedentes_hac_type,
+		#antecedentes_hipotireoidismo_type {
+			display: none;
+		}
+
+		.keep #antecedentes_diabetes_type,
+		.keep #antecedentes_hac_type,
+		.keep #antecedentes_hipotireoidismo_type {
 			display: flex;
 		}
 	</style>

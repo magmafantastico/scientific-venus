@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>Prontuario | Magma Scientific</title>
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<script src="js/villa.js"></script>
+	<link rel="stylesheet" href="css/villa-foundation.css"/>
+	<link rel="stylesheet" href="css/villa-grid.css"/>
+	<link rel="stylesheet" href="css/polar-font.css"/>
+	<link rel="stylesheet" href="css/villa.css"/>
+	<link rel="stylesheet" href="css/polar.css"/>
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="css/material-colors.css"/>
+	<script type="text/javascript" src="js/html5shiv.js"></script>
+	<script type="text/javascript" src="js/html5shiv-printshiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<style>
+</style>
+<div class="container">
+
+	<div class="flex">
+	</div>
+
+	<div>
+		<label class="field-label">H.A.C.</label>
+		<span class="field row">
+			<input type="radio" id="hac_sim" name="hac" value="1"/>
+			<label for="hac_sim">Sim</label>
+		</span>
+		<span class="field row">
+			<input type="radio" id="hac_nao" name="hac" value="0"/>
+			<label for="hac_nao">Não</label>
+		</span>
+	</div>
+
+	<div>
+		<label class="field-label">Diabetes</label>
+		<span class="field row">
+			<input type="radio" id="diabetes_sim" name="diabetes" value="1"/>
+			<label for="diabetes_sim">Sim</label>
+		</span>
+		<span class="field row">
+			<input type="radio" id="diabetes_nao" name="diabetes" value="0"/>
+			<label for="diabetes_nao">Não</label>
+		</span>
+	</div>
+
+	<div>
+		<label class="field-label">Hipotireoidismo</label>
+		<span class="field row">
+			<input type="radio" id="hipotireoidismo_sim" name="hipotireoidismo" value="1"/>
+			<label for="hipotireoidismo_sim">Sim</label>
+		</span>
+		<span class="field row">
+			<input type="radio" id="hipotireoidismo_nao" name="hipotireoidismo" value="0"/>
+			<label for="hipotireoidismo_nao">Não</label>
+		</span>
+	</div>
+
+	<div>
+	</div>
+
+</div>
+
+<script src="js/jquery-min.js"></script>
+<script src="js/scientific.js"></script>
+
+<script>
+	var c = 'keep';
+
+	addDistinctRadio(document.getElementsByName('hac'), c);
+	addDistinctRadio(document.getElementsByName('hipotireoidismo'), c);
+	addDistinctRadio(document.getElementsByName('diabetes'), c);
+</script>
+
+<style type="text/css">
+	html,
+	body {
+		height: auto;
+		overflow: visible;
+	}
+
+	input[type=radio],
+	input[type=checkbox] {
+		width: auto;
+	}
+
+	form {
+		display: block;
+	}
+
+	h2 {
+		margin-top: .75em;
+	}
+
+	@media print {
+		.page-break {
+			display: block;
+			page-break-before: always;
+		}
+	}
+</style>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>

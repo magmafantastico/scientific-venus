@@ -44,7 +44,7 @@
 			var a;
 
 			switch (evt.type) {
-				case 'RadioStateChange':
+				case 'change':
 					a = evt.explicitOriginalTarget;
 					break;
 				case 'CheckboxStateChange':
