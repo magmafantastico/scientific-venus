@@ -17,6 +17,12 @@ class Prontuario extends Thing {
 		$this->setPacienteId($a);
 	}
 
+	public function fill($a)
+	{
+		$this->data = $a['data'];
+		$this->registro = $a['registro'];
+	}
+
 	/**
 	 * @return mixed
 	 */

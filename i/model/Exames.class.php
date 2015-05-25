@@ -20,4 +20,22 @@ class Exames extends ConsultaThing {
 	public $hdl;
 	public $tsh;
 	public $t4l;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->hb = $a['hb'];
+		$this->ht = $a['ht'];
+		$this->vcm = $a['vcm'];
+		$this->rdw = $a['rdw'];
+		$this->ferro = $a['ferro'];
+		$this->ferritina = $a['ferritina'];
+		$this->vitaminaD3 = $a['vitaminaD3'];
+		$this->gj = $a['gj'];
+		$this->ct = $a['ct'];
+		$this->ldl = $a['ldl'];
+		$this->hdl = $a['hdl'];
+		$this->tsh = $a['tsh'];
+		$this->t4l = $a['t4l'];
+	}
 }

@@ -18,4 +18,20 @@ class Paciente extends Thing {
 	public $escolaridadeNote;
 	public $estadoCivil;
 	public $estadoCivilNote;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->nome = $a['nome'];
+		$this->sexo = $a['sexo'];
+		$this->nascimento = $a['nascimento'];
+		$this->religiao = $a['religiao'];
+		$this->religiaoNote = $a['religiaoNote'];
+		$this->etnia = $a['etnia'];
+		$this->etniaNote = $a['etniaNote'];
+		$this->escolaridade = $a['escolaridade'];
+		$this->escolaridadeNote = $a['escolaridadeNote'];
+		$this->estadoCivil = $a['estadoCivil'];
+		$this->estadoCivilNote = $a['estadoCivilNote'];
+	}
 }

@@ -18,4 +18,20 @@ class Antecedentes extends ConsultaThing {
 	public $hipotireoidismo;
 	public $hipotireoidismoType;
 	public $note;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->situacaoAborto = $a['situacaoAborto'];
+		$this->situacaoGestacao = $a['situacaoGestacao'];
+		$this->situacaoParidade = $a['situacaoParidade'];
+		$this->tabagismo = $a['tabagismo'];
+		$this->hac = $a['hac'];
+		$this->hacType = $a['hacType'];
+		$this->diabetes = $a['diabetes'];
+		$this->diabetesType = $a['diabetesType'];
+		$this->hipotireoidismo = $a['hipotireoidismo'];
+		$this->hipotireoidismoType = $a['hipotireoidismoType'];
+		$this->note = $a['note'];
+	}
 }

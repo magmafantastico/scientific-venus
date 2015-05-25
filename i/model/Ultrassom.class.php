@@ -11,4 +11,13 @@ class Ultrassom extends ConsultaThing {
 	public $ovarioDireito;
 	public $ovarioEsquerdo;
 	public $endometro;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->volumeUterino = $a['volumeUterino'];
+		$this->ovarioDireito = $a['ovarioDireito'];
+		$this->ovarioEsquerdo = $a['ovarioEsquerdo'];
+		$this->endometro = $a['endometro'];
+	}
 }

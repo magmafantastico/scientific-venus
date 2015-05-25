@@ -13,4 +13,15 @@ class ExameFisico extends ConsultaThing {
 	public $pressaoArterial;
 	public $circunferenciaAbdominal;
 	public $circunferenciaCervical;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->peso = $a['peso'];
+		$this->altura = $a['altura'];
+		$this->imc = $a['imc'];
+		$this->pressaoArterial = $a['pressaoArterial'];
+		$this->circunferenciaAbdominal = $a['circunferenciaAbdominal'];
+		$this->circunferenciaCervical = $a['circunferenciaCervical'];
+	}
 }

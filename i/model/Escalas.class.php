@@ -10,4 +10,12 @@ class Escalas extends ConsultaThing {
 	public $pbacInicial;
 	public $beckInicial;
 	public $vidaMioma;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->pbacInicial = $a['pbacInicial'];
+		$this->beckInicial = $a['beckInicial'];
+		$this->vidaMioma = $a['vidaMioma'];
+	}
 }

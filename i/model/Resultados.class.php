@@ -10,4 +10,12 @@ class Resultados extends ConsultaThing {
 	public $pbacFinal;
 	public $beckFinal;
 	public $vidaMioma;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->pbacFinal = $a['pbacFinal'];
+		$this->beckFinal = $a['beckFinal'];
+		$this->vidaMioma = $a['vidaMioma'];
+	}
 }

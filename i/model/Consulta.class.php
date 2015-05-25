@@ -19,6 +19,13 @@ class Consulta extends Thing
 		$this->setProntuarioId($a);
 	}
 
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->data = $a['data'];
+	}
+
+
 	/**
 	 * @return mixed
 	 */

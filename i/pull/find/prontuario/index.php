@@ -8,9 +8,8 @@
 
 header('Content-Type: application/json; charset=UTF-8;');
 require_once('../../../var/connection.php');
-require_once('../Thing.class.php');
 
-class Prontuario_Search extends Search
+class Prontuario_Search
 {
 
 	public $prontario;

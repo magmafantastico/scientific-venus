@@ -9,4 +9,11 @@
 class Mioma extends ConsultaThing {
 	public $medida;
 	public $tipo;
+
+	public function fill($a)
+	{
+		$this->_id = $a['_id'];
+		$this->medida = $a['medida'];
+		$this->tipo = $a['tipo'];
+	}
 }
