@@ -11,35 +11,32 @@ require_once('../var/connection.php');
 require_once('../model/Model.php');
 require_once('../model/Thing.class.php');
 require_once('../model/Paciente.class.php');
-require_once('../model/Response.php');
-
-/**
- * Class Pull (receive paciente)
- */
-class Pull extends Model {
-
-	public function __construct($r)
-	{
-		$this->paciente = new Paciente();
-		$this->paciente->fill($r);
-
-		print_r($this->paciente);
-	}
-
-}
+require_once('../model/Prontuario.class.php');
+require_once('../model/Consulta.class.php');
+require_once('../model/ConsultaThing.class.php');
+require_once('../model/Antecedentes.class.php');
+require_once('../model/Conduta.class.php');
+require_once('../model/Escalas.class.php');
+require_once('../model/ExameFisico.class.php');
+require_once('../model/Exames.class.php');
+require_once('../model/Resultados.class.php');
+require_once('../model/Ultrassom.class.php');
+require_once('../model/Mioma.class.php');
+require_once('../model/Pull.php');
 
 $connection = new Connection();
 $c = $connection->getConnection();
 
 $p = new Paciente();
-$p->setQueryName('nome');
-$p->setQueryValue('jo');
+//$p->setQueryName('nome');
+//$p->setQueryValue('jo');
 
 if ($r = $p->pull($c)) {
 	$a = array();
 	for ($i = $r->num_rows; $i--; ) {
-		$pull = new Pull(mysqli_fetch_assoc($r));
+		$pull = new Pull($r, $c);
 		array_push($a, $pull);
 	}
+	print_r(json_encode($a));
 	//print_r($a);
 }

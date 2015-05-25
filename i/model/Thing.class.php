@@ -48,16 +48,22 @@ class Thing
 	 * Constrói string sql para utilizar na query do pull
 	 * @return bool|string
 	 */
-	private function buildSelectQuery()
+	public function buildSelectQuery()
 	{
 		$qn = $this->getQueryName();        // query name (column name)
 		$ql = $this->getQueryLimit();       // query limit
 		$qv = $this->getQueryValue();       // query value
 
-		$n = ' ' . lcfirst(get_class($this)) . ' ';     // table name
+		$n = ' ' . lcfirst(get_class($this));     // table name
 		$k = '*';                                       // key content
 
-		$sql = 'SELECT ' . $k . ' FROM ' . $n;
+		$sql = 'SELECT ' . $k . ' FROM' . $n;       // select init
+		$order = ' ORDER BY _id DESC';              // order by
+		$qls = ' LIMIT ' . $ql;                     // set limit
+
+		// test if limit is 0
+		if ($ql < 1)
+			$qls = '';
 
 		if (!empty($qn)) {
 			$cl = ' WHERE ';        // WHERE clause
@@ -68,10 +74,10 @@ class Thing
 			else $cl = '';
 
 			// concat full query
-			return  $sql . $cl . ' LIMIT ' . $ql;
+			return  $sql . $cl . $order . $qls;
 		}
 
-		return $sql . ' LIMIT ' . $ql;
+		return $sql . $order . $qls;
 	}
 
 	/**

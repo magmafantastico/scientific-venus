@@ -14,11 +14,16 @@ class Prontuario extends Thing {
 
 	public function __construct($a)
 	{
+		$this->setQueryName('paciente_id');
+		$this->setQueryValue($a);
+		$this->setQueryLimit(1);
+
 		$this->setPacienteId($a);
 	}
 
 	public function fill($a)
 	{
+		$this->_id = $a['_id'];
 		$this->data = $a['data'];
 		$this->registro = $a['registro'];
 	}

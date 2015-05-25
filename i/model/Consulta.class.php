@@ -25,7 +25,6 @@ class Consulta extends Thing
 		$this->data = $a['data'];
 	}
 
-
 	/**
 	 * @return mixed
 	 */
