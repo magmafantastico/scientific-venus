@@ -46,7 +46,6 @@ class Thing
 			$v .= $ov[$i] . $s;
 		}
 
-		echo 'INSERT INTO' . $n . $k . 'VALUES ' . $v;
 		return 'INSERT INTO' . $n . $k . 'VALUES ' . $v;
 	}
 	/**
