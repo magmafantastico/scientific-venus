@@ -58,8 +58,8 @@ class Thing
 		$ql = $this->getQueryLimit();       // query limit
 		$qv = $this->getQueryValue();       // query value
 
-		$n = ' ' . lcfirst(get_class($this));     // table name
-		$k = '*';                                       // key content
+		$n = ' ' . lcfirst(get_class($this));       // table name
+		$k = '*';                                   // key content
 
 		$sql = 'SELECT ' . $k . ' FROM' . $n;       // select init
 		$order = ' ORDER BY _id DESC';              // order by
