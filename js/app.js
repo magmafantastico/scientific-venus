@@ -39,10 +39,11 @@ $('#consulta_create').click(function() {
 		},
 		method: 'post',
 		success: function (data) {
-			if (data.prontuario._id) {
-				document.getElementById('prontuario__id').value = data.prontuario._id;
-				document.forms['carry_id'].submit();
-			}
+			console.log(data);
+			/*if (data.prontuario._id) {
+				/!*document.getElementById('prontuario__id').value = data.prontuario._id;
+				document.forms['carry_id'].submit();*!/
+			}*/
 		},
 		url: __API_DIR + 'i/push/'
 	});
