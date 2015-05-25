@@ -343,19 +343,17 @@ insertNewUltrassom = function (a, b, c) {
  */
 var insertNewMioma;
 insertNewMioma = function (a, b, c) {
-	var e = newNode('div', c + ' content-box');
-
+	var e = newNode('div', c + ' content-box flex-wrap');
 	for (var i = b.length; i--; ) {
-		var ea = newNode('div', 'flexbox flex-column flex-4');
+		var ea = newNode('div', 'flexbox flex-column flex-3');
 		var eaa = newNode('div', 'flexbox');
 
-		eaa.appendChild(newField(b[i].medida, 'pbac Inicial'));
-		eaa.appendChild(newField(b[i].tipo, 'beck Inicial'));
+		eaa.appendChild(newField(b[i].medida, 'medida'));
+		eaa.appendChild(newField(b[i].tipo, 'tipo'));
 
 		ea.appendChild(eaa);
 		e.appendChild(ea);
 	}
-
 	a.insertBefore(e, a.firstChild);
 };
 
