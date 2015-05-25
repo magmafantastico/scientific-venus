@@ -20,11 +20,10 @@ class Thing
 	 * @return string
 	 */
 	private function buildInsertQuery()
-
 	{
-		$a = new ReflectionObject($this);
-		$b = $a->getProperties(ReflectionProperty::IS_PUBLIC);
-		$o = (array) $this;
+		$a = new ReflectionObject($this);                           // get reflection of object
+		$b = $a->getProperties(ReflectionProperty::IS_PUBLIC);      // get all public properties
+		$o = (array) $this;                                         // parse array to get value with key
 
 		$ok = array();      // object key
 		$ov = array();      // object value
@@ -48,6 +47,7 @@ class Thing
 
 		return 'INSERT INTO' . $n . $k . 'VALUES ' . $v;
 	}
+
 	/**
 	 * Constrói string sql para utilizar na query do pull
 	 * @return bool|string
@@ -105,6 +105,7 @@ class Thing
 		if ($q)
 			if($r = $c->query($q))
 				return $r;
+		return false;
 	}
 
 	/**
