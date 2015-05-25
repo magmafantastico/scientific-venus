@@ -20,14 +20,19 @@ class Thing
 	 * @return string
 	 */
 	private function buildInsertQuery()
+
 	{
+		$a = new ReflectionObject($this);
+		$b = $a->getProperties(ReflectionProperty::IS_PUBLIC);
+		$o = (array) $this;
+
 		$ok = array();      // object key
 		$ov = array();      // object value
 
-		foreach ($this as $key => $value)
-			if ($key != '_id') {
-				array_push($ok, $key);
-				array_push($ov, '"' . $value . '"');
+		for ($i = count($b); $i--; )
+			if ($b[$i]->name != '_id') {
+				array_push($ok, $b[$i]->name);
+				array_push($ov, '"' . $o[$b[$i]->name] . '"');
 			}
 
 		$n = ' ' . lcfirst(get_class($this)) . ' ';     // table name
@@ -41,9 +46,9 @@ class Thing
 			$v .= $ov[$i] . $s;
 		}
 
+		echo 'INSERT INTO' . $n . $k . 'VALUES ' . $v;
 		return 'INSERT INTO' . $n . $k . 'VALUES ' . $v;
 	}
-
 	/**
 	 * Constrói string sql para utilizar na query do pull
 	 * @return bool|string
