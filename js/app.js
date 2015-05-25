@@ -287,14 +287,18 @@ insertNewAntecedentes = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Antecedentes'));
 
-	eab.appendChild(newField(toLocaleBool(b.situacaoAborto), 'Aborto'));
-	eab.appendChild(newField(toLocaleBool(b.situacaoGestacao), 'Gestacao'));
-	eab.appendChild(newField(toLocaleBool(b.situacaoParidade), 'Paridade'));
-	eab.appendChild(newField(toLocaleBool(b.tabagismo), 'tabagismo'));
+	eab.appendChild(newField(b.situacaoAborto, 'Aborto'));
+	eab.appendChild(newField(b.situacaoGestacao, 'Gestacao'));
+	eab.appendChild(newField(b.situacaoParidade, 'Paridade'));
+	if (numberToBoolean(b.tabagismo))
+		eab.appendChild(newField(toLocaleBool(b.tabagismo), 'tabagismo'));
 
-	eac.appendChild(newField(buildTypeNote(b.hac, b.diabetesType), 'hac'));
-	eac.appendChild(newField(buildTypeNote(b.diabetes, b.diabetesType), 'diabetes'));
-	eac.appendChild(newField(buildTypeNote(b.hipotireoidismo, b.diabetesType), 'hipotireoidismo'));
+	if (numberToBoolean(b.hac))
+		eac.appendChild(newField(buildTypeNote(b.hac, b.diabetesType), 'hac'));
+	if (numberToBoolean(b.diabetes))
+		eac.appendChild(newField(buildTypeNote(b.diabetes, b.diabetesType), 'diabetes'));
+	if (numberToBoolean(b.hipotireoidismo))
+		eac.appendChild(newField(buildTypeNote(b.hipotireoidismo, b.hipotireoidismoType), 'hipotireoidismo'));
 	eac.appendChild(newField(b.note, 'outro'));
 
 	ea.appendChild(eaa);

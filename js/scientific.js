@@ -53,6 +53,28 @@ var parseBoolean = function (a) {
 	return (a === "true");
 };
 
+var toNumber = function (a) {
+	if (!isNaN(a)) {
+		return parseInt(a);
+	}
+	return false;
+};
+
+var numberToBoolean = function (a) {
+	return toNumber(a) > 0;
+};
+
+/**
+ * Localiza boolean para o português
+ * @param a
+ * @returns string
+ */
+var toLocaleBool;
+toLocaleBool = function (a) {
+	if (a == 1) return 'Sim';
+	else return '';
+};
+
 var getPickDate = function (a) {
 	return a.pickadate('picker').get('select').obj.toISOString().substr(0, 10);
 };
@@ -79,17 +101,6 @@ var buildNote;
 buildNote = function (a, b) {
 	if (b) return a + ' (' + b + ')';
 	else return a;
-};
-
-/**
- * Localiza boolean para o português
- * @param a
- * @returns string
- */
-var toLocaleBool;
-toLocaleBool = function (a) {
-	if (a == 1) return 'Sim';
-	else return '';
 };
 
 var buildTypeNote = function (a, b) {
