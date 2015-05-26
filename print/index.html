@@ -26,10 +26,20 @@
 		height: auto;
 		overflow: visible;
 	}
+
+	@media print {
+		#user {
+			display: none;
+		}
+	}
 </style>
 
 <input type="hidden" id="prontuario__id"/>
 
+<div class="flex justify-end" id="user">
+	<a href="../" class="button flat">Nova consulta</a>
+	<button class="button" id="print" onclick="window.print()">Imprimir</button>
+</div>
 <div class="" id="p_data"></div>
 <div class="" id="c_data"></div>
 
@@ -150,12 +160,35 @@
 
 	.content-box h2 {
 		color: #424242;
-		font-size: 1.5em;
+		font-size: 1.125em;
 		margin-bottom: 4px;
 	}
 
 	.content-box.prontuario .field * {
 		/*background-color: #90caf9;*/
+	}
+
+	.button {
+		background-color: #0091ea;
+		border: none;
+		color: #ffffff;
+		font-weight: 600;
+		min-height: 36px;
+		min-width: 96px;
+		padding: 0 8px;
+		text-transform: uppercase;
+		width: auto;
+	}
+
+	.button:hover,
+	.button:focus,
+	.button:active {
+		opacity: .9;
+	}
+
+	.button.flat {
+		background: none;
+		color: #0091ea;
 	}
 </style>
 

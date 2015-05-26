@@ -18,6 +18,16 @@
 	<script type="text/javascript" src="js/html5shiv.js"></script>
 	<script type="text/javascript" src="js/html5shiv-printshiv.js"></script>
 	<![endif]-->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-63400292-1', 'auto');
+		ga('send', 'pageview');
+
+	</script>
 </head>
 <body>
 
@@ -37,10 +47,6 @@
 
 	form {
 		display: block;
-	}
-
-	h2 {
-		margin-top: .75em;
 	}
 
 	@media print {
@@ -75,7 +81,7 @@
 				</span>
 
 				<span class="field flex-1">
-					<label for="prontuario_data">Data Cadastro</label>
+					<label for="prontuario_data">Data de Cadastro</label>
 					<input type="text" id="prontuario_data" name="prontuario_data" required/>
 				</span>
 
@@ -90,7 +96,7 @@
 
 				<div class="field flex-1">
 					<label for="paciente_nascimento">Data de Nascimento</label>
-					<input type="text" id="paciente_nascimento" name="paciente_nascimento"/>
+					<input type="text" id="paciente_nascimento" name="paciente_nascimento" required/>
 				</div>
 
 			</div>
@@ -279,7 +285,7 @@
 					<span class="field flex-1">
 						<label for="exameFisico_pressaoArterial">Pressão Arterial</label>
 						<span class="helper">
-							<input type="number" id="exameFisico_pressaoArterial" name="exameFisico_pressaoArterial"/>
+							<input type="text" id="exameFisico_pressaoArterial" name="exameFisico_pressaoArterial"/>
 							<span>mmHg</span>
 						</span>
 					</span>
@@ -456,7 +462,7 @@
 
 				<div class="flex flex-wrap justify-between">
 
-					<span class="field flex-4">
+					<span class="field flex-1">
 						<label for="ultrassom_volumeUterino">Volume Uterino</label>
 						<span class="helper">
 							<input type="tel" id="ultrassom_volumeUterino" maxlength="4" name="ultrassom_volumeUterino"/>
@@ -464,31 +470,30 @@
 						</span>
 					</span>
 
-					<div class="field grey-50 flex-5">
-
-						<span class="flex">
-							<label for="ultrassom_ovarioDireito">Ovário Direito</label>
-							<span class="helper">
-								<input type="tel" id="ultrassom_ovarioDireito" maxlength="3" name="ultrassom_ovarioDireito"/>
-								<span>cm³</span>
-							</span>
+					<span class="field flex-1">
+						<label for="ultrassom_ovarioDireito">Ovário Direito</label>
+						<span class="helper">
+							<input type="tel" id="ultrassom_ovarioDireito" maxlength="3" name="ultrassom_ovarioDireito"/>
+							<span>cm³</span>
 						</span>
+					</span>
 
-						<span class="flex">
-							<label for="ultrassom_ovarioEsquerdo">Ovário Esquerdo</label>
-							<span class="helper">
-								<input type="tel" id="ultrassom_ovarioEsquerdo" maxlength="3" name="ultrassom_ovarioEsquerdo"/>
-								<span>cm³</span>
-							</span>
+					<span class="field flex-1">
+						<label for="ultrassom_ovarioEsquerdo">Ovário Esquerdo</label>
+						<span class="helper">
+							<input type="tel" id="ultrassom_ovarioEsquerdo" maxlength="3" name="ultrassom_ovarioEsquerdo"/>
+							<span>cm³</span>
 						</span>
+					</span>
 
-					</div>
+					<span class="field flex-1">
+						<label for="ultrassom_endometro">Endométro</label>
+						<span class="helper">
+							<input type="tel" id="ultrassom_endometro" maxlength="2" name="ultrassom_endometro"/>
+							<span>mm</span>
+						</span>
+					</span>
 
-				</div>
-
-				<div class="field">
-					<label for="ultrassom_endometro">Endométro</label>
-					<input type="tel" id="ultrassom_endometro" maxlength="2" name="ultrassom_endometro" placeholder="mm"/>
 				</div>
 
 				<div class="flex flex-wrap">
@@ -513,20 +518,16 @@
 
 			</div>
 
-			<div class="page-break">
+			<div class="page-break"></div>
 
-				<h2>Sangramento</h2>
+			<h2>Escalas / Sangramento</h2>
 
-				<span class="field">
+			<div class="flex flex-wrap">
+
+				<span class="field flex-1">
 					<label for="sangramento_pbacInicial">Escore PBAC Inicíal</label>
 					<input type="tel" id="sangramento_pbacInicial" name="sangramento_pbacInicial"/>
 				</span>
-
-			</div>
-
-			<h2>Escalas</h2>
-
-			<div class="flex flex-wrap">
 
 				<span class="field flex-1">
 					<label for="escalas_beckInicial">Depressão Beck Inicial</label>
@@ -542,7 +543,7 @@
 
 			<div>
 
-				<h2>Exames</h2>
+				<h2>Exames Iniciais</h2>
 
 				<div class="flex flex-wrap">
 
@@ -588,6 +589,10 @@
 							</span>
 						</span>
 
+					</div>
+
+					<div class="flex flex-column" style="margin: 0 .5em">
+
 						<span class="field">
 							<label for="exames_ferritina" class="default-case">Ferritina</label>
 							<span class="helper">
@@ -603,10 +608,6 @@
 								<span>ng/mL</span>
 							</span>
 						</span>
-
-					</div>
-
-					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
 							<label for="exames_gj" class="default-case">G.J</label>
@@ -631,6 +632,10 @@
 								<span>mg/dL</span>
 							</span>
 						</span>
+
+					</div>
+
+					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
 							<label for="exames_hdl" class="default-case">H.D.L</label>
@@ -745,32 +750,39 @@
 
 						</span>
 
-						<span class="field grey-100" id="conduta_hormonioTerapia_caracteristicas">
+						<span class="flex flex-column grey-100" id="conduta_hormonioTerapia_caracteristicas">
 
 							<!--
 								Hormônio Terapia
 							-->
 
-							<label for="conduta_hormonioterapia_nome">Nome</label>
-							<input type="text" id="conduta_hormonioterapia_nome" name="conduta_hormonioterapia_nome"/>
+							<span class="field">
+								<label for="conduta_hormonioterapia_nome">Nome</label>
+								<input type="text" id="conduta_hormonioterapia_nome" name="conduta_hormonioterapia_nome"/>
+							</span>
 
 							<!--
 								Progestagênio, A.C.Os
 							-->
 
-							<span class="flex" id="conduta_hormonioTerapia_caracteristicas_tipo">
+							<span class="flex flex-column" id="conduta_hormonioTerapia_caracteristicas_tipo">
 
-								<span class="flex">
-									<input type="checkbox" id="conduta_hormonioterapia_ciclico" name="conduta_hormonioterapia_ciclico" value="true"/>
-									<label for="conduta_hormonioterapia_ciclico">Ciclico</label>
-								</span>
+								<div class="flex">
 
-								<span class="flex">
-									<input type="checkbox" id="conduta_hormonioterapia_continuo" name="conduta_hormonioterapia_continuo" value="true"/>
-									<label for="conduta_hormonioterapia_continuo">Contínuo</label>
-								</span>
+									<span class="field row">
+										<input type="checkbox" id="conduta_hormonioterapia_ciclico" name="conduta_hormonioterapia_ciclico" value="true"/>
+										<label for="conduta_hormonioterapia_ciclico">Ciclico</label>
+									</span>
 
-								<span class="flex">
+									<span class="field row">
+										<input type="checkbox" id="conduta_hormonioterapia_continuo" name="conduta_hormonioterapia_continuo" value="true"/>
+										<label for="conduta_hormonioterapia_continuo">Contínuo</label>
+									</span>
+
+								</div>
+
+
+								<span class="field">
 									<label for="conduta_hormonioterapia_ainh">A.I.N.H.</label>
 									<input type="text" id="conduta_hormonioterapia_ainh" name="conduta_hormonioterapia_ainh"/>
 								</span>

@@ -58,11 +58,11 @@ getResponse = function () {
 			situacaoGestacao: getTextField('antecedentes_situacao_gestaçao'),
 			situacaoParidade: getTextField('antecedentes_situacao_paridade'),
 			tabagismo: parseBoolean(getActiveRadio('antecedentes_tabagismo')),
-			hac: parseBoolean(getActiveRadio('antecedentes_hac')),
+			hac: numberToBoolean(getActiveRadio('antecedentes_hac')),
 			hacType: getActiveRadio('antecedentes_hac_type'),
-			diabetes: parseBoolean(getActiveRadio('antecedentes_diabetes')),
+			diabetes: numberToBoolean(getActiveRadio('antecedentes_diabetes')),
 			diabetesType: getActiveRadio('antecedentes_diabetes_type'),
-			hipotireoidismo: parseBoolean(getActiveRadio('antecedentes_hipotireoidismo')),
+			hipotireoidismo: numberToBoolean(getActiveRadio('antecedentes_hipotireoidismo')),
 			hipotireoidismoType: getActiveRadio('antecedentes_hipotireoidismo_type'),
 			note: getTextField('antecedentes_note')
 		},
@@ -168,8 +168,8 @@ renderConsulta = function (a) {
 	insertNewConduta(g, a.conduta[0], 'conduta');
 	insertNewExames(g, a.exames[0], 'exames');
 	insertNewEscalas(g, a.escalas[0], 'escalas');
-	insertNewUltrassom(g, a.ultrassom[0], 'ultrassom');
 	insertNewMioma(g, a.mioma, 'mioma');
+	insertNewUltrassom(g, a.ultrassom[0], 'ultrassom');
 	insertNewAntecedentes(g, a.antecedentes[0], 'antecedentes');
 	insertNewExameFisico(g, a.exameFisico[0], 'exameFisico');
 
@@ -287,14 +287,14 @@ insertNewAntecedentes = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Antecedentes'));
 
-	eab.appendChild(newField(b.situacaoAborto, 'Aborto'));
 	eab.appendChild(newField(b.situacaoGestacao, 'Gestacao'));
 	eab.appendChild(newField(b.situacaoParidade, 'Paridade'));
+	eab.appendChild(newField(b.situacaoAborto, 'Aborto'));
 	if (numberToBoolean(b.tabagismo))
 		eab.appendChild(newField(toLocaleBool(b.tabagismo), 'tabagismo'));
 
 	if (numberToBoolean(b.hac))
-		eac.appendChild(newField(buildTypeNote(b.hac, b.diabetesType), 'hac'));
+		eac.appendChild(newField(buildTypeNote(b.hac, b.hacType), 'hac'));
 	if (numberToBoolean(b.diabetes))
 		eac.appendChild(newField(buildTypeNote(b.diabetes, b.diabetesType), 'diabetes'));
 	if (numberToBoolean(b.hipotireoidismo))
@@ -347,9 +347,13 @@ insertNewUltrassom = function (a, b, c) {
  */
 var insertNewMioma;
 insertNewMioma = function (a, b, c) {
-	var e = newNode('div', c + ' content-box flex-wrap');
-	for (var i = b.length; i--; ) {
-		var ea = newNode('div', 'flexbox flex-column flex-3');
+	var e, f;
+
+	e = newNode('div', c + ' content-box flex-column');
+	f = b.length;
+
+	for (var i = 0; i < f; i++) {
+		var ea = newNode('div', 'flexbox');
 		var eaa = newNode('div', 'flexbox');
 
 		eaa.appendChild(newField(b[i].medida, 'medida'));
@@ -358,6 +362,7 @@ insertNewMioma = function (a, b, c) {
 		ea.appendChild(eaa);
 		e.appendChild(ea);
 	}
+
 	a.insertBefore(e, a.firstChild);
 };
 
@@ -377,7 +382,7 @@ insertNewEscalas = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Escalas'));
 
-	eab.appendChild(newField(c.pbacInicial, 'pbac Inicial'));
+	eab.appendChild(newField(b.pbacInicial, 'pbac Inicial'));
 	eab.appendChild(newField(b.beckInicial, 'beck Inicial'));
 	eab.appendChild(newField(b.vidaMioma, 'vida x Mioma'));
 
@@ -407,25 +412,25 @@ insertNewExames = function (a, b, c) {
 	var eabd = newNode('div', 'flexbox flex-column');
 	var eabe = newNode('div', 'flexbox flex-column');
 
-	eaa.appendChild(newContentNode('h2', 'Exames'));
+	eaa.appendChild(newContentNode('h2', 'Exames Iniciais'));
 
-	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase', 'mg/dL'));
-	eaba.appendChild(newField(b.ht, 'Ht', 'defaultcase'));
-	eaba.appendChild(newField(b.vcm, 'vcm'));
+	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase', '%'));
+	eaba.appendChild(newField(b.ht, 'Ht', 'defaultcase', '%'));
+	eaba.appendChild(newField(b.vcm, 'vcm', 'ft'));
 
-	eabb.appendChild(newField(b.rdw, 'rdw'));
-	eabb.appendChild(newField(b.ferro, 'ferro'));
-	eabb.appendChild(newField(b.ferritina, 'ferritina'));
+	eabb.appendChild(newField(b.rdw, 'rdw', false, '%'));
+	eabb.appendChild(newField(b.ferro, 'ferro', false, 'mg'));
+	eabb.appendChild(newField(b.ferritina, 'ferritina', false, 'ng/dL'));
 
-	eabc.appendChild(newField(b.vitaminaD3, 'VITAMINA D3 (ng/dL)', 'defaultcase'));
-	eabc.appendChild(newField(b.gj, 'GJ (mg/dL)', 'defaultcase'));
-	eabc.appendChild(newField(b.ct, 'CT (mg/dL)', 'defaultcase'));
+	eabc.appendChild(newField(b.vitaminaD3, 'Vitamina D3', false, 'ng/dL'));
+	eabc.appendChild(newField(b.gj, 'GJ', false, 'mg/dL'));
+	eabc.appendChild(newField(b.ct, 'CT', false, 'mg/dL'));
 
-	eabd.appendChild(newField(b.ldl, 'LDL (mg/dL)', 'defaultcase'));
-	eabd.appendChild(newField(b.hdl, 'HDL (mg/dL)', 'defaultcase'));
-	eabd.appendChild(newField(b.tsh, 'TSH (mU/L)', 'defaultcase'));
+	eabd.appendChild(newField(b.ldl, 'LDL', false, 'mg/dL'));
+	eabd.appendChild(newField(b.hdl, 'HDL', false, 'mg/dL'));
+	eabd.appendChild(newField(b.tsh, 'TSH', false, 'mU/L'));
 
-	eabe.appendChild(newField(b.t4l, 'T4L (ng/dL)', 'defaultcase'));
+	eabe.appendChild(newField(b.t4l, 'T4L', 'defaultcase', 'ng/dL'));
 	eabe.appendChild(newEmptyField());
 	eabe.appendChild(newEmptyField());
 
