@@ -1035,11 +1035,11 @@
 	renderPaciente = function(a) {
 		var b, c;
 		b = document.getElementById('report');
-		c = newNode('ul');
+		c = newNode('ul', 'font-grey-50');
 
 		for (var i = a.length; i--; ) {
 			var d = a[i];
-			var e = newNode('li', 'grey-100');
+			var e = newNode('li', 'blue-700 border-blue-800');
 			var ea = newNode('a', 'flex flex-column');
 			ea.href = 'print/?prontuario_id=' + d.prontuario._id;
 
@@ -1075,12 +1075,13 @@
 
 <style scoped="scoped">
 	#report li {
-
+		border-right-style: solid;
+		border-right-width: 5px;
 	}
 
 	#report li a {
 		margin: 5px auto;
-		padding: 5px;
+		padding: 5px 5px 5px .5em;
 	}
 
 	#report .item {
@@ -1094,6 +1095,12 @@
 	#report .name {
 		font-size: 1.125em;
 		font-weight: 600;
+	}
+
+	@media (max-width: 36em) {
+		#report .item {
+			font-size: .75em;
+		}
 	}
 </style>
 
