@@ -68,6 +68,12 @@
 		font-weight: 100;
 	}
 
+	.b .help-text {
+		font-size: .875em;
+		font-weight: 100;
+		margin-bottom: 1em;
+	}
+
 	.b .title.center {
 		text-align: center;
 	}
@@ -88,22 +94,27 @@
 		.b .title {
 			font-size: 6em;
 		}
+
+		.b .help-text {
+			font-size: 1em;
+		}
 	}
 </style>
 
 <div class="window height-window flex flex-column">
 
-	<div id="a" class="a flex view-0">
+	<div id="a" class="a flex view-1">
 
-		<div class="b blue-900 font-white">
+		<div class="b blue-900">
 			<div class="flex justify-end">
 				<button class="button" distinct-class="view-1">Voltar</button>
 			</div>
 			<div class="container">
 				<form action="#">
-					<span class="title">Relatórios</span>
-					<button id="getReport">Get!</button>
-					<div class="grey-300" id="report"></div>
+					<span class="title font-white">Relatórios</span>
+					<span class="help-text font-white">Selecione um dos pacientes para visualizar o prontuário completo</span>
+					<!--<button id="getReport">Get!</button>-->
+					<div class="flex flex-column" id="report"></div>
 				</form>
 			</div>
 		</div>
@@ -115,7 +126,7 @@
 					<span class="title center"><em>venus</em></span>
 				</div>
 				<div class="flex flex-column justify-center" style="margin-top: 1em">
-					<button class="button" distinct-class="view-0">Relatórios</button>
+					<button class="button" distinct-class="view-0" id="getReport">Relatórios</button>
 					<button class="button" distinct-class="view-2">Registro</button>
 				</div>
 			</div>
@@ -1005,7 +1016,86 @@
 	for (var i = button.length; i--; )
 		button[i].addEventListener('click', distinct, false);
 
+	var getPaciente;
+	getPaciente = function() {
+		$.ajax({
+			dataType: 'json',
+			error: function (data) {
+				console.log(data);
+			},
+			method: 'post',
+			success: function (data) {
+				renderPaciente(data);
+			},
+			url: __API_DIR + 'i/pull/'
+		});
+	};
+
+	var renderPaciente;
+	renderPaciente = function(a) {
+		var b, c;
+		b = document.getElementById('report');
+		c = newNode('ul');
+
+		for (var i = a.length; i--; ) {
+			var d = a[i];
+			var e = newNode('li', 'grey-100');
+			var ea = newNode('a', 'flex flex-column');
+			ea.href = 'print/?prontuario_id=' + d.prontuario._id;
+
+			var eaa = newContentNode('span', d.paciente.nome, 'name');
+
+			var eab = newNode('span', 'flex flex-wrap');
+
+			var eaba = newContentNode('span', d.paciente.sexo, 'item');
+			var eabb = newContentNode('span', getAge(d.paciente.nascimento) + ' anos', 'item');
+			var eabc = newContentNode('span', d.paciente.religiao, 'item');
+			var eabd = newContentNode('span', d.paciente.etnia, 'item');
+
+			eab.appendChild(eaba);
+			eab.appendChild(eabb);
+			eab.appendChild(eabc);
+			eab.appendChild(eabd);
+
+			ea.appendChild(eaa);
+			ea.appendChild(eab);
+
+			e.appendChild(ea);
+
+			c.appendChild(e);
+		}
+
+		b.insertBefore(c, b.firstChild);
+
+	};
+
+	window.addEventListener('load', getPaciente);
+
 </script>
+
+<style scoped="scoped">
+	#report li {
+
+	}
+
+	#report li a {
+		margin: 5px auto;
+		padding: 5px;
+	}
+
+	#report .item {
+		font-size: .875em;
+	}
+
+	#report .item:not(:first-child):before {
+		content: ', ';
+	}
+
+	#report .name {
+		font-size: 1.125em;
+		font-weight: 600;
+	}
+</style>
 
 </body>
 </html>

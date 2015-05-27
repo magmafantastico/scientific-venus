@@ -7,20 +7,6 @@
 if (typeof __API_DIR === 'undefined')
 	var __API_DIR = '';
 
-$('#getReport').click(function() {
-	$.ajax({
-		dataType: 'json',
-		error: function (data) {
-			console.log(data);
-		},
-		method: 'post',
-		success: function (data) {
-			console.log(data);
-		},
-		url: __API_DIR + 'i/pull/'
-	});
-});
-
 $('#btn').click(function () {
 
 	document.cookie = "response=" + JSON.stringify(getResponse());
