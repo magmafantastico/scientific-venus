@@ -2,16 +2,13 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `scientific_venus` ;
-CREATE SCHEMA IF NOT EXISTS `scientific_venus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `scientific_venus` ;
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`paciente`
+-- Table `empreen1_scientific_venus_remote`.`paciente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`paciente` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`paciente` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`paciente` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`paciente` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `sexo` VARCHAR(10) NOT NULL,
@@ -30,11 +27,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`prontuario`
+-- Table `empreen1_scientific_venus_remote`.`prontuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`prontuario` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`prontuario` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`prontuario` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`prontuario` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `paciente_id` INT NOT NULL,
   `data` DATE NOT NULL,
@@ -44,18 +41,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`prontuario` (
   INDEX `paciente_id_idx` (`paciente_id` ASC),
   CONSTRAINT `paciente_id`
     FOREIGN KEY (`paciente_id`)
-    REFERENCES `scientific_venus`.`paciente` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`paciente` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`consulta`
+-- Table `empreen1_scientific_venus_remote`.`consulta`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`consulta` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`consulta` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`consulta` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`consulta` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `prontuario_id` INT NOT NULL,
   `data` DATE NOT NULL,
@@ -64,18 +61,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`consulta` (
   INDEX `fk_consulta_1_idx` (`prontuario_id` ASC),
   CONSTRAINT `fk_consulta_1`
     FOREIGN KEY (`prontuario_id`)
-    REFERENCES `scientific_venus`.`prontuario` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`prontuario` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`exameFisico`
+-- Table `empreen1_scientific_venus_remote`.`exameFisico`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`exameFisico` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`exameFisico` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`exameFisico` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`exameFisico` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `peso` FLOAT NULL,
@@ -89,18 +86,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`exameFisico` (
   INDEX `fk_exameFisico_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_exameFisico_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`antecedentes`
+-- Table `empreen1_scientific_venus_remote`.`antecedentes`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`antecedentes` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`antecedentes` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`antecedentes` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`antecedentes` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `situacaoAborto` TINYINT(1) NULL,
@@ -119,18 +116,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`antecedentes` (
   INDEX `fk_antecedentes_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_antecedentes_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`ultrassom`
+-- Table `empreen1_scientific_venus_remote`.`ultrassom`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`ultrassom` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`ultrassom` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`ultrassom` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`ultrassom` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `volumeUterino` FLOAT NULL,
@@ -143,18 +140,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`ultrassom` (
   INDEX `fk_ultrassom_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_ultrassom_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`escalas`
+-- Table `empreen1_scientific_venus_remote`.`escalas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`escalas` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`escalas` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`escalas` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`escalas` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `pbacInicial` VARCHAR(45) NULL,
@@ -165,18 +162,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`escalas` (
   INDEX `fk_escalas_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_escalas_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`exames`
+-- Table `empreen1_scientific_venus_remote`.`exames`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`exames` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`exames` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`exames` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`exames` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `hb` FLOAT NULL,
@@ -197,18 +194,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`exames` (
   INDEX `fk_exames_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_exames_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`conduta`
+-- Table `empreen1_scientific_venus_remote`.`conduta`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`conduta` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`conduta` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`conduta` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`conduta` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `conduta` VARCHAR(45) NULL,
@@ -224,18 +221,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`conduta` (
   INDEX `fk_conduta_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_conduta_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`resultados`
+-- Table `empreen1_scientific_venus_remote`.`resultados`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`resultados` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`resultados` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`resultados` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`resultados` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `pbacFinal` VARCHAR(45) NULL,
@@ -246,18 +243,18 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`resultados` (
   INDEX `fk_resultados_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_resultados_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scientific_venus`.`mioma`
+-- Table `empreen1_scientific_venus_remote`.`mioma`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scientific_venus`.`mioma` ;
+DROP TABLE IF EXISTS `empreen1_scientific_venus_remote`.`mioma` ;
 
-CREATE TABLE IF NOT EXISTS `scientific_venus`.`mioma` (
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus_remote`.`mioma` (
   `_id` INT NOT NULL AUTO_INCREMENT,
   `consulta_id` INT NOT NULL,
   `medida` FLOAT NULL,
@@ -267,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `scientific_venus`.`mioma` (
   INDEX `fk_mioma_1_idx` (`consulta_id` ASC),
   CONSTRAINT `fk_mioma_1`
     FOREIGN KEY (`consulta_id`)
-    REFERENCES `scientific_venus`.`consulta` (`_id`)
+    REFERENCES `empreen1_scientific_venus_remote`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
