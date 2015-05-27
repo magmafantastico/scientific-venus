@@ -36,8 +36,14 @@ class Pull extends Model {
 		$this->exames = new Exames($id);
 		$this->exames->fill(mysqli_fetch_assoc($this->exames->pull($c)));
 
-		$this->mioma = new Mioma($id);
-		$this->mioma->fill(mysqli_fetch_assoc($this->mioma->pull($c)));
+		$this->mioma = array();
+		$mioma = new Mioma($id);
+		if ($r = $mioma->pull($c))
+			for ($i = $r->num_rows; $i--; ) {
+				$m = new Mioma($id);
+				$m->fill(mysqli_fetch_assoc($r));
+				array_push($this->mioma, $m);
+			}
 
 		$this->resultados = new Resultados($id);
 		$this->resultados->fill(mysqli_fetch_assoc($this->resultados->pull($c)));

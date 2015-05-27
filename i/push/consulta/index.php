@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Magma Scientific Push Server v1.9.0 (http://getvilla.org/)
+ * Magma Scientific Push Server v1.9.5 (http://getvilla.org/)
  * Copyright 2014-2015 Magma Fantastico
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
  */
@@ -9,6 +9,7 @@
 header('Content-Type: application/json; charset=UTF-8;');
 require_once('../../var/connection.php');
 require_once('../../model/Thing.class.php');
+require_once('../../model/Model.php');
 require_once('../../model/Paciente.class.php');
 require_once('../../model/Prontuario.class.php');
 require_once('../../model/ConsultaThing.class.php');
@@ -20,7 +21,9 @@ require_once('../../model/ExameFisico.class.php');
 require_once('../../model/Exames.class.php');
 require_once('../../model/Resultados.class.php');
 require_once('../../model/Ultrassom.class.php');
-require_once('../../model/Response.php');
+require_once('../../model/Mioma.class.php');
+require_once('../../model/Push.php');
+require_once('../../model/PushConsulta.php');
 
 function __autoload($name) {
 	echo "Want to load $name.\n";
@@ -30,89 +33,17 @@ function __autoload($name) {
 try {
 
 	$connection = new Connection();
-	$c = $connection->getConnection();
 
-	if ($_POST['response']) {
-		$a = $_POST['response'];
+	if ($_COOKIE['response']) {
 
-		// Preenche consulta
-		/**
-		 * TODO - Adicionar método para criar prontuario_id
-		 */
-		$response = new ResponseConsulta($a);
+		$a = $_COOKIE['response'];
 
-		$r = $response->getRequest();
+		// init push
+		$push = new PushConsulta($a, $connection->getConnection());
 
-		$response->consulta = new Consulta(190);
+		// print JSON
+		print_r($push->toJSON());
 
-		$response->consulta->data = $r->prontuario->data;
-		$response->consulta->push($c);
-
-		// Preenche itens da consulta
-		$response->createAll($response->consulta->_id);
-
-		$response->antecedentes;
-
-		$response->antecedentes->situacaoAborto = $r->antecedentes->situacaoAborto;
-		$response->antecedentes->situacaoGestacao = $r->antecedentes->situacaoGestacao;
-		$response->antecedentes->situacaoParidade = $r->antecedentes->situacaoParidade;
-		$response->antecedentes->tabagismo = $r->antecedentes->tabagismo;
-		$response->antecedentes->hac = $r->antecedentes->hac;
-		$response->antecedentes->hacType = $r->antecedentes->hacType;
-		$response->antecedentes->diabetes = $r->antecedentes->diabetes;
-		$response->antecedentes->diabetesType = $r->antecedentes->diabetesType;
-		$response->antecedentes->hipotireoidismo = $r->antecedentes->hipotireoidismo;
-		$response->antecedentes->hipotireoidismoType = $r->antecedentes->hipotireoidismoType;
-		$response->antecedentes->note = $r->antecedentes->note;
-
-		$response->conduta->conduta = $r->conduta->conduta;
-		$response->conduta->cirurgia = $r->conduta->cirurgia;
-		$response->conduta->hormonioTerapia = $r->conduta->hormonioTerapia;
-		$response->conduta->hormonioTerapiaCiclico = $r->conduta->hormonioTerapiaCiclico;
-		$response->conduta->hormonioTerapiaContinuo = $r->conduta->hormonioTerapiaContinuo;
-		$response->conduta->hormonioTerapiaNome = $r->conduta->hormonioTerapiaNome;
-		$response->conduta->ainh = $r->conduta->ainh;
-
-		$response->escalas->pbacInicial = $r->escalas->pbacInicial;
-		$response->escalas->beckInicial = $r->escalas->beckInicial;
-		$response->escalas->vidaMioma = $r->escalas->vidaMioma;
-
-		$response->exameFisico->peso = $r->exameFisico->peso;
-		$response->exameFisico->altura = $r->exameFisico->altura;
-		$response->exameFisico->imc = $r->exameFisico->imc;
-		$response->exameFisico->pressaoArterial = $r->exameFisico->pressaoArterial;
-		$response->exameFisico->circunferenciaAbdominal = $r->exameFisico->circunferenciaAbdominal;
-		$response->exameFisico->circunferenciaCervical = $r->exameFisico->circunferenciaCervical;
-
-		$response->exames->hb = $r->exames->hb;
-		$response->exames->ht = $r->exames->ht;
-		$response->exames->vcm = $r->exames->vcm;
-		$response->exames->rdw = $r->exames->rdw;
-		$response->exames->ferro = $r->exames->ferro;
-		$response->exames->ferritina = $r->exames->ferritina;
-		$response->exames->vitaminaD3 = $r->exames->vitaminaD3;
-		$response->exames->gj = $r->exames->gj;
-		$response->exames->ct = $r->exames->ct;
-		$response->exames->ldl = $r->exames->ldl;
-		$response->exames->hdl = $r->exames->hdl;
-		$response->exames->tsh = $r->exames->tsh;
-		$response->exames->t4l = $r->exames->t4l;
-
-		$response->resultados->pbacFinal = $r->resultados->pbacFinal;
-		$response->resultados->beckFinal = $r->resultados->beckFinal;
-		$response->resultados->vidaMioma = $r->resultados->vidaMioma;
-
-		$response->utero->volumeUterino = $r->utero->volumeUterino;
-		$response->utero->ovarioDireito = $r->utero->ovarioDireito;
-		$response->utero->ovarioEsquerdo = $r->utero->ovarioEsquerdo;
-		$response->utero->endometro = $r->utero->endometro;
-		$response->utero->nd = $r->utero->nd;
-
-		// Realiza push de todos os itens da consulta
-		$response->pushAll($c);
-
-		// Print JSON
-		print_r($response->toJSON());
 	}
 
 } catch (Exception $e) {

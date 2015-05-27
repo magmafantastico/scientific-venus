@@ -16,4 +16,11 @@ class Mioma extends ConsultaThing {
 		$this->medida = $a['medida'];
 		$this->tipo = $a['tipo'];
 	}
+
+	public function setQuery()
+	{
+		$this->setQueryName('consulta_id');
+		$this->setQueryValue($this->consulta_id);
+		$this->setQueryLimit(0);
+	}
 }

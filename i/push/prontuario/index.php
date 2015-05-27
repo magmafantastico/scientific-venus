@@ -26,7 +26,7 @@ try {
 	if ($_POST['response']) {
 
 		$a = $_POST['response'];
-		$response = new Response($a);
+		$response = new Push($a);
 
 		$r = $response->getRequest();
 
