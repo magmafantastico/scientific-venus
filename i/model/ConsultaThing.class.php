@@ -15,11 +15,15 @@ class ConsultaThing extends Thing {
 	 */
 	public function __construct($a)
 	{
-		$this->setQueryName('consulta_id');
-		$this->setQueryValue($a);
-		$this->setQueryLimit(1);
-
 		$this->setConsultaId($a);
+		$this->setQuery();
+	}
+
+	public function setQuery()
+	{
+		$this->setQueryName('consulta_id');
+		$this->setQueryValue($this->consulta_id);
+		$this->setQueryLimit(1);
 	}
 
 	/**

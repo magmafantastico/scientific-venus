@@ -22,6 +22,14 @@ class Connection
 	private $_SCHEMA = "empreen1_scientific_venus";*/
 
 	/**
+	 * BLUEHOST REMOTE TEST
+	 */
+
+	/*private $_USER = "empreen1_magma";
+	private $_PASSWD = "o6NRAoNk@0[!bV";
+	private $_SCHEMA = "empreen1_scientific_venus_remote";*/
+
+	/**
 	 * HOME
 	 */
 
