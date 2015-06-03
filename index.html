@@ -858,8 +858,8 @@
 			target: document.getElementById('conduta_hormonioTerapia')
 		}, ['click', 'touchstart']);
 
-		var $prontuario_data = $('#prontuario_data').pickadate();
-		var $paciente_nascimento = $('#paciente_nascimento').pickadate({
+		var $prontuario_data = $('#prontuario_data').attr('data-value', "2015/04/20").pickadate();
+		var $paciente_nascimento = $('#paciente_nascimento').attr('data-value', "2015/04/20").pickadate({
 			selectYears: 180,
 			selectMonths: true
 		});

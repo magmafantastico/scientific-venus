@@ -28,12 +28,31 @@ $('#btn').click(function () {
 
 // Adaptaçao da funçao acima
 $('#consulta_create').click(function() {
+	pushResponse(true, true, false);
+});
 
-	document.cookie = "response=" + JSON.stringify(getResponse());
+function submitProntuario() {
+	document.forms['carry_id'].submit();
+}
+
+function pushResponse(cookies, submit, log) {
+	var d, id, r, u;
 
 	document.getElementById('prontuario__id').value = '';
 
+	d = false;
+	r = JSON.stringify(getResponse());
+	u = __API_DIR + 'i/push/';
+
+	if (cookies) setCookies(r);
+	else d = {
+		response: r
+	};
+
+	if (log) u = __API_DIR + 'log/push/';
+
 	$.ajax({
+		data: d,
 		error: function (data) {
 			console.log(data.responseText);
 		},
@@ -41,20 +60,31 @@ $('#consulta_create').click(function() {
 		success: function (data) {
 			if (data.prontuario._id) {
 				document.getElementById('prontuario__id').value = data.prontuario._id;
-				document.forms['carry_id'].submit();
+				if (submit)
+					submitProntuario();
 			}
 		},
-		url: __API_DIR + 'i/push/'
+		url: u
 	});
+}
 
-});
+function t() {
+	console.log(getResponse());
+}
 
-var t = function() {
-	console.log(getResponse);
-};
+function setCookies(r) {
+	document.cookie = "response=" + r;
+}
 
-var getResponse;
-getResponse = function () {
+function setResponse() {
+	console.log('oiasd');
+}
+
+var sexoInput = document.getElementsByName('paciente_sexo');
+for (var i = sexoInput.length; i--; )
+	sexoInput[i].addEventListener('blur', setResponse, false);
+
+function getResponse () {
 	return {
 
 		antecedentes: {
@@ -141,7 +171,7 @@ getResponse = function () {
 		}
 
 	};
-};
+}
 
 
 /**
