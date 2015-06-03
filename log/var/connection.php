@@ -25,9 +25,9 @@ class Connection
 	 * BLUEHOST REMOTE LOG
 	 */
 
-	private $_USER = "empreen1_magma";
+	/*private $_USER = "empreen1_magma";
 	private $_PASSWD = "o6NRAoNk@0[!bV";
-	private $_SCHEMA = "empreen1_scientific_venus_log";
+	private $_SCHEMA = "empreen1_scientific_venus_log";*/
 
 	/**
 	 * BLUEHOST REMOTE TEST
@@ -49,9 +49,9 @@ class Connection
 	 * HOME
 	 */
 
-	/*private $_USER = "root";
+	private $_USER = "root";
 	private $_PASSWD = "sux";
-	private $_SCHEMA = "scientific_venus_log";*/
+	private $_SCHEMA = "scientific_venus_log";
 
 	public function __construct() {
 
