@@ -15,7 +15,6 @@ class Log extends Thing {
 
 	function __construct()
 	{
-		$this->setIP();
 		$this->setQuery();
 	}
 
@@ -32,10 +31,13 @@ class Log extends Thing {
 
 	public function fill($a)
 	{
-		$this->_id = $a['_id'];
+		if (!empty($a['_id']))
+			$this->_id = $a['_id'];
 		$this->agent = $a['agent'];
 		$this->time = $a['time'];
 		$this->timezone = $a['timezone'];
+		if (!empty($a['ip'])) $this->ip = $a['ip'];
+		else $this->setIP();
 	}
 
 	public function setQuery()
