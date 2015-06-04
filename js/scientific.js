@@ -393,9 +393,8 @@ numberMioma = function() {
  */
 var calcIMC;
 calcIMC = function(a, b) {
-	var c = a / Math.pow(b, 2);
-
-	return parseFloat(c).toFixed(2);
+	pushResponse(true, false, true);
+	return parseFloat(a / Math.pow(b, 2)).toFixed(2);
 };
 
 /**

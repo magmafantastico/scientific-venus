@@ -18,7 +18,7 @@
 	<script type="text/javascript" src="js/html5shiv.js"></script>
 	<script type="text/javascript" src="js/html5shiv-printshiv.js"></script>
 	<![endif]-->
-	<script>
+	<!--<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -27,7 +27,7 @@
 		ga('create', 'UA-63400292-1', 'auto');
 		ga('require', 'linkid', 'linkid.js');
 		ga('send', 'pageview');
-	</script>
+	</script>-->
 </head>
 <body>
 
@@ -858,8 +858,8 @@
 			target: document.getElementById('conduta_hormonioTerapia')
 		}, ['click', 'touchstart']);
 
-		var $prontuario_data = $('#prontuario_data').pickadate();
-		var $paciente_nascimento = $('#paciente_nascimento').pickadate({
+		var $prontuario_data = $('#prontuario_data').attr('data-value', "2015/04/20").pickadate();
+		var $paciente_nascimento = $('#paciente_nascimento').attr('data-value', "2015/04/20").pickadate({
 			selectYears: 180,
 			selectMonths: true
 		});

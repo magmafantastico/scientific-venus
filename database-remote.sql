@@ -2,6 +2,9 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+DROP SCHEMA IF EXISTS `empreen1_scientific_venus` ;
+CREATE SCHEMA IF NOT EXISTS `empreen1_scientific_venus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `empreen1_scientific_venus` ;
 
 -- -----------------------------------------------------
 -- Table `empreen1_scientific_venus`.`paciente`
@@ -267,6 +270,22 @@ CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`mioma` (
     REFERENCES `empreen1_scientific_venus`.`consulta` (`_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `empreen1_scientific_venus`.`log`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `empreen1_scientific_venus`.`log` ;
+
+CREATE TABLE IF NOT EXISTS `empreen1_scientific_venus`.`log` (
+  `_id` INT NULL AUTO_INCREMENT,
+  `agent` VARCHAR(180) NOT NULL,
+  `time` VARCHAR(45) NOT NULL,
+  `timezone` INT NOT NULL,
+  `ip` VARCHAR(45) NOT NULL,
+  `timestamp` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`_id`))
 ENGINE = InnoDB;
 
 
