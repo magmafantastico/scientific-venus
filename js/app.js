@@ -27,7 +27,7 @@ $('#btn').click(function () {
 });
 
 // Adaptaçao da funçao acima
-$('#consulta_create').click(function() {
+$('#consulta_create').click(function () {
 	pushResponse(true, true, false);
 });
 
@@ -44,7 +44,7 @@ function pushResponse(cookies, submit, log) {
 	r = JSON.stringify(getResponse());
 	u = __API_DIR + 'i/push/';
 
-	if (cookies) setCookies(r);
+	if (cookies) setCookies('response', r);
 	else d = {
 		response: r
 	};
@@ -72,8 +72,15 @@ function t() {
 	console.log(getResponse());
 }
 
-function setCookies(r) {
-	document.cookie = "response=" + r;
+/**
+ * Atualiza Cookies
+ * @param a atributo
+ * @param c content
+ */
+function setCookies(a, c) {
+	var b = a + "=" + c;
+	console.log(b);
+	document.cookie = b;
 }
 
 function setResponse() {
@@ -81,10 +88,10 @@ function setResponse() {
 }
 
 var sexoInput = document.getElementsByName('paciente_sexo');
-for (var i = sexoInput.length; i--; )
+for (var i = sexoInput.length; i--;)
 	sexoInput[i].addEventListener('blur', setResponse, false);
 
-function getResponse () {
+function getResponse() {
 	return {
 
 		antecedentes: {
@@ -591,3 +598,30 @@ if (typeof _id !== 'undefined') {
 		url: __API_DIR + 'i/pull/find/consulta/'
 	});
 }
+
+function getLog() {
+	return {
+			agent: window.navigator.userAgent,
+			time: new Date().toISOString(),
+			timezone: new Date().getTimezoneOffset() / 60
+	};
+}
+
+function doLog() {
+	var log = JSON.stringify(getLog());
+
+	$.ajax({
+		cache: false,
+		data: {
+			log: log
+		},
+		dataType: 'json',
+		method: 'post',
+		success: function (data) {
+			console.log(data)
+		},
+		url: __API_DIR + 'i/log/'
+	});
+}
+
+window.addEventListener('load', doLog);
