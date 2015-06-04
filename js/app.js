@@ -608,18 +608,11 @@ function getLog() {
 }
 
 function doLog() {
-	var log = JSON.stringify(getLog());
-
 	$.ajax({
-		cache: false,
 		data: {
-			log: log
+			log: JSON.stringify(getLog())
 		},
-		dataType: 'json',
 		method: 'post',
-		success: function (data) {
-			console.log(data)
-		},
 		url: __API_DIR + 'i/log/'
 	});
 }
