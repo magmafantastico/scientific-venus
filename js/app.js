@@ -143,7 +143,11 @@ function getResponse() {
 			ldl: getTextField('exames_ldl'),
 			hdl: getTextField('exames_hdl'),
 			tsh: getTextField('exames_tsh'),
-			t4l: getTextField('exames_t4l')
+			t4l: getTextField('exames_t4l'),
+			tgl: getTextField('exames_tgl'),
+			do: getTextField('exames_do'),
+			colo: getTextField('exames_colo'),
+			lombar: getTextField('exames_lombar')
 		},
 		mioma: getMiomas(),
 		paciente: {
@@ -452,6 +456,7 @@ insertNewExames = function (a, b, c) {
 	var eabc = newNode('div', 'flexbox flex-column');
 	var eabd = newNode('div', 'flexbox flex-column');
 	var eabe = newNode('div', 'flexbox flex-column');
+	var eabf = newNode('div', 'flexbox flex-column');
 
 	eaa.appendChild(newContentNode('h2', 'Exames Iniciais'));
 
@@ -472,14 +477,19 @@ insertNewExames = function (a, b, c) {
 	eabd.appendChild(newField(b.tsh, 'TSH', false, 'mU/L'));
 
 	eabe.appendChild(newField(b.t4l, 'T4L', 'defaultcase', 'ng/dL'));
-	eabe.appendChild(newEmptyField());
-	eabe.appendChild(newEmptyField());
+	eabe.appendChild(newField(b.tgl, 'TGL', false, ''));
+	eabe.appendChild(newField(b.do, 'DO', false, ''));
+
+	eabf.appendChild(newField(b.colo, 'COLO', false, ''));
+	eabf.appendChild(newField(b.lombar, 'LOMBAR', false, ''));
+	eabf.appendChild(newEmptyField());
 
 	eab.appendChild(eaba);
 	eab.appendChild(eabb);
 	eab.appendChild(eabc);
 	eab.appendChild(eabd);
 	eab.appendChild(eabe);
+	eab.appendChild(eabf);
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
