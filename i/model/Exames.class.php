@@ -20,6 +20,10 @@ class Exames extends ConsultaThing {
 	public $hdl;
 	public $tsh;
 	public $t4l;
+	public $tgl;
+	public $do;
+	public $colo;
+	public $lombar;
 
 	public function fill($a)
 	{
@@ -37,5 +41,9 @@ class Exames extends ConsultaThing {
 		$this->hdl = $a['hdl'];
 		$this->tsh = $a['tsh'];
 		$this->t4l = $a['t4l'];
+		$this->tgl = $a['tgl'];
+		$this->do = $a['do'];
+		$this->colo = $a['colo'];
+		$this->lombar = $a['lombar'];
 	}
 }
