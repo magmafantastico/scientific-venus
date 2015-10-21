@@ -145,7 +145,6 @@ function getResponse() {
 			tsh: getTextField('exames_tsh'),
 			t4l: getTextField('exames_t4l'),
 			tgl: getTextField('exames_tgl'),
-			do: getTextField('exames_do'),
 			colo: getTextField('exames_colo'),
 			lombar: getTextField('exames_lombar')
 		},
@@ -460,12 +459,12 @@ insertNewExames = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Exames Iniciais'));
 
-	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase', '%'));
+	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase', 'g/dL'));
 	eaba.appendChild(newField(b.ht, 'Ht', 'defaultcase', '%'));
 	eaba.appendChild(newField(b.vcm, 'vcm', 'ft'));
 
 	eabb.appendChild(newField(b.rdw, 'rdw', false, '%'));
-	eabb.appendChild(newField(b.ferro, 'ferro', false, 'mg'));
+	eabb.appendChild(newField(b.ferro, 'ferro', false, 'μg/dL'));
 	eabb.appendChild(newField(b.ferritina, 'ferritina', false, 'ng/dL'));
 
 	eabc.appendChild(newField(b.vitaminaD3, 'Vitamina D3', false, 'ng/dL'));
@@ -478,7 +477,6 @@ insertNewExames = function (a, b, c) {
 
 	eabe.appendChild(newField(b.t4l, 'T4L', 'defaultcase', 'ng/dL'));
 	eabe.appendChild(newField(b.tgl, 'TGL', false, ''));
-	eabe.appendChild(newField(b.do, 'DO', false, ''));
 
 	eabf.appendChild(newField(b.colo, 'COLO', false, ''));
 	eabf.appendChild(newField(b.lombar, 'LOMBAR', false, ''));
@@ -611,9 +609,9 @@ if (typeof _id !== 'undefined') {
 
 function getLog() {
 	return {
-			agent: window.navigator.userAgent,
-			time: new Date().toISOString(),
-			timezone: new Date().getTimezoneOffset() / 60
+		agent: window.navigator.userAgent,
+		time: new Date().toISOString(),
+		timezone: new Date().getTimezoneOffset() / 60
 	};
 }
 

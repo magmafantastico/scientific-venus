@@ -249,6 +249,7 @@
 	</form>
 
 	<div id="consulta">
+
 		<form action="#" id="consulta_form">
 
 			<div>
@@ -260,7 +261,7 @@
 					<span class="field flex-1">
 						<label for="exameFisico_peso">Peso</label>
 						<span class="helper">
-							<input type="number" id="exameFisico_peso" name="exameFisico_peso"/>
+							<input type="text" id="exameFisico_peso" name="exameFisico_peso"/>
 							<span>kg</span>
 						</span>
 					</span>
@@ -268,7 +269,7 @@
 					<span class="field flex-1">
 						<label for="exameFisico_altura">Altura</label>
 						<span class="helper">
-							<input type="number" id="exameFisico_altura" name="exameFisico_altura"/>
+							<input type="text" id="exameFisico_altura" name="exameFisico_altura"/>
 							<span>cm</span>
 						</span>
 					</span>
@@ -293,7 +294,7 @@
 					<span class="field flex-1">
 						<label for="exameFisico_circunferenciaAbdominal">Circunferência Abdominal</label>
 						<span class="helper">
-							<input type="number" id="exameFisico_circunferenciaAbdominal" name="exameFisico_circunferenciaAbdominal"/>
+							<input type="text" id="exameFisico_circunferenciaAbdominal" name="exameFisico_circunferenciaAbdominal"/>
 							<span>cm</span>
 						</span>
 					</span>
@@ -301,7 +302,7 @@
 					<span class="field flex-1">
 						<label for="exameFisico_circunferenciaCervical">Circunferência Cervical</label>
 						<span class="helper">
-							<input type="number" id="exameFisico_circunferenciaCervical" name="exameFisico_circunferenciaCervical"/>
+							<input type="text" id="exameFisico_circunferenciaCervical" name="exameFisico_circunferenciaCervical"/>
 							<span>cm</span>
 						</span>
 					</span>
@@ -318,17 +319,17 @@
 
 					<div class="field flex-1">
 						<label for="antecedentes_situacao_gestaçao">Gestação</label>
-						<input type="number" id="antecedentes_situacao_gestaçao" name="antecedentes_situacao_gestaçao"/>
+						<input type="text" id="antecedentes_situacao_gestaçao" name="antecedentes_situacao_gestaçao"/>
 					</div>
 
 					<div class="field flex-1">
 						<label for="antecedentes_situacao_paridade">Paridade</label>
-						<input type="number" id="antecedentes_situacao_paridade" name="antecedentes_situacao_paridade"/>
+						<input type="text" id="antecedentes_situacao_paridade" name="antecedentes_situacao_paridade"/>
 					</div>
 
 					<div class="field flex-1">
 						<label for="antecedentes_situacao_aborto">Aborto</label>
-						<input type="number" id="antecedentes_situacao_aborto" name="antecedentes_situacao_aborto"/>
+						<input type="text" id="antecedentes_situacao_aborto" name="antecedentes_situacao_aborto"/>
 					</div>
 
 				</div>
@@ -465,7 +466,7 @@
 					<span class="field flex-1">
 						<label for="ultrassom_volumeUterino">Volume Uterino</label>
 						<span class="helper">
-							<input type="tel" id="ultrassom_volumeUterino" maxlength="4" name="ultrassom_volumeUterino"/>
+							<input type="tel" id="ultrassom_volumeUterino" maxlength="6" name="ultrassom_volumeUterino"/>
 							<span>cm³</span>
 						</span>
 					</span>
@@ -473,7 +474,7 @@
 					<span class="field flex-1">
 						<label for="ultrassom_ovarioDireito">Ovário Direito</label>
 						<span class="helper">
-							<input type="tel" id="ultrassom_ovarioDireito" maxlength="3" name="ultrassom_ovarioDireito"/>
+							<input type="tel" id="ultrassom_ovarioDireito" maxlength="6" name="ultrassom_ovarioDireito"/>
 							<span>cm³</span>
 						</span>
 					</span>
@@ -481,7 +482,7 @@
 					<span class="field flex-1">
 						<label for="ultrassom_ovarioEsquerdo">Ovário Esquerdo</label>
 						<span class="helper">
-							<input type="tel" id="ultrassom_ovarioEsquerdo" maxlength="3" name="ultrassom_ovarioEsquerdo"/>
+							<input type="tel" id="ultrassom_ovarioEsquerdo" maxlength="6" name="ultrassom_ovarioEsquerdo"/>
 							<span>cm³</span>
 						</span>
 					</span>
@@ -489,7 +490,7 @@
 					<span class="field flex-1">
 						<label for="ultrassom_endometro">Endométro</label>
 						<span class="helper">
-							<input type="tel" id="ultrassom_endometro" maxlength="2" name="ultrassom_endometro"/>
+							<input type="tel" id="ultrassom_endometro" maxlength="6" name="ultrassom_endometro"/>
 							<span>mm</span>
 						</span>
 					</span>
@@ -502,7 +503,7 @@
 
 						<span class="field">
 							<label for="mioma_quantidade">Quantidade de Miomas</label>
-							<input type="number" id="mioma_quantidade" maxlength="1" name="mioma_quantidade"/>
+							<input type="text" id="mioma_quantidade" maxlength="1" name="mioma_quantidade"/>
 						</span>
 
 						<span class="field row">
@@ -553,7 +554,7 @@
 							<label for="exames_hb" class="default-case">Hb</label>
 							<span class="helper">
 								<input type="tel" class="small" id="exames_hb" name="exames_hb"/>
-								<span>%</span>
+								<span>g/dL</span>
 							</span>
 						</span>
 
@@ -585,7 +586,7 @@
 							<label for="exames_ferro" class="default-case">Ferro</label>
 							<span class="helper">
 								<input type="tel" class="small" id="exames_ferro" name="exames_ferro"/>
-								<span>mg</span>
+								<span>μg/dL</span>
 							</span>
 						</span>
 
@@ -649,7 +650,7 @@
 							<label for="exames_tsh" class="default-case">T.S.H</label>
 							<span class="helper">
 								<input type="tel" class="small" id="exames_tsh" name="exames_tsh"/>
-								<span>mU/L</span>
+								<span>μUi/mL</span>
 							</span>
 						</span>
 
@@ -665,15 +666,7 @@
 							<label for="exames_tgl" class="default-case">T.G.L</label>
 							<span class="helper">
 								<input type="tel" class="small" id="exames_tgl" name="exames_tgl"/>
-								<span>mU/L</span>
-							</span>
-						</span>
-
-						<span class="field">
-							<label for="exames_do" class="default-case">D.O</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_do" name="exames_do"/>
-								<span>ng/dL</span>
+								<span>mg/dL</span>
 							</span>
 						</span>
 
@@ -682,7 +675,7 @@
 					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
-							<label for="exames_colo" class="default-case">Colo</label>
+							<label for="exames_colo" class="default-case">D.P Colo</label>
 							<span class="helper">
 								<input type="tel" class="small" id="exames_colo" name="exames_colo"/>
 								<span>mg/dL</span>
@@ -690,7 +683,7 @@
 						</span>
 
 						<span class="field">
-							<label for="exames_lombar" class="default-case">Lombar</label>
+							<label for="exames_lombar" class="default-case">D.P Lombar</label>
 							<span class="helper">
 								<input type="tel" class="small" id="exames_lombar" name="exames_lombar"/>
 								<span>mU/L</span>

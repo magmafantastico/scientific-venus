@@ -21,7 +21,6 @@ class Exames extends ConsultaThing {
 	public $tsh;
 	public $t4l;
 	public $tgl;
-	public $do;
 	public $colo;
 	public $lombar;
 
@@ -42,7 +41,6 @@ class Exames extends ConsultaThing {
 		$this->tsh = $a['tsh'];
 		$this->t4l = $a['t4l'];
 		$this->tgl = $a['tgl'];
-		$this->do = $a['do'];
 		$this->colo = $a['colo'];
 		$this->lombar = $a['lombar'];
 	}
