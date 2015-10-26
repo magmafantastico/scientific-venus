@@ -475,6 +475,14 @@
 				<div class="flex flex-wrap justify-between">
 
 					<span class="field flex-1">
+						<label for="ultrassom_data">Data do Exame</label>
+						<span class="helper">
+							<input type="tel" id="ultrassom_data" maxlength="6" name="ultrassom_data"/>
+							<span>cm³</span>
+						</span>
+					</span>
+
+					<span class="field flex-1">
 						<label for="ultrassom_volumeUterino">Volume Uterino</label>
 						<span class="helper">
 							<input type="tel" id="ultrassom_volumeUterino" maxlength="6" name="ultrassom_volumeUterino"/>
@@ -901,6 +909,7 @@
 			selectYears: 180,
 			selectMonths: true
 		});
+		var $utero_data = $('#ultrassom_data').attr('data-value', "2015/04/20").pickadate();
 
 		var $exameFisico_imc = document.getElementById('exameFisico_imc');
 		$exameFisico_imc.addEventListener('focus', getIMC);
