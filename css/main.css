@@ -12,6 +12,7 @@ body {
 }
 
 #main {
-    padding: 1em 0;
+    box-shadow: 4px 4px 8px rgba(0,0,0,.5);
+    padding: 1em 1em 2.25em;
     margin: 4.5em auto;
 }
