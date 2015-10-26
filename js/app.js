@@ -231,7 +231,7 @@ insertNewProntuario = function (a, b, c, d) {
 
 	var dateOptions = {
 		day: 'numeric',
-		month: 'long',
+		month: 'numeric',
 		year: 'numeric'
 	};
 
