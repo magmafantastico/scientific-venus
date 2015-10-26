@@ -1,0 +1,17 @@
+html,
+body {
+    height: auto;
+    overflow: visible;
+}
+
+#header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+#main {
+    padding: 1em 0;
+    margin: 4.5em auto;
+}
