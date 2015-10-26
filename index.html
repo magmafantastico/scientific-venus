@@ -29,7 +29,7 @@
 		ga('send', 'pageview');
 	</script>-->
 </head>
-<body>
+<body class="grey-700">
 
 <div id="string"></div>
 
@@ -54,7 +54,17 @@
 	}
 </style>
 
-<div class="container">
+<header id="header" class="grey-100">
+
+	<footer class="flex justify-end">
+
+		<a class="button flat" id="consulta_create">Salvar e Imprimir</a>
+
+	</footer>
+
+</header>
+
+<main id="main" class="container white">
 
 	<div style="position:fixed; display: none;">
 		<button id="btn">clica aqui</button>
@@ -75,7 +85,12 @@
 
 			<div class="flex flex-wrap">
 
-				<span class="field flex-2">
+				<span class="field flex-3">
+					<label for="prontuario_pesquisador">Pesquisador</label>
+					<input type="text" id="prontuario_pesquisador" name="prontuario_pesquisador"/>
+				</span>
+
+				<span class="field flex-1">
 					<label for="prontuario_registro">Registro Ambulatorio</label>
 					<input type="text" id="prontuario_registro" name="prontuario_registro"/>
 				</span>
@@ -89,7 +104,7 @@
 
 			<div class="flex flex-wrap">
 
-				<div class="field flex-2">
+				<div class="field flex-3">
 					<label for="paciente_nome">Nome</label>
 					<input type="text" class="font-large" id="paciente_nome" name="paciente_nome" required/>
 				</div>
@@ -548,7 +563,7 @@
 
 				<div class="flex flex-wrap">
 
-					<div class="flex flex-column" style="margin: 0 .5em">
+					<div class="flex" style="margin: 0 .5em">
 
 						<span class="field">
 							<label for="exames_hb" class="default-case">Hb</label>
@@ -582,6 +597,10 @@
 							</span>
 						</span>
 
+					</div>
+
+					<div class="flex" style="margin: 0 .5em">
+
 						<span class="field">
 							<label for="exames_ferro" class="default-case">Ferro</label>
 							<span class="helper">
@@ -589,10 +608,6 @@
 								<span>μg/dL</span>
 							</span>
 						</span>
-
-					</div>
-
-					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
 							<label for="exames_ferritina" class="default-case">Ferritina</label>
@@ -618,6 +633,10 @@
 							</span>
 						</span>
 
+					</div>
+
+					<div class="flex" style="margin: 0 .5em">
+
 						<span class="field">
 							<label for="exames_ct" class="default-case">C.T</label>
 							<span class="helper">
@@ -633,10 +652,6 @@
 								<span>mg/dL</span>
 							</span>
 						</span>
-
-					</div>
-
-					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
 							<label for="exames_hdl" class="default-case">H.D.L</label>
@@ -654,6 +669,10 @@
 							</span>
 						</span>
 
+					</div>
+
+					<div class="flex" style="margin: 0 .5em">
+
 						<span class="field">
 							<label for="exames_t4l" class="default-case">T.4.L</label>
 							<span class="helper">
@@ -669,10 +688,6 @@
 								<span>mg/dL</span>
 							</span>
 						</span>
-
-					</div>
-
-					<div class="flex flex-column" style="margin: 0 .5em">
 
 						<span class="field">
 							<label for="exames_colo" class="default-case">D.P Colo</label>
@@ -862,11 +877,9 @@
 
 		</form>
 
-		<div class="flex justify-end" style="margin-top: 1em">
-			<a class="button flat" id="consulta_create">Salvar e Imprimir</a>
-		</div>
-
 	</div>
+
+</main>
 
 	<script src="js/jquery-min.js"></script>
 	<script src="js/picker.js"></script>
@@ -944,8 +957,6 @@
 			display: flex;
 		}
 	</style>
-
-</div>
 
 </body>
 </html>
