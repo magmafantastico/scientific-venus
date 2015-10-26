@@ -229,6 +229,7 @@ renderConsulta = function (a) {
 var insertNewProntuario;
 insertNewProntuario = function (a, b, c, d) {
 
+	// usar 'long' para apresentar nome do mês
 	var dateOptions = {
 		day: 'numeric',
 		month: 'numeric',
