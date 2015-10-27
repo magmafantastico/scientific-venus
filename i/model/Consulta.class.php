@@ -10,6 +10,7 @@ class Consulta extends Thing
 {
 	public $prontuario_id;
 	public $data;
+	public $pesquisador;
 
 	/**
 	 * @param $a
@@ -23,6 +24,7 @@ class Consulta extends Thing
 	{
 		$this->_id = $a['_id'];
 		$this->data = $a['data'];
+		$this->pesquisador = $a['pesquisador'];
 	}
 
 	/**

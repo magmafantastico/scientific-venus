@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="open-sans">
 <head>
 	<meta charset="utf-8"/>
 	<title>Magma Scientific</title>
@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="dist/css/classic.css"/>
 	<link rel="stylesheet" href="dist/css/classic.date.css"/>
 	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/fields.css">
 	<!--[if lt IE 9]>
 	<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
 	<script type="text/javascript" src="dist/js/html5shiv.js"></script>
@@ -29,7 +30,7 @@
 		ga('send', 'pageview');
 	</script>-->
 </head>
-<body class="grey-700">
+<body class="grey-100">
 
 <div id="string"></div>
 
@@ -50,7 +51,7 @@
 
 </style>
 
-<header id="header" class="grey-100">
+<header id="header" class="grey-200">
 
 	<footer class="flex justify-end">
 
@@ -75,23 +76,23 @@
 
 	<form action="#" id="prontuario_edit">
 
-		<div>
+		<section>
 
 			<h2>Paciente</h2>
 
 			<div class="flex flex-wrap">
 
-				<span class="field flex-1">
+				<span class="field grow-1">
 					<label for="prontuario_pesquisador">Pesquisador</label>
 					<input type="text" id="prontuario_pesquisador" name="prontuario_pesquisador"/>
 				</span>
 
-				<span class="field flex-1">
+				<span class="field grow-1">
 					<label for="prontuario_registro">Registro Ambulatorio</label>
 					<input type="text" id="prontuario_registro" name="prontuario_registro"/>
 				</span>
 
-				<span class="field flex-1">
+				<span class="field grow-1">
 					<label for="prontuario_data">Data de Cadastro</label>
 					<input type="text" id="prontuario_data" name="prontuario_data" required/>
 				</span>
@@ -100,12 +101,12 @@
 
 			<div class="flex flex-wrap">
 
-				<div class="field flex-3">
+				<div class="field grow-2">
 					<label for="paciente_nome">Nome</label>
 					<input type="text" class="font-large" id="paciente_nome" name="paciente_nome" required/>
 				</div>
 
-				<div class="field flex-1">
+				<div class="field grow-1">
 					<label for="paciente_nascimento">Data de Nascimento</label>
 					<input type="text" id="paciente_nascimento" name="paciente_nascimento" required/>
 				</div>
@@ -250,7 +251,7 @@
 
 			</div>
 
-		</div>
+		</section>
 
 
 		<div class="flex justify-end" style="margin-top: 1em; display: none;">
@@ -263,7 +264,7 @@
 
 		<form action="#" id="consulta_form">
 
-			<div>
+			<section>
 
 				<h2>Exame Físico</h2>
 
@@ -320,9 +321,9 @@
 
 				</div>
 
-			</div>
+			</section>
 
-			<div class="page-break">
+			<section class="page-break">
 
 				<h2>Antecedentes</h2>
 
@@ -466,9 +467,9 @@
 					<input type="text" id="antecedentes_note" name="antecedentes_note"/>
 				</div>
 
-			</div>
+			</section>
 
-			<div class="page-break">
+			<section class="page-break">
 
 				<h2>Características do Utero / Mioma</h2>
 
@@ -536,186 +537,188 @@
 
 				</div>
 
-			</div>
+			</section>
 
-			<div class="page-break"></div>
+			<section class="page-break">
 
-			<h2>Escalas / Sangramento</h2>
-
-			<div class="flex flex-wrap">
-
-				<span class="field flex-1">
-					<label for="sangramento_pbacInicial">Escore PBAC Inicíal</label>
-					<input type="tel" id="sangramento_pbacInicial" name="sangramento_pbacInicial"/>
-				</span>
-
-				<span class="field flex-1">
-					<label for="escalas_beckInicial">Depressão Beck Inicial</label>
-					<input type="tel" id="escalas_beckInicial" name="escalas_beckInicial"/>
-				</span>
-
-				<span class="field flex-1">
-					<label for="escalas_vidaMioma">Qualidade de Vida x Mioma</label>
-					<input type="tel" id="escalas_vidaMioma" name="escalas_vidaMioma"/>
-				</span>
-
-			</div>
-
-			<div>
-
-				<h2>Exames Iniciais</h2>
+				<h2>Escalas / Sangramento</h2>
 
 				<div class="flex flex-wrap">
 
-					<div class="flex" style="margin: 0 .5em">
+					<span class="field flex-1">
+						<label for="sangramento_pbacInicial">Escore PBAC Inicíal</label>
+						<input type="tel" id="sangramento_pbacInicial" name="sangramento_pbacInicial"/>
+					</span>
 
-						<span class="field">
-							<label for="exames_hb" class="default-case">Hb</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_hb" name="exames_hb"/>
-								<span>g/dL</span>
+					<span class="field flex-1">
+						<label for="escalas_beckInicial">Depressão Beck Inicial</label>
+						<input type="tel" id="escalas_beckInicial" name="escalas_beckInicial"/>
+					</span>
+
+					<span class="field flex-1">
+						<label for="escalas_vidaMioma">Qualidade de Vida x Mioma</label>
+						<input type="tel" id="escalas_vidaMioma" name="escalas_vidaMioma"/>
+					</span>
+
+				</div>
+
+				<div>
+
+					<h2>Exames Iniciais</h2>
+
+					<div class="flex flex-wrap">
+
+						<div class="flex" style="margin: 0 .5em">
+
+							<span class="field">
+								<label for="exames_hb" class="default-case">Hb</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_hb" name="exames_hb"/>
+									<span>g/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_ht" class="default-case">Ht</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_ht" name="exames_ht"/>
-								<span>%</span>
+							<span class="field">
+								<label for="exames_ht" class="default-case">Ht</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_ht" name="exames_ht"/>
+									<span>%</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_vcm" class="default-case">V.C.M</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_vcm" name="exames_vcm"/>
-								<span>ft</span>
+							<span class="field">
+								<label for="exames_vcm" class="default-case">V.C.M</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_vcm" name="exames_vcm"/>
+									<span>ft</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_rdw" class="default-case">R.D.W</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_rdw" name="exames_rdw"/>
-								<span>%</span>
+							<span class="field">
+								<label for="exames_rdw" class="default-case">R.D.W</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_rdw" name="exames_rdw"/>
+									<span>%</span>
+								</span>
 							</span>
-						</span>
 
-					</div>
+						</div>
 
-					<div class="flex" style="margin: 0 .5em">
+						<div class="flex" style="margin: 0 .5em">
 
-						<span class="field">
-							<label for="exames_ferro" class="default-case">Ferro</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_ferro" name="exames_ferro"/>
-								<span>μg/dL</span>
+							<span class="field">
+								<label for="exames_ferro" class="default-case">Ferro</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_ferro" name="exames_ferro"/>
+									<span>μg/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_ferritina" class="default-case">Ferritina</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_ferritina" name="exames_ferritina"/>
-								<span>ng/dL</span>
+							<span class="field">
+								<label for="exames_ferritina" class="default-case">Ferritina</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_ferritina" name="exames_ferritina"/>
+									<span>ng/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_vitaminaD3" class="default-case">Vitamina D3</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
-								<span>ng/mL</span>
+							<span class="field">
+								<label for="exames_vitaminaD3" class="default-case">Vitamina D3</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_vitaminaD3" name="exames_vitaminaD3"/>
+									<span>ng/mL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_gj" class="default-case">G.J</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_gj" name="exames_gj"/>
-								<span>mg/dL</span>
+							<span class="field">
+								<label for="exames_gj" class="default-case">G.J</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_gj" name="exames_gj"/>
+									<span>mg/dL</span>
+								</span>
 							</span>
-						</span>
 
-					</div>
+						</div>
 
-					<div class="flex" style="margin: 0 .5em">
+						<div class="flex" style="margin: 0 .5em">
 
-						<span class="field">
-							<label for="exames_ct" class="default-case">C.T</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_ct" name="exames_ct"/>
-								<span>mg/dL</span>
+							<span class="field">
+								<label for="exames_ct" class="default-case">C.T</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_ct" name="exames_ct"/>
+									<span>mg/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_ldl" class="default-case">L.D.L</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_ldl" name="exames_ldl"/>
-								<span>mg/dL</span>
+							<span class="field">
+								<label for="exames_ldl" class="default-case">L.D.L</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_ldl" name="exames_ldl"/>
+									<span>mg/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_hdl" class="default-case">H.D.L</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_hdl" name="exames_hdl"/>
-								<span>mg/dL</span>
+							<span class="field">
+								<label for="exames_hdl" class="default-case">H.D.L</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_hdl" name="exames_hdl"/>
+									<span>mg/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_tsh" class="default-case">T.S.H</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_tsh" name="exames_tsh"/>
-								<span>μUi/mL</span>
+							<span class="field">
+								<label for="exames_tsh" class="default-case">T.S.H</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_tsh" name="exames_tsh"/>
+									<span>μUi/mL</span>
+								</span>
 							</span>
-						</span>
 
-					</div>
+						</div>
 
-					<div class="flex" style="margin: 0 .5em">
+						<div class="flex" style="margin: 0 .5em">
 
-						<span class="field">
-							<label for="exames_t4l" class="default-case">T.4.L</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_t4l" name="exames_t4l"/>
-								<span>ng/dL</span>
+							<span class="field">
+								<label for="exames_t4l" class="default-case">T.4.L</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_t4l" name="exames_t4l"/>
+									<span>ng/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_tgl" class="default-case">T.G.L</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_tgl" name="exames_tgl"/>
-								<span>mg/dL</span>
+							<span class="field">
+								<label for="exames_tgl" class="default-case">T.G.L</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_tgl" name="exames_tgl"/>
+									<span>mg/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_colo" class="default-case">D.P Colo</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_colo" name="exames_colo"/>
-								<span>mg/dL</span>
+							<span class="field">
+								<label for="exames_colo" class="default-case">D.P Colo</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_colo" name="exames_colo"/>
+									<span>mg/dL</span>
+								</span>
 							</span>
-						</span>
 
-						<span class="field">
-							<label for="exames_lombar" class="default-case">D.P Lombar</label>
-							<span class="helper">
-								<input type="tel" class="small" id="exames_lombar" name="exames_lombar"/>
-								<span>mU/L</span>
+							<span class="field">
+								<label for="exames_lombar" class="default-case">D.P Lombar</label>
+								<span class="helper">
+									<input type="tel" class="small" id="exames_lombar" name="exames_lombar"/>
+									<span>mU/L</span>
+								</span>
 							</span>
-						</span>
+
+						</div>
 
 					</div>
 
 				</div>
 
-			</div>
+			</section>
 
-			<div class="page-break">
+			<section class="page-break">
 
 				<h2>Conduta</h2>
 
@@ -852,9 +855,9 @@
 
 				</div>
 
-			</div>
+			</section>
 
-			<div>
+			<section>
 
 				<h2>Resultados</h2>
 
@@ -877,7 +880,7 @@
 
 				</div>
 
-			</div>
+			</section>
 
 		</form>
 

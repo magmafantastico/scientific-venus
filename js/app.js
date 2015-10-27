@@ -84,7 +84,7 @@ function setCookies(a, c) {
 }
 
 function setResponse() {
-	console.log('oiasd');
+
 }
 
 var sexoInput = document.getElementsByName('paciente_sexo');
@@ -165,6 +165,7 @@ function getResponse() {
 		prontuario: {
 			_id: getTextField('prontuario__id'),
 			registro: getTextField('prontuario_registro'),
+			pesquisador: getTextField('prontuario_pesquisador'),
 			data: getPickDate($prontuario_data)
 		},
 		resultados: {

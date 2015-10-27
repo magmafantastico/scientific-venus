@@ -4,22 +4,6 @@
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
 */
 
-/*@import url('//fonts.googleapis.com/css?family=Josefin+Sans:100,300,600|Open+Sans:300,400,600,700,800');*/
-
-html,
-body {
-    font: caption;
-}
-
-html {
-    font-size: 62.5%;
-}
-
-body {
-    font-size: 160%;
-    line-height: 1.25;
-}
-
 /*!
  *	Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
  *	License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -663,8 +647,6 @@ body {
 .icon-cc:before {content: "\f20a"}
 .icon-shekel:before, .icon-sheqel:before, .icon-ils:before {content: "\f20b"}
 .icon-meanpath:before {content: "\f20c"}
-
-
 
 @font-face {
     font-family: 'magma';
