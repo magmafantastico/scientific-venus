@@ -10,6 +10,7 @@ class Ultrassom extends ConsultaThing {
 	public $volumeUterino;
 	public $ovarioDireito;
 	public $ovarioEsquerdo;
+	public $data;
 	public $endometro;
 
 	public function fill($a)
@@ -18,6 +19,7 @@ class Ultrassom extends ConsultaThing {
 		$this->volumeUterino = $a['volumeUterino'];
 		$this->ovarioDireito = $a['ovarioDireito'];
 		$this->ovarioEsquerdo = $a['ovarioEsquerdo'];
+		$this->data= $a['data'];
 		$this->endometro = $a['endometro'];
 	}
 }

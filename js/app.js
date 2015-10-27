@@ -175,6 +175,7 @@ function getResponse() {
 		},
 		ultrassom: {
 			volumeUterino: getTextField('ultrassom_volumeUterino'),
+			data: getPickDate($utero_data),
 			ovarioDireito: getTextField('ultrassom_ovarioDireito'),
 			ovarioEsquerdo: getTextField('ultrassom_ovarioEsquerdo'),
 			endometro: getTextField('ultrassom_endometro'),
@@ -191,10 +192,8 @@ function getResponse() {
  */
 var renderConsulta;
 renderConsulta = function (a) {
-	var c, d, e, f, g;
 
-	c = a.prontuario[0];
-	d = a.paciente[0];
+	var e, f, g;
 
 	e = document.getElementById('p_data');
 	f = document.getElementById('prontuario__id');
@@ -206,29 +205,28 @@ renderConsulta = function (a) {
 
 	$('#prontuario_edit').hide();
 
-	insertNewProntuario(e, c, d, 'prontuario');
+	insertNewProntuario(e, a.prontuario, a.paciente, a.consulta, 'prontuario');
 
-	insertNewResultados(g, a.resultados[0], 'resultados');
-	//insertNewCondutaExames(g, a.conduta[0], a.exames[0], 'conduta');
-	insertNewConduta(g, a.conduta[0], 'conduta');
-	insertNewExames(g, a.exames[0], 'exames');
-	insertNewEscalas(g, a.escalas[0], 'escalas');
+	insertNewResultados(g, a.resultados, 'resultados');
+	insertNewConduta(g, a.conduta, 'conduta');
+	insertNewExames(g, a.exames, 'exames');
+	insertNewEscalas(g, a.escalas, 'escalas');
 	insertNewMioma(g, a.mioma, 'mioma');
-	insertNewUltrassom(g, a.ultrassom[0], 'ultrassom');
-	insertNewAntecedentes(g, a.antecedentes[0], 'antecedentes');
-	insertNewExameFisico(g, a.exameFisico[0], 'exameFisico');
+	insertNewUltrassom(g, a.ultrassom, 'ultrassom');
+	insertNewAntecedentes(g, a.antecedentes, 'antecedentes');
+	insertNewExameFisico(g, a.exameFisico, 'exameFisico');
 
 };
 
 /**
  * Insere elemento de prontuario no parent
  * @param a parent
- * @param b prontuario
- * @param c paciente
- * @param d class
+ * @param prontuario
+ * @param paciente
+ * @param c class
  */
 var insertNewProntuario;
-insertNewProntuario = function (a, b, c, d) {
+insertNewProntuario = function (a, prontuario, paciente, consulta, c) {
 
 	// usar 'long' para apresentar nome do mês
 	var dateOptions = {
@@ -237,7 +235,9 @@ insertNewProntuario = function (a, b, c, d) {
 		year: 'numeric'
 	};
 
-	var date = new Date(b.data);
+	console.log(consulta.pesquisador);
+
+	var date = new Date(prontuario.data);
 	date.setDate(date.getDate() + 1);
 	var prontuario_data = date.toLocaleDateString('pt-BR', dateOptions);
 
@@ -245,18 +245,19 @@ insertNewProntuario = function (a, b, c, d) {
 
 	// renderiza coluna A (nome, religiao, etnia, escolaridade, estadoCivil)
 
-	var e = newNode('div', d + ' content-box');
+	var e = newNode('div', c + ' content-box');
 
 	var ea = newNode('div', 'flexbox flex-column flex-4');
 	var eaa = newNode('div', 'flexbox');
 	var eab = newNode('div', 'flexbox');
 
-	eaa.appendChild(newField(c.nome, 'nome', 'value-bold value-large'));
+	eaa.appendChild(newField(consulta.pesquisador, 'pesquisador'));
+	eaa.appendChild(newField(paciente.nome, 'paciente', 'value-bold value-large'));
 
-	eab.appendChild(newField(buildNote(c.religiao, c.religiaoNote), 'religiao'));
-	eab.appendChild(newField(buildNote(c.etnia, c.etniaNote), 'etnia'));
-	eab.appendChild(newField(buildNote(c.escolaridade, c.escolaridadeNote), 'escolaridade'));
-	eab.appendChild(newField(buildNote(c.estadoCivil, c.estadoCivilNote), 'estado civil'));
+	eab.appendChild(newField(buildNote(paciente.religiao, paciente.religiaoNote), 'religiao'));
+	eab.appendChild(newField(buildNote(paciente.etnia, paciente.etniaNote), 'etnia'));
+	eab.appendChild(newField(buildNote(paciente.escolaridade, paciente.escolaridadeNote), 'escolaridade'));
+	eab.appendChild(newField(buildNote(paciente.estadoCivil, paciente.estadoCivilNote), 'estado civil'));
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
@@ -270,10 +271,10 @@ insertNewProntuario = function (a, b, c, d) {
 	var eba = newNode('div', 'flexbox flex-column');
 	var ebb = newNode('div', 'flexbox flex-column');
 
-	eba.appendChild(newField(c.sexo, 'sexo', 'value-bold'));
-	eba.appendChild(newField(b.registro, 'ambulatório'));
+	eba.appendChild(newField(paciente.sexo, 'sexo'));
+	eba.appendChild(newField(prontuario.registro, 'ambulatório'));
 
-	ebb.appendChild(newField(getAge(c.nascimento) + ' anos', 'idade', 'value-bold'));
+	ebb.appendChild(newField(getAge(paciente.nascimento) + ' anos', 'idade'));
 	ebb.appendChild(newField(prontuario_data, 'data'));
 
 	eb.appendChild(eba);
@@ -364,6 +365,18 @@ insertNewAntecedentes = function (a, b, c) {
  */
 var insertNewUltrassom;
 insertNewUltrassom = function (a, b, c) {
+
+	// usar 'long' para apresentar nome do mês
+	var dateOptions = {
+		day: 'numeric',
+		month: 'numeric',
+		year: 'numeric'
+	};
+
+	var date = new Date(b.data);
+	date.setDate(date.getDate() + 1);
+	var utero_data = date.toLocaleDateString('pt-BR', dateOptions);
+
 	var e = newNode('div', c + ' content-box');
 
 	var ea = newNode('div', 'flexbox flex-column flex-4');
@@ -372,6 +385,8 @@ insertNewUltrassom = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Características Útero / Mioma'));
 
+
+	eab.appendChild(newField(utero_data, 'data'));
 	eab.appendChild(newField(b.volumeUterino, 'volume Uterino'));
 	eab.appendChild(newField(b.ovarioDireito, 'ovario Direito'));
 	eab.appendChild(newField(b.ovarioEsquerdo, 'ovario Esquerdo'));
@@ -456,40 +471,33 @@ insertNewExames = function (a, b, c) {
 	var eabb = newNode('div', 'flexbox flex-column');
 	var eabc = newNode('div', 'flexbox flex-column');
 	var eabd = newNode('div', 'flexbox flex-column');
-	var eabe = newNode('div', 'flexbox flex-column');
-	var eabf = newNode('div', 'flexbox flex-column');
 
 	eaa.appendChild(newContentNode('h2', 'Exames Iniciais'));
 
 	eaba.appendChild(newField(b.hb, 'Hb', 'defaultcase', 'g/dL'));
-	eaba.appendChild(newField(b.ht, 'Ht', 'defaultcase', '%'));
-	eaba.appendChild(newField(b.vcm, 'vcm', 'ft'));
+	eabb.appendChild(newField(b.ht, 'Ht', 'defaultcase', '%'));
+	eabc.appendChild(newField(b.vcm, 'VCM', 'defaultcase', 'ft'));
+	eabd.appendChild(newField(b.rdw, 'rdw', false, '%'));
 
-	eabb.appendChild(newField(b.rdw, 'rdw', false, '%'));
-	eabb.appendChild(newField(b.ferro, 'ferro', false, 'μg/dL'));
+	eaba.appendChild(newField(b.ferro, 'ferro', false, 'μg/dL'));
 	eabb.appendChild(newField(b.ferritina, 'ferritina', false, 'ng/dL'));
-
 	eabc.appendChild(newField(b.vitaminaD3, 'Vitamina D3', false, 'ng/dL'));
-	eabc.appendChild(newField(b.gj, 'GJ', false, 'mg/dL'));
-	eabc.appendChild(newField(b.ct, 'CT', false, 'mg/dL'));
+	eabd.appendChild(newField(b.gj, 'GJ', false, 'mg/dL'));
 
-	eabd.appendChild(newField(b.ldl, 'LDL', false, 'mg/dL'));
-	eabd.appendChild(newField(b.hdl, 'HDL', false, 'mg/dL'));
-	eabd.appendChild(newField(b.tsh, 'TSH', false, 'mU/L'));
+	eaba.appendChild(newField(b.ct, 'CT', false, 'mg/dL'));
+	eabb.appendChild(newField(b.ldl, 'LDL', false, 'mg/dL'));
+	eabc.appendChild(newField(b.hdl, 'HDL', false, 'mg/dL'));
+	eabd.appendChild(newField(b.tsh, 'TSH', false, 'μUi/mL'));
 
-	eabe.appendChild(newField(b.t4l, 'T4L', 'defaultcase', 'ng/dL'));
-	eabe.appendChild(newField(b.tgl, 'TGL', false, ''));
-
-	eabf.appendChild(newField(b.colo, 'COLO', false, ''));
-	eabf.appendChild(newField(b.lombar, 'LOMBAR', false, ''));
-	eabf.appendChild(newEmptyField());
+	eaba.appendChild(newField(b.t4l, 'T4L', 'defaultcase', 'ng/dL'));
+	eabb.appendChild(newField(b.tgl, 'TGL', false, 'mg/dL'));
+	eabc.appendChild(newField(b.colo, 'D.P Colo', false, 'mg/dL'));
+	eabd.appendChild(newField(b.lombar, 'D.P Lombar', false, 'mU/L'));
 
 	eab.appendChild(eaba);
 	eab.appendChild(eabb);
 	eab.appendChild(eabc);
 	eab.appendChild(eabd);
-	eab.appendChild(eabe);
-	eab.appendChild(eabf);
 
 	ea.appendChild(eaa);
 	ea.appendChild(eab);
@@ -514,7 +522,7 @@ insertNewConduta = function (a, b, c) {
 
 	eaa.appendChild(newContentNode('h2', 'Conduta'));
 
-	eab.appendChild(newField(b.conduta, 'conduta'));
+	eab.appendChild(newField(b.conduta, 'conduta', 'value-small'));
 
 	if (b.cirurgia)
 		eab.appendChild(newField(b.cirurgia, 'cirurgia'));
@@ -600,12 +608,10 @@ if (typeof _id !== 'undefined') {
 		},
 		method: 'get',
 		success: function (data) {
-			if (data.prontuario)
-				renderConsulta(data);
-			else
-				return false;
+			if (data[0].prontuario)
+				renderConsulta(data[0]);
 		},
-		url: __API_DIR + 'i/pull/find/consulta/'
+		url: __API_DIR + 'i/pull/'
 	});
 }
 

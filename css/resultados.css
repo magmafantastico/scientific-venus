@@ -1,0 +1,30 @@
+#resultados {
+	margin: 3em 0 0;
+}
+
+td,
+th {
+	min-width: 8em;
+	padding: 0 4em 0 2em;
+}
+
+td:last-child,
+th:last-child {
+	border-left: none;
+}
+
+th {
+	font-weight: 900;
+}
+
+thead tr {
+	background-color: #ffffff !important;
+}
+
+tr {
+	background-color: #eeeeee;
+}
+
+tr:nth-child(even) {
+	background-color: #ffffff;
+}

@@ -10,6 +10,8 @@
 	<link rel="stylesheet" href="../dist/css/polar-font.css"/>
 	<link rel="stylesheet" href="../dist/css/classic.css"/>
 	<link rel="stylesheet" href="../dist/css/classic.date.css"/>
+	<link rel="stylesheet" href="../css/header.css"/>
+	<link rel="stylesheet" href="../css/print.css"/>
 	<!--[if lt IE 9]>
 	<link rel="stylesheet" type="text/css" href="../dist/css/material-colors.css"/>
 	<script type="text/javascript" src="../dist/js/html5shiv.js"></script>
@@ -18,28 +20,32 @@
 </head>
 <body>
 
-<style>
-	html,
-	body {
-		height: auto;
-		overflow: visible;
-	}
-
-	@media print {
-		#user {
-			display: none;
-		}
-	}
-</style>
-
 <input type="hidden" id="prontuario__id"/>
 
-<div class="flex justify-end" id="user">
-	<a href="../" class="button flat">Nova consulta</a>
-	<button class="button" id="print" onclick="window.print()">Imprimir</button>
-</div>
-<div class="" id="p_data"></div>
-<div class="" id="c_data"></div>
+<header id="header" class="grey-200 flex justify-between align-center open-sans child-flex">
+
+	<header>
+
+		<a href="../" class="button font-light-blue-a700 h-grey-300 a-grey-400">Nova consulta</a>
+
+		<a href="../resultados/" class="button font-grey-600 h-grey-300 a-grey-400">Resultados</a>
+
+	</header>
+
+	<footer>
+
+		<a class="button font-light-blue-a700 h-grey-300 a-grey-400" onclick="window.print()">Imprimir</a>
+
+	</footer>
+
+</header>
+
+<main class="print-view">
+
+	<div class="" id="p_data"></div>
+	<div class="" id="c_data"></div>
+
+</main>
 
 <script>
 	__API_DIR = '../';
@@ -64,131 +70,6 @@
 <script src="../dist/js/jquery-min.js"></script>
 <script src="../js/scientific.js"></script>
 <script src="../js/app.js"></script>
-
-<style>
-
-	@page {
-		margin: 10mm;
-	}
-
-	.content-box {
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		margin-bottom: .875em;
-		max-width: 190mm;
-	}
-	.content-box .flexbox {
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		width: 100%;
-	}
-
-	.content-box .field {
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		flex-direction: column;
-		min-width: 7.5em;
-		width: 100%;
-	}
-
-	.content-box .field .content,
-	.content-box .field .title {
-		/*background-color: #dddddd;*/
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		border-style: solid;
-	}
-
-	.content-box .field .content {
-		align-items: flex-end;
-		border-width: 0 0 1px 1px;
-		color: #000000;
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		justify-content: space-between;
-		margin: 0 2px 2px;
-		padding: 0 2px;
-		height: 23px;
-	}
-
-	.content-box .field .content .value {
-		font-size: .875em;
-	}
-
-	.content-box .field .content .holder {
-		color: #424242;
-		font-size: .625em;
-	}
-
-	.content-box .field .title {
-		border-width: 0 0 0 1px;
-		color: #424242;
-		font-size: .625em;
-		margin: 2px 2px 0;
-		padding: 0 2px;
-		text-transform: uppercase;
-	}
-
-	.content-box .field.defaultcase .title {
-		text-transform: none !important;
-	}
-
-	.content-box .field.content-bold .content {
-		font-weight: 600;
-	}
-
-	.content-box .field.content-large .content {
-		font-size: 1em;
-	}
-
-	.content-box h2 {
-		color: #424242;
-		font-size: 1.125em;
-		margin-bottom: 4px;
-	}
-
-	.content-box.prontuario .field * {
-		/*background-color: #90caf9;*/
-	}
-
-	.button {
-		background-color: #0091ea;
-		border: none;
-		color: #ffffff;
-		font-weight: 600;
-		min-height: 36px;
-		min-width: 96px;
-		padding: 0 8px;
-		text-transform: uppercase;
-		width: auto;
-	}
-
-	.button:hover,
-	.button:focus,
-	.button:active {
-		opacity: .9;
-	}
-
-	.button.flat {
-		background: none;
-		color: #0091ea;
-	}
-</style>
 
 </body>
 </html>

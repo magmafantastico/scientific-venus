@@ -17,9 +17,9 @@ class Connection
 	 * CLINICA
 	 */
 
-	private $_USER = "empreen1_magma";
+	/*private $_USER = "empreen1_magma";
 	private $_PASSWD = "o6NRAoNk@0[!bV";
-	private $_SCHEMA = "empreen1_clinica";
+	private $_SCHEMA = "empreen1_clinica";*/
 
 	/**
 	 * BLUEHOST REMOTE
@@ -49,9 +49,9 @@ class Connection
 	 * HOME
 	 */
 
-	/*private $_USER = "root";
+	private $_USER = "root";
 	private $_PASSWD = "sux";
-	private $_SCHEMA = "scientific_venus";*/
+	private $_SCHEMA = "scientific_venus";
 
 	public function __construct() {
 

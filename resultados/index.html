@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="pt-br" class="open-sans">
+<head>
+	<meta charset="UTF-8">
+	<title>Resultados | Scientific Venus</title>
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<script src="../dist/js/villa.min.js"></script>
+	<link rel="stylesheet" href="../dist/css/villa.min.css">
+	<link rel="stylesheet" href="../css/header.css"/>
+	<link rel="stylesheet" href="../css/resultados.css"/>
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="../dist/css/material-colors.css"/>
+	<script type="text/javascript" src="../dist/js/html5shiv.js"></script>
+	<script type="text/javascript" src="../dist/js/html5shiv-printshiv.js"></script>
+	<![endif]-->
+	<!--<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-63400292-1', 'auto');
+		ga('require', 'linkid', 'linkid.js');
+		ga('send', 'pageview');
+	</script>-->
+</head>
+<body>
+
+<header id="header" class="grey-200 flex justify-between align-center open-sans child-flex">
+
+	<header>
+
+		<a href="../" class="button font-light-blue-a700 h-grey-300 a-grey-400">Nova consulta</a>
+
+	</header>
+
+	<footer>
+
+	</footer>
+
+</header>
+
+<table id="resultados" cellpadding="0" cellspacing="0"></table>
+
+<script src="../dist/js/jquery-min.js"></script>
+<script>
+
+	var resultados = {};
+
+	resultados.table = document.getElementById('resultados');
+	resultados.data = [];
+
+	resultados.current = 0;
+
+	resultados.setData = function(data) {
+		resultados.data = data;
+	};
+
+	resultados.getMioma = function(current) {
+
+		var table = document.createElement('table');
+
+		var head = document.createElement('thead');
+		var body = document.createElement('tbody');
+
+		var headerRow = document.createElement('tr');
+
+		var headerMedida = document.createElement('th');
+		headerMedida.innerHTML = 'Medida';
+
+		var headerTipo = document.createElement('th');
+		headerTipo.innerHTML = 'Tipo';
+
+		headerRow.appendChild(headerMedida);
+		headerRow.appendChild(headerTipo);
+
+		table.appendChild(headerRow);
+
+		for (var i = resultados.data[current].mioma.length; i--; ) {
+
+			var contentRow = document.createElement('tr');
+
+			var contentMedida = document.createElement('td');
+			contentMedida.innerHTML = resultados.data[current].mioma[i].medida;
+
+			var contentTipo = document.createElement('td');
+			contentTipo.innerHTML = resultados.data[current].mioma[i].tipo;
+
+			contentRow.appendChild(contentMedida);
+			contentRow.appendChild(contentTipo);
+
+			table.appendChild(contentRow);
+
+		}
+
+		return table;
+
+	};
+
+	resultados.getHeader = function(element) {
+
+		var cell, row;
+
+		row = document.createElement('tr');
+
+		for (var i = 0; i < resultados.things.length; i++) {
+
+			if (resultados.things[i].append) {
+
+				cell = document.createElement('th');
+				cell.innerHTML = resultados.things[i].title;
+
+				row.appendChild(cell);
+
+			} else {
+
+				for (var j = 0; j < resultados.things[i].data.length; j++) {
+
+					cell = document.createElement('th');
+					cell.innerHTML = resultados.things[i].data[j].title;
+
+					row.appendChild(cell);
+
+				}
+
+			}
+
+		}
+
+		element.appendChild(row);
+
+	};
+
+	resultados.getValues = function(element) {
+
+		var cell, name, thing;
+
+		for (var k = resultados.data.length; k--;) {
+
+			var row = document.createElement('tr');
+
+			for (var i = 0; i < resultados.things.length; i++) {
+
+				resultados.current = k;
+
+				if (resultados.things[i].append) {
+
+					cell = document.createElement('td');
+					cell.appendChild(resultados.things[i].append(k));
+
+					row.appendChild(cell);
+
+				} else {
+
+					for (var j = 0; j < resultados.things[i].data.length; j++) {
+
+						cell = document.createElement('td');
+
+						thing = resultados.things[i].name;
+						name = resultados.things[i].data[j].name;
+
+						cell.innerHTML = resultados.data[k][thing][name];
+
+						row.appendChild(cell);
+
+					}
+
+				}
+
+			}
+
+			element.appendChild(row);
+
+		}
+
+	};
+
+	resultados.buildTable = function() {
+
+		var head, body, i, data, tr;
+
+		data = resultados.data;
+
+		console.log(data);
+
+		head = document.createElement('thead');
+		body = document.createElement('tbody');
+
+		resultados.getHeader(head);
+		resultados.getValues(body);
+
+		resultados.table.appendChild(head);
+		resultados.table.appendChild(body);
+
+	};
+
+	resultados.update = function(data) {
+		resultados.setData(data);
+		resultados.buildTable();
+	};
+
+	resultados.things = [
+		{
+			name: 'prontuario',
+			title: 'Prontuario',
+			data: [
+				{
+					name: 'registro',
+					title: 'Reg. Ambulatório',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'consulta',
+			title: 'Consulta',
+			data: [
+				{
+					name: 'data',
+					title: 'Data',
+					type: false
+				},
+				{
+					name: 'pesquisador',
+					title: 'Pesquisador',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'paciente',
+			title: 'Paciente',
+			data: [
+				{
+					name: 'nome',
+					title: 'Nome',
+					type: false
+				},
+				{
+					name: 'sexo',
+					title: 'Sexo',
+					type: false
+				},
+				{
+					name: 'nascimento',
+					title: 'Nascimento',
+					type: false
+				},
+				{
+					name: 'religiao',
+					title: 'Religião',
+					type: false
+				},
+				{
+					name: 'religiaoNote',
+					title: 'Religião (outro)',
+					type: false
+				},
+				{
+					name: 'etnia',
+					title: 'Etnia',
+					type: false
+				},
+				{
+					name: 'escolaridade',
+					title: 'Escolaridade',
+					type: false
+				},
+				{
+					name: 'escolaridadeNote',
+					title: 'Escolaridade (outro)',
+					type: false
+				},
+				{
+					name: 'estadoCivil',
+					title: 'Estado Cívil',
+					type: false
+				},
+				{
+					name: 'estadoCivilNote',
+					title: 'Estado Cívil (outro)',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'exameFisico',
+			title: 'Exame Físico',
+			data: [
+				{
+					name: 'peso',
+					title: 'Peso',
+					type: false
+				},
+				{
+					name: 'altura',
+					title: 'Altura',
+					type: false
+				},
+				{
+					name: 'imc',
+					title: 'imc',
+					type: false
+				},
+				{
+					name: 'pressaoArterial',
+					title: 'Pressão Arterial',
+					type: false
+				},
+				{
+					name: 'circunferenciaAbdominal',
+					title: 'Circunferência Abdominal',
+					type: false
+				},
+				{
+					name: 'circunferenciaCervical',
+					title: 'Circunferência Cervical',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'antecedentes',
+			title: 'Antecedentes',
+			data: [
+				{
+					name: 'situacaoAborto',
+					title: 'Aborto',
+					type: false
+				},
+				{
+					name: 'situacaoGestacao',
+					title: 'Gestação',
+					type: false
+				},
+				{
+					name: 'situacaoParidade',
+					title: 'Paridade',
+					type: false
+				},
+				{
+					name: 'tabagismo',
+					title: 'Tabagismo',
+					type: false
+				},
+				{
+					name: 'hac',
+					title: 'hac',
+					type: false
+				},
+				{
+					name: 'hacType',
+					title: 'hacType',
+					type: false
+				},
+				{
+					name: 'diabetes',
+					title: 'Diabetes',
+					type: false
+				},
+				{
+					name: 'diabetesType',
+					title: 'Diabetes (tipo)',
+					type: false
+				},
+				{
+					name: 'hipotireoidismo',
+					title: 'Hipotireoidismo',
+					type: false
+				},
+				{
+					name: 'hipotireoidismoType',
+					title: 'Hipotireoidismo (tipo)',
+					type: false
+				},
+				{
+					name: 'note',
+					title: 'Nota',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'conduta',
+			title: 'Conduta',
+			data: [
+				{
+					name: 'conduta',
+					title: 'Conduta (tipo)',
+					type: false
+				},
+				{
+					name: 'cirurgia',
+					title: 'Cirurgia (tipo)',
+					type: false
+				},
+				{
+					name: 'hormonioTerapia',
+					title: 'Hormônio Terapia',
+					type: false
+				},
+				{
+					name: 'hormonioTerapiaAINH',
+					title: 'Hormônio Terapia (A.I.N.H)',
+					type: false
+				},
+				{
+					name: 'hormonioTerapiaCiclico',
+					title: 'Hormônio Terapia (Ciclico)',
+					type: false
+				},
+				{
+					name: 'hormonioTerapiaContinuo',
+					title: 'Hormônio Terapia (Contínuo)',
+					type: false
+				},
+				{
+					name: 'hormonioTerapiaNome',
+					title: 'Hormônio Terapia (Nome)',
+					type: false
+				},
+				{
+					name: 'ainh',
+					title: 'A.I.N.H (Nome)',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'escalas',
+			title: 'Escalas',
+			data: [
+				{
+					name: 'beckInicial',
+					title: 'beckInicial',
+					type: 'beckInicial'
+				},
+				{
+					name: 'pbacInicial',
+					title: 'pbacInicial',
+					type: 'pbacInicial'
+				},
+				{
+					name: 'vidaMioma',
+					title: 'vidaMioma',
+					type: 'vidaMioma'
+				}
+			]
+		},
+		{
+			name: 'exames',
+			title: 'Exames',
+			data: [
+				{
+					name: 'hb',
+					title: 'Hb',
+					type: false
+				},
+				{
+					name: 'ht',
+					title: 'Ht',
+					type: false
+				},
+				{
+					name: 'vcm',
+					title: 'V.C.M',
+					type: false
+				},
+				{
+					name: 'rdw',
+					title: 'R.D.W',
+					type: false
+				},
+				{
+					name: 'ferro',
+					title: 'Ferro',
+					type: false
+				},
+				{
+					name: 'ferritina',
+					title: 'Ferritina',
+					type: false
+				},
+				{
+					name: 'vitaminaD3',
+					title: 'Vitamina D3',
+					type: false
+				},
+				{
+					name: 'gj',
+					title: 'G.J',
+					type: false
+				},
+				{
+					name: 'ct',
+					title: 'C.T',
+					type: false
+				},
+				{
+					name: 'ldl',
+					title: 'L.D.L',
+					type: false
+				},
+				{
+					name: 'hdl',
+					title: 'H.D.L',
+					type: false
+				},
+				{
+					name: 'tsh',
+					title: 'T.S.H',
+					type: false
+				},
+				{
+					name: 't4l',
+					title: 'T.4.L',
+					type: false
+				},
+				{
+					name: 'tgl',
+					title: 'T.G.L',
+					type: false
+				},
+				{
+					name: 'colo',
+					title: 'D.P Colo',
+					type: false
+				},
+				{
+					name: 'lombar',
+					title: 'D.P Lombar',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'resultados',
+			title: 'Resultados',
+			data: [
+				{
+					name: 'pbacFinal',
+					title: 'pbacFinal',
+					type: false
+				},
+				{
+					name: 'beckFinal',
+					title: 'beckFinal',
+					type: false
+				},
+				{
+					name: 'vidaMioma',
+					title: 'vidaMioma',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'ultrassom',
+			title: 'Ultrassom',
+			data: [
+				{
+					name: 'volumeUterino',
+					title: 'volumeUterino',
+					type: false
+				},
+				{
+					name: 'ovarioDireito',
+					title: 'ovarioDireito',
+					type: false
+				},
+				{
+					name: 'ovarioEsquerdo',
+					title: 'ovarioEsquerdo',
+					type: false
+				},
+				{
+					name: 'endometro',
+					title: 'endometro',
+					type: false
+				},
+				{
+					name: 'nd',
+					title: 'nd',
+					type: false
+				}
+			]
+		},
+		{
+			name: 'mioma',
+			title: 'Mioma',
+			data: [
+				{
+					name: 'tipo',
+					title: 'Tipo',
+					type: false
+				},
+				{
+					name: 'medida',
+					title: 'Medida',
+					type: false
+				}
+			],
+			append: resultados.getMioma
+		}
+	];
+
+	$.ajax({
+		url: '../i/pull/',
+		type: 'get',
+		cache: false,
+		success: resultados.update
+	})
+
+</script>
+
+</body>
+</html>

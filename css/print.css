@@ -1,0 +1,132 @@
+html,
+body {
+	height: auto;
+	overflow: visible;
+}
+
+@media print {
+
+	.print-view {
+		margin: 0;
+	}
+
+}
+
+@page {
+	margin: 10mm;
+}
+
+.print-view {
+	margin: 4.5em 0 0 0;
+}
+
+.value-bold .content {
+	font-weight: 600;
+}
+
+.value-small .content {
+	font-size: .875em;
+}
+
+.value-x-small .content {
+	font-size: .75em;
+}
+
+.value-large .content {
+	font-size: 1.125em;
+}
+
+.content-box {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	margin-bottom: .875em;
+	max-width: 190mm;
+}
+.content-box .flexbox {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	width: 100%;
+}
+
+.content-box .field {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: column;
+	min-width: 7.5em;
+	width: 100%;
+}
+
+.content-box .field .content,
+.content-box .field .title {
+	/*background-color: #dddddd;*/
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	border-style: solid;
+}
+
+.content-box .field .content {
+	align-items: flex-end;
+	border-width: 0 0 1px 1px;
+	color: #000000;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 2px 2px;
+	padding: 0 2px;
+	height: 23px;
+}
+
+.content-box .field .content .value {
+	font-size: .875em;
+}
+
+.content-box .field .content .holder {
+	color: #424242;
+	font-size: .625em;
+}
+
+.content-box .field .title {
+	border-width: 0 0 0 1px;
+	color: #424242;
+	font-size: .625em;
+	margin: 2px 2px 0;
+	padding: 0 2px;
+	text-transform: uppercase;
+}
+
+.content-box .field.defaultcase .title {
+	text-transform: none !important;
+}
+
+.content-box .field.content-bold .content {
+	font-weight: 600;
+}
+
+.content-box .field.content-large .content {
+	font-size: 1em;
+}
+
+.content-box h2 {
+	color: #424242;
+	font-size: 1.125em;
+	margin-bottom: 4px;
+}
+
+.content-box.prontuario .field * {
+	/*background-color: #90caf9;*/
+}

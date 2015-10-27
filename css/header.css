@@ -1,0 +1,57 @@
+@media print {
+
+	#header {
+		display: none;
+	}
+
+}
+
+@media (min-width: 60em) {
+
+	#header {
+		padding: 0 16em;
+	}
+
+}
+
+#header {
+	border-bottom: solid 1px #bdbdbd;
+	box-shadow: inset 0 -1px rgba(0,0,0,0);
+	position: fixed;
+	width: 100%;
+	height: 48px;
+	top: 0;
+	left: 0;
+}
+
+#header > * {
+	height: 100%;
+}
+
+#header .button {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+#header .button {
+	border: none;
+	font-weight: 600;
+	min-width: 96px;
+	padding: 0 1em;
+	text-transform: uppercase;
+}
+
+#header .button:hover,
+#header .button:focus,
+#header .button:active {
+	opacity: .9;
+}
+
+#header a.button {
+	cursor: pointer;
+}

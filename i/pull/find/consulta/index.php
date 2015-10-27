@@ -184,7 +184,7 @@ class ConsultaSearch {
 	 */
 	public function findConsulta($a, $c)
 	{
-		$sql = "SELECT _id, prontuario_id FROM consulta WHERE prontuario_id = " . $a;
+		$sql = "SELECT * FROM consulta WHERE prontuario_id = " . $a;
 		$res = $c->query($sql);
 
 		if ($res->num_rows) {

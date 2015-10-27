@@ -6,6 +6,7 @@
 	<meta name="viewport"
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 	<script src="dist/js/villa.min.js"></script>
+	<link rel="stylesheet" href="dist/css/villa.min.css">
 	<link rel="stylesheet" href="dist/css/villa-grid.css"/>
 	<link rel="stylesheet" href="dist/css/polar-font.css"/>
 	<link rel="stylesheet" href="css/flex.css"/>
@@ -14,12 +15,13 @@
 	<link rel="stylesheet" href="dist/css/classic.date.css"/>
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/fields.css">
+	<link rel="stylesheet" href="css/header.css">
 	<!--[if lt IE 9]>
 	<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
 	<script type="text/javascript" src="dist/js/html5shiv.js"></script>
 	<script type="text/javascript" src="dist/js/html5shiv-printshiv.js"></script>
 	<![endif]-->
-	<!--<script>
+	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -28,7 +30,7 @@
 		ga('create', 'UA-63400292-1', 'auto');
 		ga('require', 'linkid', 'linkid.js');
 		ga('send', 'pageview');
-	</script>-->
+	</script>
 </head>
 <body class="grey-100">
 
@@ -51,11 +53,17 @@
 
 </style>
 
-<header id="header" class="grey-200">
+<header id="header" class="grey-200 flex justify-between align-center open-sans child-flex">
 
-	<footer class="flex justify-end">
+	<header>
 
-		<a class="button flat" id="consulta_create">Salvar e Imprimir</a>
+		<a href="resultados/" class="button font-grey-600 h-grey-300 a-grey-400">Resultados</a>
+
+	</header>
+
+	<footer>
+
+		<a class="button font-light-blue-a700 h-grey-300 a-grey-400" id="consulta_create">Salvar e Imprimir</a>
 
 	</footer>
 
@@ -155,7 +163,7 @@
 					</span>
 
 					<span class="field row">
-						<input type="radio" id="paciente_religiao_4" name="paciente_religiao" value="Testemunha de Jeová"/>
+						<input type="radio" id="paciente_religiao_4" name="paciente_religiao" value="Test de Jeová"/>
 						<label for="paciente_religiao_4">Testemunha de Jeová</label>
 					</span>
 
@@ -479,7 +487,6 @@
 						<label for="ultrassom_data">Data do Exame</label>
 						<span class="helper">
 							<input type="tel" id="ultrassom_data" maxlength="6" name="ultrassom_data"/>
-							<span>cm³</span>
 						</span>
 					</span>
 
@@ -900,8 +907,8 @@
 			border: none;
 		}
 
-		.dev-logo {
-			max-width: 8em;
+		.dev-logo #kabanas-logo-main {
+			width: 8em;
 		}
 
 		.dev-logo-area .kabanas-logo-logo,

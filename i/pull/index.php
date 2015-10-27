@@ -28,10 +28,14 @@ $connection = new Connection();
 $c = $connection->getConnection();
 
 $p = new Paciente();
-//$p->setQueryName('nome');
-//$p->setQueryValue('jo');
+
+$p->setQueryName('_id');
+
+// temporariamente, isso está usando o id do prontuário
+$p->setQueryValue($_GET['prontuario_id']);
 
 if ($r = $p->pull($c)) {
+
 	$a = array();
 	for ($i = $r->num_rows; $i--; ) {
 		$pull = new Pull($r, $c);
@@ -40,3 +44,4 @@ if ($r = $p->pull($c)) {
 	print_r(json_encode($a));
 	//print_r($a);
 }
+
