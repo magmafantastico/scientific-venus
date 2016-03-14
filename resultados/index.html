@@ -134,7 +134,7 @@
 
 	resultados.getValues = function(element) {
 
-		var cell, name, thing;
+		var cell, name, span, thing;
 
 		for (var k = resultados.data.length; k--;) {
 
@@ -160,7 +160,16 @@
 						thing = resultados.things[i].name;
 						name = resultados.things[i].data[j].name;
 
-						cell.innerHTML = resultados.data[k][thing][name];
+						if (resultados.things[i].data[j].link) {
+							span = document.createElement('a');
+							span.href = resultados.things[i].data[j].link + resultados.data[k][thing][name];
+						} else {
+							span = document.createElement('span');
+						}
+
+						span.innerHTML = resultados.data[k][thing][name];
+
+						cell.appendChild(span);
 
 						row.appendChild(cell);
 
@@ -182,8 +191,6 @@
 
 		data = resultados.data;
 
-		console.log(data);
-
 		head = document.createElement('thead');
 		body = document.createElement('tbody');
 
@@ -196,8 +203,10 @@
 	};
 
 	resultados.update = function(data) {
+
 		resultados.setData(data);
 		resultados.buildTable();
+
 	};
 
 	resultados.things = [
@@ -205,6 +214,12 @@
 			name: 'prontuario',
 			title: 'Prontuario',
 			data: [
+				{
+					link: '../print/?prontuario_id=',
+					name: '_id',
+					title: 'Prontuario ID',
+					type: false
+				},
 				{
 					name: 'registro',
 					title: 'Reg. Ambulatório',
